@@ -89,7 +89,7 @@ void memory_init(void)
         curr_address += ( sizeof(mem_block*) + 128);
         curr_node = (mem_block*) curr_address;
         curr_node->next = head;
-        curr_node->block_address = curr_node -= sizeof(mem_block*);
+        curr_node->block_address = (U32)curr_node -= sizeof(mem_block*);
         head = curr_node;
     }
 
@@ -132,7 +132,10 @@ void *k_request_memory_block(void) {
     }
 
     mem_blk = (void*)head->block_address;
-    head = head->next;
+    mem_block* curr_node = head->next;
+    head->next = NULL;
+    head = curr_node;
+
     __enable_irq(); //atomic (off)
     return mem_blk;
 }
@@ -143,7 +146,7 @@ int k_release_memory_block(void *p_mem_blk) {
 #endif /* ! DEBUG_0 */
     __disable_irq(); //atomic(on);
     U32 release_address = (U32)p_mem_blk;
-    if(release_address > low_adddress || release_address > high_address) {
+    if(release_address < low_adddress || release_address > high_address) {
         return RTX_ERR;
     }
 
