@@ -11,6 +11,12 @@
 #include "printf.h"
 #endif /* ! DEBUG_0 */
 
+typedef struct mem_block
+{
+    U32 block_address;
+    struct mem_block* next;
+} mem_block;
+
 mem_block* head;
 /* ----- Global Variables ----- */
 U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
@@ -47,8 +53,11 @@ U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
 
 void memory_init(void)
 {
+	U32 curr_address;
+	mem_block* curr_node;
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
 	int i;
+	int j;
 
 	/* 4 bytes padding */
 	p_end += 4;
@@ -78,18 +87,18 @@ void memory_init(void)
     // Need to calculate the low address and the high address
     // Assume 30 blocks
 
-    U32* curr_adress = gp_pcbs;
+    curr_address = (U32)p_end;
     curr_address += sizeof(mem_block *);
-    mem_block* curr_node = (mem_block*)curr_address;
+    curr_node = (mem_block*)curr_address;
     curr_node->next = NULL;
-    curr_node->block_address = gp_pcbs;
+    curr_node->block_address = (U32)p_end;
     head = curr_node;
-    int j;
+
     for(j = 0; j < 29; j++) {
         curr_address += ( sizeof(mem_block*) + 128);
         curr_node = (mem_block*) curr_address;
         curr_node->next = head;
-        curr_node->block_address = (U32)curr_node -= sizeof(mem_block*);
+        curr_node->block_address = curr_address - sizeof(mem_block*);
         head = curr_node;
     }
 
@@ -118,12 +127,15 @@ U32 *alloc_stack(U32 size_b)
 }
 
 void *k_request_memory_block(void) {
+	void* mem_blk;
+	mem_block* curr_node;
+	/*
 #ifdef DEBUG_0
 	printf("k_request_memory_block: entering...\n");
 #endif /* ! DEBUG_0 */
-	return (void *) NULL;
+	// return (void *) NULL;
+	
 
-    void* mem_blk;
     // Rough idea of what we want to do
     __disable_irq(); //atomic(on);
 
@@ -132,7 +144,7 @@ void *k_request_memory_block(void) {
     }
 
     mem_blk = (void*)head->block_address;
-    mem_block* curr_node = head->next;
+    curr_node = head->next;
     head->next = NULL;
     head = curr_node;
 
@@ -144,6 +156,7 @@ int k_release_memory_block(void *p_mem_blk) {
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
+		/*
     __disable_irq(); //atomic(on);
     U32 release_address = (U32)p_mem_blk;
     if(release_address < low_adddress || release_address > high_address) {
@@ -154,5 +167,6 @@ int k_release_memory_block(void *p_mem_blk) {
     node->next = head;
     head = node;
     __enable_irq(); //atomic (off);
+	*/
 	return RTX_OK;
 }
