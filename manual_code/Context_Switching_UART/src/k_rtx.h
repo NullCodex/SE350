@@ -51,10 +51,5 @@ typedef struct proc_init
 	void (*mpf_start_pc) ();/* entry point of the process */
 } PROC_INIT;
 
-typedef struct mem_block
-{
-    U32 block_address;
-    mem_block* next;
-} mem_block;
 
 #endif // ! K_RTX_H_
