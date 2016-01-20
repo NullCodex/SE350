@@ -27,6 +27,10 @@ void set_test_procs() {
   
 	g_test_procs[0].mpf_start_pc = &proc1;
 	g_test_procs[1].mpf_start_pc = &proc2;
+	g_test_procs[2].mpf_start_pc = &proc3;
+	g_test_procs[3].mpf_start_pc = &proc4;
+	g_test_procs[4].mpf_start_pc = &proc5;
+	g_test_procs[5].mpf_start_pc = &proc6;
 }
 
 
@@ -86,3 +90,116 @@ void proc2(void)
 		
 	}
 }
+
+/**
+ * @brief: a process that prints 5x6 `*` character
+ *         and then yields the cpu.
+ */
+void proc3(void)
+{
+	int i = 0;
+	int ret_val = 20;
+	int x = 0;
+	while ( 1) {
+		if ( i != 0 && i%5 == 0 ) {
+			uart1_put_string("\n\r");
+			
+			if ( i%30 == 0 ) {
+				ret_val = release_processor();
+#ifdef DEBUG_0
+				printf("proc3: ret_val=%d\n", ret_val);
+			
+#endif /* DEBUG_0 */
+			}
+			for ( x = 0; x < 500000; x++); // some artifical delay
+		}
+		uart1_put_char('*');
+		i++;
+		
+	}
+}
+
+/**
+ * @brief: a process that prints 5x6 even and odd numbers
+ *         and then yields the cpu.
+ */
+void proc4(void)
+{
+	int i = 0;
+	int p = 1;
+	int ret_val = 20;
+	int x = 0;
+	while ( 1) {
+		if ( i != 0 && i%5 == 0 ) {
+			uart1_put_string("\n\r");
+			
+			if ( i%30 == 0 ) {
+				ret_val = release_processor();
+#ifdef DEBUG_0
+				printf("proc4: ret_val=%d\n", ret_val);
+			
+#endif /* DEBUG_0 */
+			}
+			for ( x = 0; x < 500000; x++); // some artifical delay
+		}
+		uart1_put_char('a' + i%26);
+		i++;
+	}
+}
+
+/**
+ * @brief: a process that prints 5x6 even and odd numbers
+ *         and then yields the cpu.
+ */
+void proc5(void)
+{
+	int i = 0;
+	int p = 1;
+	int ret_val = 20;
+	int x = 0;
+	while ( 1) {
+		if ( i != 0 && i%5 == 0 ) {
+			uart1_put_string("\n\r");
+			
+			if ( i%30 == 0 ) {
+				ret_val = release_processor();
+#ifdef DEBUG_0
+				printf("proc5: ret_val=%d\n", ret_val);
+			
+#endif /* DEBUG_0 */
+			}
+			for ( x = 0; x < 500000; x++); // some artifical delay
+		}
+		uart1_put_char('&');
+		i++;
+	}
+}
+
+/**
+ * @brief: a process that prints 5x6 even and odd numbers
+ *         and then yields the cpu.
+ */
+void proc6(void)
+{
+	int i = 0;
+	int p = 1;
+	int ret_val = 20;
+	int x = 0;
+	while ( 1) {
+		if ( i != 0 && i%5 == 0 ) {
+			uart1_put_string("\n\r");
+			
+			if ( i%30 == 0 ) {
+				ret_val = release_processor();
+#ifdef DEBUG_0
+				printf("proc6: ret_val=%d\n", ret_val);
+			
+#endif /* DEBUG_0 */
+			}
+			for ( x = 0; x < 500000; x++); // some artifical delay
+		}
+		uart1_put_char('$');
+		i++;
+	}
+}
+

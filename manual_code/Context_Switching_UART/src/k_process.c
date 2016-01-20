@@ -22,7 +22,7 @@
 #include "printf.h"
 #endif /* DEBUG_0 */
 
-/* ----- Global Variables ----- */
+/* ----- Globafl Variables ----- */
 PCB **gp_pcbs;                  /* array of pcbs */
 PCB *gp_current_process = NULL; /* always point to the current RUN process */
 
@@ -33,6 +33,17 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+
+/**
+*	Null Process
+*
+*/
+void null_process() {
+	while (1) {
+		k_release_processor () ;
+	}
+}
+
 
 /**
  * @biref: initialize all processes in the system
@@ -84,6 +95,14 @@ PCB *scheduler(void)
 	if ( gp_current_process == gp_pcbs[0] ) {
 		return gp_pcbs[1];
 	} else if ( gp_current_process == gp_pcbs[1] ) {
+		return gp_pcbs[2];
+	} else if ( gp_current_process == gp_pcbs[2] ) {
+		return gp_pcbs[3];
+	} else if ( gp_current_process == gp_pcbs[3] ) {
+		return gp_pcbs[4];
+	} else if ( gp_current_process == gp_pcbs[4] ) {
+		return gp_pcbs[5];
+	} else if ( gp_current_process == gp_pcbs[5] ) {
 		return gp_pcbs[0];
 	} else {
 		return NULL;
@@ -141,8 +160,9 @@ int k_release_processor(void)
 	p_pcb_old = gp_current_process;
 	gp_current_process = scheduler();
 	
-	if ( gp_current_process == NULL  ) {
-		gp_current_process = p_pcb_old; // revert back to the old process
+	if ( gp_current_process == NULL  ) {\
+		null_process();
+//		gp_current_process = p_pcb_old; // revert back to the old process
 		return RTX_ERR;
 	}
         if ( p_pcb_old == NULL ) {

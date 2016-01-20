@@ -3,9 +3,266 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-P:\s\se350\code\manual_code\Context_Switching_UART\context_switching.uvproj
-Project File Date:  02/28/2014
+N:\SE 350\SE350-master\manual_code\Context_Switching_UART\context_switching.uvproj
+Project File Date:  01/06/2016
 
 <h2>Output:</h2>
-Clean started: Project: 'context_switching'
-   deleting intermediate output files for target 'Context Switching SIM'
+Build target 'Context Switching SIM'
+compiling main_svc.c...
+compiling k_process.c...
+src\k_process.c(43): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+Include "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\RAM.ini" 
+/******************************************************************************/
+/* RAM.INI: RAM Initialization File                                           */
+/******************************************************************************/
+/* This file is part of the uVision/ARM development tools.                    */
+/* Copyright (c) 2009 Keil Software. All rights reserved.                     */
+/* This software may only be used under the terms of a valid, current,        */
+/* end user licence from KEIL for a compatible version of KEIL software       */
+/* development tools. Nothing else gives you the right to use this software.  */
+/******************************************************************************/
+FUNC void Setup (void) {
+  SP = _RDWORD(0x10000000);                          // Setup Stack Pointer
+  PC = _RDWORD(0x10000004);                          // Setup Program Counter
+  _WDWORD(0xE000ED08, 0x10000000);                   // Setup Vector Table Offset Register
+  //_WDWORD(0x400FC0C4, _RDWORD(0x400FC0C4) | 1<<12);  // Enable ADC Power
+  //_WDWORD(0x40034034, 0x00000F00);                   // Setup ADC Trim
+}
+// You need to provide the path of the .axf file here
+LOAD build\RAM\context_switching.axf INCREMENTAL            // Download
+_____^
+*** error 56, line 20: cannot open file
+Setup();                                             // Setup for Running
+g, main
+___^
+*** error 34, line 24: undefined identifier
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Include "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\RAM.ini" 
+/******************************************************************************/
+/* RAM.INI: RAM Initialization File                                           */
+/******************************************************************************/
+/* This file is part of the uVision/ARM development tools.                    */
+/* Copyright (c) 2009 Keil Software. All rights reserved.                     */
+/* This software may only be used under the terms of a valid, current,        */
+/* end user licence from KEIL for a compatible version of KEIL software       */
+/* development tools. Nothing else gives you the right to use this software.  */
+/******************************************************************************/
+FUNC void Setup (void) {
+  SP = _RDWORD(0x10000000);                          // Setup Stack Pointer
+  PC = _RDWORD(0x10000004);                          // Setup Program Counter
+  _WDWORD(0xE000ED08, 0x10000000);                   // Setup Vector Table Offset Register
+  //_WDWORD(0x400FC0C4, _RDWORD(0x400FC0C4) | 1<<12);  // Enable ADC Power
+  //_WDWORD(0x40034034, 0x00000F00);                   // Setup ADC Trim
+}
+// You need to provide the path of the .axf file here
+LOAD build\RAM\context_switching.axf INCREMENTAL            // Download
+_____^
+*** error 56, line 20: cannot open file
+Setup();                                             // Setup for Running
+g, main
+___^
+*** error 34, line 24: undefined identifier
+Full Chip Erase Done.
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Include "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\RAM.ini" 
+/******************************************************************************/
+/* RAM.INI: RAM Initialization File                                           */
+/******************************************************************************/
+/* This file is part of the uVision/ARM development tools.                    */
+/* Copyright (c) 2009 Keil Software. All rights reserved.                     */
+/* This software may only be used under the terms of a valid, current,        */
+/* end user licence from KEIL for a compatible version of KEIL software       */
+/* development tools. Nothing else gives you the right to use this software.  */
+/******************************************************************************/
+FUNC void Setup (void) {
+  SP = _RDWORD(0x10000000);                          // Setup Stack Pointer
+  PC = _RDWORD(0x10000004);                          // Setup Program Counter
+  _WDWORD(0xE000ED08, 0x10000000);                   // Setup Vector Table Offset Register
+  //_WDWORD(0x400FC0C4, _RDWORD(0x400FC0C4) | 1<<12);  // Enable ADC Power
+  //_WDWORD(0x40034034, 0x00000F00);                   // Setup ADC Trim
+}
+// You need to provide the path of the .axf file here
+LOAD build\RAM\context_switching.axf INCREMENTAL            // Download
+_____^
+*** error 56, line 20: cannot open file
+Setup();                                             // Setup for Running
+g, main
+___^
+*** error 34, line 24: undefined identifier
+Full Chip Erase Done.
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+Include "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\RAM.ini" 
+/******************************************************************************/
+/* RAM.INI: RAM Initialization File                                           */
+/******************************************************************************/
+/* This file is part of the uVision/ARM development tools.                    */
+/* Copyright (c) 2009 Keil Software. All rights reserved.                     */
+/* This software may only be used under the terms of a valid, current,        */
+/* end user licence from KEIL for a compatible version of KEIL software       */
+/* development tools. Nothing else gives you the right to use this software.  */
+/******************************************************************************/
+FUNC void Setup (void) {
+  SP = _RDWORD(0x10000000);                          // Setup Stack Pointer
+  PC = _RDWORD(0x10000004);                          // Setup Program Counter
+  _WDWORD(0xE000ED08, 0x10000000);                   // Setup Vector Table Offset Register
+  //_WDWORD(0x400FC0C4, _RDWORD(0x400FC0C4) | 1<<12);  // Enable ADC Power
+  //_WDWORD(0x40034034, 0x00000F00);                   // Setup ADC Trim
+}
+// You need to provide the path of the .axf file here
+LOAD build\RAM\context_switching.axf INCREMENTAL            // Download
+_____^
+*** error 56, line 20: cannot open file
+Setup();                                             // Setup for Running
+g, main
+___^
+*** error 34, line 24: undefined identifier
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Load "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+Include "N:\\SE 350\\SE350-master\\manual_code\\Context_Switching_UART\\RAM.ini" 
+/******************************************************************************/
+/* RAM.INI: RAM Initialization File                                           */
+/******************************************************************************/
+/* This file is part of the uVision/ARM development tools.                    */
+/* Copyright (c) 2009 Keil Software. All rights reserved.                     */
+/* This software may only be used under the terms of a valid, current,        */
+/* end user licence from KEIL for a compatible version of KEIL software       */
+/* development tools. Nothing else gives you the right to use this software.  */
+/******************************************************************************/
+FUNC void Setup (void) {
+  SP = _RDWORD(0x10000000);                          // Setup Stack Pointer
+  PC = _RDWORD(0x10000004);                          // Setup Program Counter
+  _WDWORD(0xE000ED08, 0x10000000);                   // Setup Vector Table Offset Register
+  //_WDWORD(0x400FC0C4, _RDWORD(0x400FC0C4) | 1<<12);  // Enable ADC Power
+  //_WDWORD(0x40034034, 0x00000F00);                   // Setup ADC Trim
+}
+// You need to provide the path of the .axf file here
+LOAD build\RAM\context_switching.axf INCREMENTAL            // Download
+_____^
+*** error 56, line 20: cannot open file
+Setup();                                             // Setup for Running
+g, main
+___^
+*** error 34, line 24: undefined identifier
+No Algorithm found for: 10000000H - 10000FDFH
+Erase skipped!
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3600 RO-data=412 RW-data=52 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling main_svc.c...
+compiling k_process.c...
+src\k_process.c(35): error:  #20: identifier "f" is undefined
+src\k_process.c(43): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
+Target not created
+Build target 'Context Switching SIM'
+compiling main_svc.c...
+compiling k_rtx_init.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(35): error:  #20: identifier "f" is undefined
+src\k_process.c(43): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(43): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=3720 RO-data=412 RW-data=52 ZI-data=708  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=3720 RO-data=412 RW-data=52 ZI-data=708  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+linking...
+Program Size: Code=3728 RO-data=412 RW-data=52 ZI-data=708  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+linking...
+Program Size: Code=3732 RO-data=412 RW-data=52 ZI-data=708  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling main_svc.c...
+compiling k_rtx_init.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(43): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
+src\usr_proc.c(162): warning:  #177-D: variable "p" was declared but never referenced
+src\usr_proc.c(190): warning:  #177-D: variable "p" was declared but never referenced
+linking...
+Program Size: Code=4188 RO-data=412 RW-data=52 ZI-data=804  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(43): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=4164 RO-data=412 RW-data=52 ZI-data=804  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(129): warning:  #177-D: variable "p" was declared but never referenced
+src\usr_proc.c(157): warning:  #177-D: variable "p" was declared but never referenced
+src\usr_proc.c(185): warning:  #177-D: variable "p" was declared but never referenced
+linking...
+Program Size: Code=4140 RO-data=412 RW-data=52 ZI-data=804  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
