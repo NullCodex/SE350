@@ -22,13 +22,27 @@
 #include "printf.h"
 #endif /* DEBUG_0 */
 
-/* ----- Globafl Variables ----- */
+/* ----- Global Variables ----- */
 PCB **gp_pcbs;                  /* array of pcbs */
 PCB *gp_current_process = NULL; /* always point to the current RUN process */
 
 U32 g_switch_flag = 0;          /* whether to continue to run the process before the UART receive interrupt */
                                 /* 1 means to switch to another process, 0 means to continue the current process */
 				/* this value will be set by UART handler */
+				
+struct process_block {
+	PCB pcb_address;
+	struct* next;
+};
+				  
+/*	Represents two queues - 
+*		one for ready processes
+*		one for blocked processes  
+*/
+process_block *headBlocked;
+process_block *tailBlocked;
+process_block *headReady;
+process_block *tailReady;
 
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
@@ -60,6 +74,8 @@ void process_init()
 		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
 		g_proc_table[i].m_stack_size = g_test_procs[i].m_stack_size;
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
+		// added a priority to the table
+		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
@@ -76,6 +92,35 @@ void process_init()
 		}
 		(gp_pcbs[i])->mp_sp = sp;
 	}
+	
+	// initializing queues
+	headReady = NULL;
+	tailReady = NULL;
+	headBlocked = NULL;
+	tailBlocked = NULL;
+	
+	// initializing queues
+	headReady->next = NULL;
+	tailReady->next = NULL;
+	headBlocked->next = NULL;
+	tailBlocked->next = NULL;
+}
+
+PCB *highestPriority(void) {
+	process_block* currProc = headReady;
+	process_block* maxProc = currProc;
+	int maxPriority = LOWEST;
+	
+	// going through ready queue to find process with max priority
+	while(currProc != NULL) {
+		if(currProc->m_priority > maxPriority) {
+			maxPriority = currProc->m_priority;
+			maxProc = currProc;
+		}
+		currProc = currProc->next;
+	}
+	
+	return maxProc;
 }
 
 /*@brief: scheduler, pick the pid of the next to run process
@@ -87,26 +132,15 @@ void process_init()
 
 PCB *scheduler(void)
 {
+	process_block* start;
+	
+	// not sure if we need this atm
 	if (gp_current_process == NULL) {
 		gp_current_process = gp_pcbs[0]; 
 		return gp_pcbs[0];
 	}
-
-	if ( gp_current_process == gp_pcbs[0] ) {
-		return gp_pcbs[1];
-	} else if ( gp_current_process == gp_pcbs[1] ) {
-		return gp_pcbs[2];
-	} else if ( gp_current_process == gp_pcbs[2] ) {
-		return gp_pcbs[3];
-	} else if ( gp_current_process == gp_pcbs[3] ) {
-		return gp_pcbs[4];
-	} else if ( gp_current_process == gp_pcbs[4] ) {
-		return gp_pcbs[5];
-	} else if ( gp_current_process == gp_pcbs[5] ) {
-		return gp_pcbs[0];
-	} else {
-		return NULL;
-	}
+	
+	return highestPriority();
 }
 
 /*@brief: switch out old pcb (p_pcb_old), run the new pcb (gp_current_process)
@@ -165,7 +199,7 @@ int k_release_processor(void)
 //		gp_current_process = p_pcb_old; // revert back to the old process
 		return RTX_ERR;
 	}
-        if ( p_pcb_old == NULL ) {
+  if ( p_pcb_old == NULL ) {
 		p_pcb_old = gp_current_process;
 	}
 	process_switch(p_pcb_old);

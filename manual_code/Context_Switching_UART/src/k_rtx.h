@@ -14,7 +14,7 @@
 #define RTX_OK  0
 
 #define NULL 0
-#define NUM_TEST_PROCS 6
+#define NUM_TEST_PROCS 3
 
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */
@@ -26,8 +26,12 @@
 typedef unsigned char U8;
 typedef unsigned int U32;
 
-/* process states, note we only assume three states in this example */
-typedef enum {NEW = 0, RDY, RUN} PROC_STATE_E;  
+/* process states, four states
+* BOR - Blocked on resource
+* WFM - Waiting for message
+* 
+*/
+typedef enum {NEW = 0, RDY, RUN, BOR, WFM} PROC_STATE_E;  
 
 /*
   PCB data structure definition.
@@ -39,6 +43,7 @@ typedef struct pcb
 	//struct pcb *mp_next;  /* next pcb, not used in this example */  
 	U32 *mp_sp;		/* stack pointer of the process */
 	U32 m_pid;		/* process id */
+	U32 m_priority; /* process priority */
 	PROC_STATE_E m_state;   /* state of the process */      
 } PCB;
 
