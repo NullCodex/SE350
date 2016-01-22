@@ -39,11 +39,14 @@ void proc1(void)
 	int i = 0;
 	int ret_val = 10;
 	int x = 0;
+	void* returnedPtr;
+	int returnedCode;
 
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
-			
+			returnedPtr = k_request_memory_block();
+			returnedCode = k_release_memory_block(returnedPtr);
 			if ( i%30 == 0 ) {
 				ret_val = release_processor();
 #ifdef DEBUG_0

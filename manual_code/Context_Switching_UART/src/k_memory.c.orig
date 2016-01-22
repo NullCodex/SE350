@@ -153,21 +153,27 @@ void *k_request_memory_block(void) {
 }
 
 int k_release_memory_block(void *p_mem_blk) {
-  U32 release_address;
-  mem_block* node;
+	U32 release_address;
+	mem_block* node;
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
+		/*
     __disable_irq(); //atomic(on);
     release_address = (U32)p_mem_blk;
-
-    // if(release_address < low_adddress || release_address > high_address) {
-    //     return RTX_ERR;
-    // }
-
+		/*
+    if(release_address < low_adddress || release_address > high_address) {
+        return RTX_ERR;
+    }
+		*/
     node = (mem_block*)(release_address+sizeof(mem_block*));
     node->next = head;
     head = node;
     __enable_irq(); //atomic (off);
+<<<<<<< HEAD
+
+=======
+	*/
+>>>>>>> 22d3a5cd7e2998ea187db3da2f5514d36690e7d7
 	return RTX_OK;
 }
