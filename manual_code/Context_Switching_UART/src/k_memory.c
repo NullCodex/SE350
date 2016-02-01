@@ -71,6 +71,7 @@ void memory_init(void)
 		p_end += sizeof(PCB);
 	}
 #ifdef DEBUG_0
+	
 	printf("gp_pcbs[0] = 0x%x \n", gp_pcbs[0]);
 	printf("gp_pcbs[1] = 0x%x \n", gp_pcbs[1]);
 #endif
@@ -94,14 +95,13 @@ void memory_init(void)
     curr_node->block_address = (U32)p_end;
     head = curr_node;
 
-    for(j = 0; j < 29; j++) {
-        curr_address += ( sizeof(mem_block*) + 128);
+		while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
+				curr_address += ( sizeof(mem_block*) + 128);
         curr_node = (mem_block*) curr_address;
         curr_node->next = head;
         curr_node->block_address = curr_address - sizeof(mem_block*);
         head = curr_node;
-    }
-
+		}
 }
 
 /**
@@ -114,6 +114,7 @@ void memory_init(void)
 U32 *alloc_stack(U32 size_b)
 {
 	U32 *sp;
+	U32	newHeadAddress = (U32) head;
 	sp = gp_stack; /* gp_stack is always 8 bytes aligned */
 
 	/* update gp_stack */
@@ -123,6 +124,11 @@ U32 *alloc_stack(U32 size_b)
 	if ((U32)gp_stack & 0x04) {
 		--gp_stack;
 	}
+	
+	while(newHeadAddress > (U32)gp_stack) {
+		newHeadAddress -= 132;
+	}
+	head = (mem_block*)newHeadAddress;
 	return sp;
 }
 
@@ -161,13 +167,13 @@ int k_release_memory_block(void *p_mem_blk) {
     __disable_irq(); //atomic(on);
     release_address = (U32)p_mem_blk;
 
-    // if(release_address < low_adddress || release_address > high_address) {
-    //     return RTX_ERR;
-    // }
+		if(release_address > (U32)gp_stack || release_address < (U32)gp_pcbs[NUM_TEST_PROCS-1]) {
+				return RTX_ERR;
+		}
 
     node = (mem_block*)(release_address+sizeof(mem_block*));
     node->next = head;
     head = node;
     __enable_irq(); //atomic (off);
-	return RTX_OK;
+		return RTX_OK;
 }

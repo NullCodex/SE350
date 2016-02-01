@@ -45,8 +45,9 @@ void proc1(void)
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
-			returnedPtr = k_request_memory_block();
-			returnedCode = k_release_memory_block(returnedPtr);
+			returnedPtr = request_memory_block();
+			returnedCode = release_memory_block(returnedPtr);
+			printf("proc1: ret_val=%d\n", returnedCode);
 			if ( i%30 == 0 ) {
 				ret_val = release_processor();
 #ifdef DEBUG_0
