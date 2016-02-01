@@ -14,7 +14,7 @@
 #define RTX_OK  0
 
 #define NULL 0
-#define NUM_TEST_PROCS 3
+#define NUM_TEST_PROCS 6
 
 #define HIGH    0
 #define MEDIUM  1
@@ -49,7 +49,8 @@ typedef struct pcb
 	U32 *mp_sp;		/* stack pointer of the process */
 	U32 m_pid;		/* process id */
 	U32 m_priority; /* process priority */
-	PROC_STATE_E m_state;   /* state of the process */      
+	PROC_STATE_E m_state;   /* state of the process */   
+	struct pcb *next;
 } PCB;
 
 /* initialization table item */
