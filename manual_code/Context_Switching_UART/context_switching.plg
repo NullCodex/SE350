@@ -7,3 +7,180 @@ N:\SE350\manual_code\Context_Switching_UART\context_switching.uvproj
 Project File Date:  01/06/2016
 
 <h2>Output:</h2>
+Build target 'Context Switching SIM'
+compiling main_svc.c...
+compiling k_rtx_init.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(35): error:  #110: expected either a definition or a tag name
+src\k_process.c(35): warning:  #64-D: declaration does not declare anything
+src\k_process.c(42): error:  #20: identifier "process_block" is undefined
+src\k_process.c(43): error:  #20: identifier "process_block" is undefined
+src\k_process.c(44): error:  #20: identifier "process_block" is undefined
+src\k_process.c(45): error:  #20: identifier "process_block" is undefined
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(70): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(72): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(116): error:  #20: identifier "process_block" is undefined
+src\k_process.c(116): error:  #20: identifier "currProc" is undefined
+src\k_process.c(117): error:  #20: identifier "maxProc" is undefined
+src\k_process.c(118): error:  #268: declaration may not appear after executable statement in block
+src\k_process.c(118): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(141): error:  #20: identifier "process_block" is undefined
+src\k_process.c(141): error:  #20: identifier "start" is undefined
+compiling usr_proc.c...
+src\usr_proc.c(134): warning:  #177-D: variable "p" was declared but never referenced
+src\usr_proc.c(162): warning:  #177-D: variable "p" was declared but never referenced
+src\usr_proc.c(190): warning:  #177-D: variable "p" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(42): error:  #20: identifier "process_block" is undefined
+src\k_process.c(43): error:  #20: identifier "process_block" is undefined
+src\k_process.c(44): error:  #20: identifier "process_block" is undefined
+src\k_process.c(45): error:  #20: identifier "process_block" is undefined
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(70): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(72): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(116): error:  #20: identifier "process_block" is undefined
+src\k_process.c(116): error:  #20: identifier "currProc" is undefined
+src\k_process.c(117): error:  #20: identifier "maxProc" is undefined
+src\k_process.c(118): error:  #268: declaration may not appear after executable statement in block
+src\k_process.c(118): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(141): error:  #20: identifier "process_block" is undefined
+src\k_process.c(141): error:  #20: identifier "start" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(66): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(67): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(70): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "struct process_block *"
+src\k_process.c(71): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(118): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(122): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(123): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(129): error:  #120: return value type does not match the function type
+src\k_process.c(141): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(66): error:  #513: a value of type "process_block" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(67): error:  #513: a value of type "process_block" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(70): error:  #513: a value of type "process_block" cannot be assigned to an entity of type "struct process_block *"
+src\k_process.c(71): error:  #513: a value of type "process_block" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(102): error:  #268: declaration may not appear after executable statement in block
+src\k_process.c(103): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "PCB"
+src\k_process.c(104): error:  #167: argument of type "process_block *" is incompatible with parameter of type "process_block"
+src\k_process.c(120): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(124): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(125): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(131): error:  #120: return value type does not match the function type
+src\k_process.c(143): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(102): error:  #268: declaration may not appear after executable statement in block
+src\k_process.c(103): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "PCB"
+src\k_process.c(120): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(124): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(125): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(131): error:  #120: return value type does not match the function type
+src\k_process.c(143): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(102): error:  #268: declaration may not appear after executable statement in block
+src\k_process.c(103): error:  #20: identifier "curr_proc" is undefined
+src\k_process.c(120): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(124): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(125): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(131): error:  #120: return value type does not match the function type
+src\k_process.c(143): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(104): error:  #20: identifier "curr_proc" is undefined
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(125): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(126): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(132): error:  #120: return value type does not match the function type
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(104): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "PCB"
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(125): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(126): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(132): error:  #120: return value type does not match the function type
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(125): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(126): error:  #136: struct "process_block" has no field "m_priority"
+src\k_process.c(132): error:  #120: return value type does not match the function type
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(132): error:  #120: return value type does not match the function type
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(127): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "process_block *"
+src\k_process.c(132): error:  #120: return value type does not match the function type
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(120): error:  #144: a value of type "process_block *" cannot be used to initialize an entity of type "PCB *"
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(121): error:  #20: identifier "LOWEST" is undefined
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+src\rtx.h(22): error:  #101: "proc_init" has already been declared in the current scope
+src\rtx.h(28): error:  #256: invalid redeclaration of type name "PROC_INIT" (declared at line 57 of "src\k_rtx.h")
+compiling k_process.c...
+src\rtx.h(22): error:  #101: "proc_init" has already been declared in the current scope
+src\rtx.h(28): error:  #256: invalid redeclaration of type name "PROC_INIT" (declared at line 57 of "src\k_rtx.h")
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(57): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(144): warning:  #177-D: variable "start" was declared but never referenced
+linking...
+Program Size: Code=4104 RO-data=412 RW-data=68 ZI-data=708  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=4104 RO-data=412 RW-data=68 ZI-data=708  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Load "N:\\SE350\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.

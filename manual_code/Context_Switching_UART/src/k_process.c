@@ -30,10 +30,10 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
                                 /* 1 means to switch to another process, 0 means to continue the current process */
 				/* this value will be set by UART handler */
 				
-struct process_block {
-	PCB pcb_address;
-	struct* next;
-};
+typedef struct process_block {
+	PCB *pcb_addr;
+	struct process_block* next;
+} process_block;
 				  
 /*	Represents two queues - 
 *		one for ready processes
@@ -59,6 +59,20 @@ void null_process() {
 }
 
 
+
+void rpq_enqueue(process_block *current_process) {
+	// ready queue is empty
+	if(headReady == NULL) {
+		headReady = current_process;
+		tailReady = current_process;
+	} 
+	else {
+		tailReady->next = current_process;
+		tailReady = current_process;
+		tailReady->next = NULL;
+	}
+}
+
 /**
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
@@ -81,8 +95,14 @@ void process_init()
 	/* initilize exception stack frame (i.e. initial context) for each process */
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		int j;
+		process_block *cur_proc;
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
-		(gp_pcbs[i])->m_state = NEW;
+		// setting all processes to ready state in the beginning
+		// adding all to the ready queue
+		(gp_pcbs[i])->m_state = RDY;
+		
+		cur_proc->pcb_addr = gp_pcbs[i];
+		rpq_enqueue(cur_proc);
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
@@ -92,30 +112,19 @@ void process_init()
 		}
 		(gp_pcbs[i])->mp_sp = sp;
 	}
-	
-	// initializing queues
-	headReady = NULL;
-	tailReady = NULL;
-	headBlocked = NULL;
-	tailBlocked = NULL;
-	
-	// initializing queues
-	headReady->next = NULL;
-	tailReady->next = NULL;
-	headBlocked->next = NULL;
-	tailBlocked->next = NULL;
 }
+
 
 PCB *highestPriority(void) {
 	process_block* currProc = headReady;
-	process_block* maxProc = currProc;
+	PCB* maxProc = currProc->pcb_addr;
 	int maxPriority = LOWEST;
 	
 	// going through ready queue to find process with max priority
 	while(currProc != NULL) {
-		if(currProc->m_priority > maxPriority) {
-			maxPriority = currProc->m_priority;
-			maxProc = currProc;
+		if(currProc->pcb_addr->m_priority > maxPriority) {
+			maxPriority = currProc->pcb_addr->m_priority;
+			maxProc = currProc->pcb_addr;
 		}
 		currProc = currProc->next;
 	}
@@ -182,6 +191,7 @@ int process_switch(PCB *p_pcb_old)
 	}
 	return RTX_OK;
 }
+
 /**
  * @brief release_processor(). 
  * @return RTX_ERR on error and zero on success
