@@ -103,6 +103,9 @@ void proc2(void)
 		i++;
 		
 	}
+<<<<<<< HEAD
+}
+=======
 }
 
 /**
@@ -217,3 +220,4 @@ void proc6(void)
 	}
 }
 
+>>>>>>> origin/ProcessP1

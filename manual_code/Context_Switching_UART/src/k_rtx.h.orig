@@ -14,12 +14,16 @@
 #define RTX_OK  0
 
 #define NULL 0
+<<<<<<< HEAD
 #define NUM_TEST_PROCS 15
+=======
+#define NUM_TEST_PROCS 6
 
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
 #define LOWEST  3
+>>>>>>> origin/ProcessP1
 
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */
@@ -62,5 +66,8 @@ typedef struct proc_init
 	void (*mpf_start_pc) ();/* entry point of the process */    
 } PROC_INIT;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/ProcessP1
 #endif // ! K_RTX_H_

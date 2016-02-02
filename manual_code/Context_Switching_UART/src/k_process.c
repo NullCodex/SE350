@@ -29,10 +29,60 @@ PCB *gp_current_process = NULL; /* always point to the current RUN process */
 U32 g_switch_flag = 0;          /* whether to continue to run the process before the UART receive interrupt */
                                 /* 1 means to switch to another process, 0 means to continue the current process */
 				/* this value will be set by UART handler */
+				  
+/*	Represents two queues - 
+*		one for ready processes
+*		one for blocked processes  
+*/
+PCB *headBlocked = NULL;
+PCB *tailBlocked = NULL;
+PCB *headReady = NULL;
+PCB *tailReady = NULL;
 
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+
+/**
+*	Null Process
+*
+*/
+void null_process() {
+	while (1) {
+		k_release_processor () ;
+	}
+}
+
+void rpq_dequeue(PCB *current_process) {
+	 PCB* temp = headReady;
+	// if currProc is the first element in the queue
+	if(current_process == headReady) {
+		headReady = headReady->next;
+		return;
+	}
+	
+	// deleting in the middle
+	 while(temp != NULL) {
+		 if(temp->next == current_process) {
+			temp->next = current_process->next;
+			 return;
+		 }
+		 temp = temp->next;
+	 }
+}
+
+void rpq_enqueue(PCB *current_process) {
+	// ready queue is empty
+	if(headReady == NULL) {
+		headReady = current_process;
+		tailReady = current_process;
+	} 
+	else {
+		tailReady->next = current_process;
+		tailReady = current_process;
+		tailReady->next = NULL;
+	}
+}
 
 /**
  * @biref: initialize all processes in the system
@@ -42,6 +92,7 @@ void process_init()
 {
 	int i;
 	U32 *sp;
+	PCB* temp;
   
         /* fill out the initialization table */
 	set_test_procs();
@@ -49,13 +100,23 @@ void process_init()
 		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
 		g_proc_table[i].m_stack_size = g_test_procs[i].m_stack_size;
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
+		// added a priority to the table
+		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
+		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		int j;
+		
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
+		// setting all processes to ready state in the beginning
+		// adding all to the ready queue
 		(gp_pcbs[i])->m_state = NEW;
+		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
+		
+		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
+		rpq_enqueue(gp_pcbs[i]);
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
@@ -65,6 +126,41 @@ void process_init()
 		}
 		(gp_pcbs[i])->mp_sp = sp;
 	}
+	
+	temp = headReady;
+	
+	while(temp != NULL) {
+			printf("temp %d \n", (temp)->m_pid);
+			temp = temp->next;
+	}
+}
+
+
+PCB *highestPriority(void) {\
+	PCB* temp = headReady;
+	PCB* currProc = headReady;
+	PCB* maxProc = currProc;
+	int maxPriority = LOWEST;
+	int maxpid = 1;
+	
+	while(temp != NULL) {
+			printf("highpri temp %d \n", (temp)->m_pid);
+			temp = temp->next;
+	}
+	// going through ready queue to find process with max priority
+	while(currProc != NULL) {
+		int currpid = currProc->m_priority;
+			printf("curr_priority %d \n", currpid);
+		printf("max_pid %d \n", maxpid);
+		if(currProc->m_priority < maxPriority) {
+			maxPriority = currProc->m_priority;
+			maxProc = currProc;
+			maxpid =  currProc->m_pid;
+		}
+		currProc = currProc->next;
+	}
+	
+	return maxProc;
 }
 
 /*@brief: scheduler, pick the pid of the next to run process
@@ -76,18 +172,14 @@ void process_init()
 
 PCB *scheduler(void)
 {
-	if (gp_current_process == NULL) {
+	PCB* max;
+	// not sure if we need this atm
+/*	if (gp_current_process == NULL) {
 		gp_current_process = gp_pcbs[0]; 
 		return gp_pcbs[0];
-	}
-
-	if ( gp_current_process == gp_pcbs[0] ) {
-		return gp_pcbs[1];
-	} else if ( gp_current_process == gp_pcbs[1] ) {
-		return gp_pcbs[0];
-	} else {
-		return NULL;
-	}
+	}*/
+	max = highestPriority();
+	return max;
 }
 
 /*@brief: switch out old pcb (p_pcb_old), run the new pcb (gp_current_process)
@@ -129,6 +221,7 @@ int process_switch(PCB *p_pcb_old)
 	}
 	return RTX_OK;
 }
+
 /**
  * @brief release_processor(). 
  * @return RTX_ERR on error and zero on success
@@ -138,16 +231,26 @@ int k_release_processor(void)
 {
 	PCB *p_pcb_old = NULL;
 	
+	PCB* temp = headReady;
+	
+	while(temp != NULL) {
+			printf("release temp %d \n", (temp)->m_pid);
+			temp = temp->next;
+	}
+	
 	p_pcb_old = gp_current_process;
 	gp_current_process = scheduler();
-	
+	printf("gp_current_process 0x%x \n", gp_current_process->m_state);
 	if ( gp_current_process == NULL  ) {
-		gp_current_process = p_pcb_old; // revert back to the old process
+		null_process();
+//		gp_current_process = p_pcb_old; // revert back to the old process
 		return RTX_ERR;
 	}
-        if ( p_pcb_old == NULL ) {
+  if ( p_pcb_old == NULL ) {
 		p_pcb_old = gp_current_process;
 	}
 	process_switch(p_pcb_old);
+	rpq_dequeue(p_pcb_old);
+	rpq_enqueue(p_pcb_old);
 	return RTX_OK;
 }
