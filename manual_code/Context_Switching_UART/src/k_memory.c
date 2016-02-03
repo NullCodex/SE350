@@ -11,7 +11,6 @@
 #include "printf.h"
 #endif /* ! DEBUG_0 */
 
-mem_block* head;
 typedef struct mem_block
 {
     U32 block_address;
@@ -23,7 +22,11 @@ mem_block* head;
 U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
                /* The first stack starts at the RAM high address */
 	       /* stack grows down. Fully decremental stack */
-
+extern PCB *gp_current_process;
+extern PCB *headReady;
+extern PCB *tailReady;
+extern PCB *headBlocked;
+extern PCB *tailBlocked;
 /**
  * @brief: Initialize RAM as follows:
 
@@ -51,6 +54,49 @@ U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
 0x10000000+---------------------------+ Low Address
 
 */
+PCB* bpq_dequeue(void) {
+		PCB* temp;
+		if(headBlocked) {
+			temp = headBlocked;
+			headBlocked = headBlocked->next;
+			return temp;
+		}
+		return NULL;
+}
+
+void bpq_enqueue (PCB *current_process) {
+	PCB* temp = headBlocked;
+	PCB* prev = NULL;
+	
+	if (headBlocked == NULL) {
+		headBlocked = tailBlocked = current_process;
+	} else {
+		if (headBlocked == tailBlocked) {
+			if (headBlocked->m_priority < current_process->m_priority) {
+				headBlocked->next = current_process;
+				tailBlocked = current_process;
+			} else {
+				current_process->next = tailBlocked;
+				headBlocked = current_process;
+				tailBlocked = current_process->next;
+			}
+		} else {
+			while (temp != tailBlocked->next) {
+				if (temp->m_priority < current_process->m_priority) {
+					prev = temp;
+					temp = temp->next;
+				} else {
+					if (headBlocked == temp) {
+						headBlocked = current_process;
+					}
+					current_process->next = temp;
+					prev->next = current_process;
+					break;
+				}
+			}
+		}
+	}
+}
 
 void memory_init(void)
 {
@@ -58,7 +104,6 @@ void memory_init(void)
 	mem_block* curr_node;
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
 	int i;
-
 	int j;
 
 	/* 4 bytes padding */
@@ -86,25 +131,6 @@ void memory_init(void)
 	}
 
 	/* allocate memory for heap, not implemented yet*/
-
-    // Need to calculate the low address and the high address
-    // Assume 30 blocks
-
-    U32* curr_adress = gp_pcbs;
-    curr_address += sizeof(mem_block *);
-    mem_block* curr_node = (mem_block*)curr_address;
-    curr_node->next = NULL;
-    curr_node->block_address = gp_pcbs;
-    head = curr_node;
-    int j;
-    for(j = 0; j < 29; j++) {
-        curr_address += ( sizeof(mem_block*) + 128);
-        curr_node = (mem_block*) curr_address;
-        curr_node->next = head;
-        curr_node->block_address = (U32)curr_node -= sizeof(mem_block*);
-        head = curr_node;
-    }
-
 
     // Need to calculate the low address and the high address
     // Assume 30 blocks
@@ -154,38 +180,24 @@ U32 *alloc_stack(U32 size_b)
 }
 
 void *k_request_memory_block(void) {
-#ifdef DEBUG_0
 	void* mem_blk;
 	mem_block* curr_node;
 	/*
 #ifdef DEBUG_0
 	printf("k_request_memory_block: entering...\n");
 #endif /* ! DEBUG_0 */
-	return (void *) NULL;
 	// return (void *) NULL;
 	
 
-    void* mem_blk;
     // Rough idea of what we want to do
     __disable_irq(); //atomic(on);
 
     while(head == NULL) {
+				gp_current_process->m_state = BOR;
+				bpq_enqueue(gp_current_process);
         k_release_processor();
-    }
-
-    mem_blk = (void*)head->block_address;
-    mem_block* curr_node = head->next;
-    head->next = NULL;
-    head = curr_node;
-
-    __enable_irq(); //atomic (off)
-    return mem_blk;
-
-    // Rough idea of what we want to do
-    __disable_irq(); //atomic(on);
-
-    while(head == NULL) {
-        k_release_processor();
+				
+				return NULL;
     }
 
     mem_blk = (void*)head->block_address;
@@ -198,33 +210,28 @@ void *k_request_memory_block(void) {
 }
 
 int k_release_memory_block(void *p_mem_blk) {
-#ifdef DEBUG_0
   U32 release_address;
   mem_block* node;
+	PCB* currentProcess;
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
-    __disable_irq(); //atomic(on);
-    U32 release_address = (U32)p_mem_blk;
-    if(release_address < low_adddress || release_address > high_address) {
-        return RTX_ERR;
-    }
-
-    mem_block* node = (mem_block*)(release_address+sizeof(mem_block*);
-    node->next = head;
-    head = node;
-    __enable_irq(); //atomic (off);
     __disable_irq(); //atomic(on);
     release_address = (U32)p_mem_blk;
 
 		if(release_address > (U32)gp_stack || release_address < (U32)gp_pcbs[NUM_TEST_PROCS-1]) {
 				return RTX_ERR;
 		}
-
+		
+		if(headBlocked != NULL) {
+				currentProcess = headBlocked;
+				bpq_dequeue();
+				currentProcess->m_state = RDY;
+				rpq_enqueue(currentProcess);
+		}
     node = (mem_block*)(release_address+sizeof(mem_block*));
     node->next = head;
     head = node;
     __enable_irq(); //atomic (off);
-	return RTX_OK;
 		return RTX_OK;
 }
