@@ -144,6 +144,23 @@ PCB* removeBlockedProcess(int pid) {
 	return NULL;
 }
 
+int set_process_priority(int process_id, int priority) {
+	// HOW TO DO THIS
+}
+
+int get_process_priority(int process_id) {
+	PCB* temp = headReady;
+	
+	while(temp != NULL) {
+		if(temp->m_pid == process_id) {
+			return temp->m_priority;
+			break;
+		}
+		temp = temp->next;
+	}
+	return -1;
+}
+
 void rpq_enqueue (PCB *current_process) {
 	PCB* temp = headReady;
 	PCB* prev = NULL;

@@ -100,7 +100,8 @@ void memory_init(void)
     head = curr_node;
 		curr_node = curr_node->next;
 
-		for (i = 0; i < 2; i++) {
+		
+		while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
 				curr_address += ( sizeof(mem_block*) + 128);
         curr_node = (mem_block*) curr_address;
         curr_node->next = head;
@@ -108,15 +109,6 @@ void memory_init(void)
         head = curr_node;
 				curr_node = curr_node->next;
 		}
-		
-		/*while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
-				curr_address += ( sizeof(mem_block*) + 128);
-        curr_node = (mem_block*) curr_address;
-        curr_node->next = head;
-        curr_node->block_address = curr_address - sizeof(mem_block*);
-        head = curr_node;
-				curr_node = curr_node->next;
-		}*/
 		/*
 		while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
 				curr_address += ( sizeof(mem_block*) + 128);
