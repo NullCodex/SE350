@@ -17,7 +17,7 @@ typedef struct mem_block
     struct mem_block* next;
 } mem_block;
 
-mem_block* head;
+mem_block* head = NULL;
 /* ----- Global Variables ----- */
 U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
                /* The first stack starts at the RAM high address */
@@ -54,49 +54,7 @@ extern PCB *tailBlocked;
 0x10000000+---------------------------+ Low Address
 
 */
-PCB* bpq_dequeue(void) {
-		PCB* temp;
-		if(headBlocked) {
-			temp = headBlocked;
-			headBlocked = headBlocked->next;
-			return temp;
-		}
-		return NULL;
-}
 
-void bpq_enqueue (PCB *current_process) {
-	PCB* temp = headBlocked;
-	PCB* prev = NULL;
-	
-	if (headBlocked == NULL) {
-		headBlocked = tailBlocked = current_process;
-	} else {
-		if (headBlocked == tailBlocked) {
-			if (headBlocked->m_priority < current_process->m_priority) {
-				headBlocked->next = current_process;
-				tailBlocked = current_process;
-			} else {
-				current_process->next = tailBlocked;
-				headBlocked = current_process;
-				tailBlocked = current_process->next;
-			}
-		} else {
-			while (temp != tailBlocked->next) {
-				if (temp->m_priority < current_process->m_priority) {
-					prev = temp;
-					temp = temp->next;
-				} else {
-					if (headBlocked == temp) {
-						headBlocked = current_process;
-					}
-					current_process->next = temp;
-					prev->next = current_process;
-					break;
-				}
-			}
-		}
-	}
-}
 
 void memory_init(void)
 {
@@ -104,7 +62,6 @@ void memory_init(void)
 	mem_block* curr_node;
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
 	int i;
-	int j;
 
 	/* 4 bytes padding */
 	p_end += 4;
@@ -134,14 +91,33 @@ void memory_init(void)
 
     // Need to calculate the low address and the high address
     // Assume 30 blocks
-
+		head = NULL;
     curr_address = (U32)p_end;
     curr_address += sizeof(mem_block *);
     curr_node = (mem_block*)curr_address;
     curr_node->next = NULL;
     curr_node->block_address = (U32)p_end;
     head = curr_node;
+		curr_node = curr_node->next;
 
+		for (i = 0; i < 2; i++) {
+				curr_address += ( sizeof(mem_block*) + 128);
+        curr_node = (mem_block*) curr_address;
+        curr_node->next = head;
+        curr_node->block_address = curr_address - sizeof(mem_block*);
+        head = curr_node;
+				curr_node = curr_node->next;
+		}
+		
+		/*while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
+				curr_address += ( sizeof(mem_block*) + 128);
+        curr_node = (mem_block*) curr_address;
+        curr_node->next = head;
+        curr_node->block_address = curr_address - sizeof(mem_block*);
+        head = curr_node;
+				curr_node = curr_node->next;
+		}*/
+		/*
 		while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
 				curr_address += ( sizeof(mem_block*) + 128);
         curr_node = (mem_block*) curr_address;
@@ -149,6 +125,47 @@ void memory_init(void)
         curr_node->block_address = curr_address - sizeof(mem_block*);
         head = curr_node;
 		}
+		*/
+}
+
+void bpq_enqueue (PCB *current_process) {
+	PCB* temp = headBlocked;
+	PCB* prev = NULL;
+	
+	if (headBlocked == NULL) {
+		headBlocked = tailBlocked = current_process;
+	} else {
+		if (headBlocked == tailBlocked) {
+			if (headBlocked->m_priority < current_process->m_priority) {
+				headBlocked->next = current_process;
+				tailBlocked = current_process;
+			} else {
+				current_process->next = tailBlocked;
+				headBlocked = current_process;
+				tailBlocked = current_process->next;
+			}
+		} else {
+			while (temp != tailBlocked->next) {
+				if (temp->m_priority < current_process->m_priority) {
+					if (temp == tailBlocked) {
+						current_process->next = temp->next;
+						temp->next = current_process;
+						tailBlocked = current_process;
+						break;
+					}
+					prev = temp;
+					temp = temp->next;
+				} else {
+					if (headBlocked == temp) {
+						headBlocked = current_process;
+					}
+					current_process->next = temp;
+					prev->next = current_process;
+					break;
+				}
+			}
+		}
+	}
 }
 
 /**
@@ -192,19 +209,24 @@ void *k_request_memory_block(void) {
     // Rough idea of what we want to do
     __disable_irq(); //atomic(on);
 
-    while(head == NULL) {
+    while(head == NULL || head->next == NULL) {
+				printf("------------------------\n");
+				printf("no more memory\n");
+				printf("gp_current_process: %d\n",gp_current_process->m_state);
 				gp_current_process->m_state = BOR;
-				bpq_enqueue(gp_current_process);
+			//	rpq_dequeue();
+				removeBlockedProcess(gp_current_process->m_pid);
+ 				bpq_enqueue(gp_current_process);
         k_release_processor();
 				
-				return NULL;
+				//return (void*)NULL;
     }
 
     mem_blk = (void*)head->block_address;
-    curr_node = head->next;
-    head->next = NULL;
-    head = curr_node;
-
+    //curr_node = head->next;
+    //head->next = NULL;
+    //head = curr_node;
+		head = head->next;
     __enable_irq(); //atomic (off)
     return mem_blk;
 }
@@ -223,12 +245,12 @@ int k_release_memory_block(void *p_mem_blk) {
 				return RTX_ERR;
 		}
 		
-		if(headBlocked != NULL) {
-				currentProcess = headBlocked;
-				bpq_dequeue();
-				currentProcess->m_state = RDY;
-				rpq_enqueue(currentProcess);
-		}
+	//	if(headBlocked != NULL) {
+//				currentProcess = headBlocked;
+	//			bpq_dequeue();
+	//			currentProcess->m_state = RDY;
+	//			rpq_enqueue(currentProcess);
+//		}
     node = (mem_block*)(release_address+sizeof(mem_block*));
     node->next = head;
     head = node;

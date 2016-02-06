@@ -28,13 +28,13 @@ void set_test_procs() {
 	g_test_procs[0].m_priority=HIGH;
 
 	g_test_procs[1].mpf_start_pc = &proc2;
-	g_test_procs[1].m_priority=LOW;
+	g_test_procs[1].m_priority=HIGH;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
 	g_test_procs[2].m_priority=LOW;
 	
 	g_test_procs[3].mpf_start_pc = &proc4;
-	g_test_procs[3].m_priority=HIGH;
+	g_test_procs[3].m_priority=LOW;
 	
 	g_test_procs[4].mpf_start_pc = &proc5;
 	g_test_procs[4].m_priority=LOW;
@@ -59,8 +59,8 @@ void proc1(void)
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
-//			returnedPtr = request_memory_block();
-//			returnedCode = release_memory_block(returnedPtr);
+				//returnedPtr = request_memory_block();
+				//returnedCode = release_memory_block(returnedPtr);
 			printf("proc1: ret_val=%d\n", returnedCode);
 			if ( i%30 == 0 ) {
 				ret_val = release_processor();
@@ -86,10 +86,11 @@ void proc2(void)
 	int i = 0;
 	int ret_val = 20;
 	int x = 0;
+	void* returnedPtr;
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
-			
+			returnedPtr = request_memory_block();
 			if ( i%30 == 0 ) {
 				ret_val = release_processor();
 #ifdef DEBUG_0
@@ -140,7 +141,6 @@ void proc3(void)
 void proc4(void)
 {
 	int i = 0;
-	int p = 1;
 	int ret_val = 20;
 	int x = 0;
 	while ( 1) {
@@ -168,7 +168,6 @@ void proc4(void)
 void proc5(void)
 {
 	int i = 0;
-	int p = 1;
 	int ret_val = 20;
 	int x = 0;
 	while ( 1) {
@@ -196,15 +195,15 @@ void proc5(void)
 void proc6(void)
 {
 	int i = 0;
-	int p = 1;
 	int ret_val = 20;
 	int x = 0;
+	void* returnedPtr;
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
-			
+			//returnedPtr = request_memory_block();
 			if ( i%30 == 0 ) {
-				ret_val = release_processor();
+			ret_val = release_processor();
 #ifdef DEBUG_0
 				printf("proc6: ret_val=%d\n", ret_val);
 			
