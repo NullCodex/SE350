@@ -3,40 +3,172 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-N:\SE350Memory\SE350\manual_code\Context_Switching_UART\context_switching.uvproj
-Project File Date:  02/02/2016
+C:\Users\Akash\Documents\Development\SE350\manual_code\Context_Switching_UART\context_switching.uvproj
+Project File Date:  02/06/2016
 
 <h2>Output:</h2>
 Build target 'Context Switching SIM'
+assembling startup_LPC17xx.s...
+compiling system_LPC17xx.c...
+compiling uart_polling.c...
+compiling printf.c...
+compiling main_svc.c...
+compiling uart_irq.c...
+compiling k_rtx_init.c...
+src\k_rtx.h(33): error:  #20: identifier "mem_block" is undefined
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_rtx.h(63): error:  #65: expected a ";"
+compiling k_memory.c...
+src\k_rtx.h(33): error:  #20: identifier "mem_block" is undefined
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_rtx.h(63): error:  #65: expected a ";"
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
 compiling k_process.c...
-src\k_process.c(52): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_rtx.h(33): error:  #20: identifier "mem_block" is undefined
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_rtx.h(63): error:  #65: expected a ";"
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
+src\usr_proc.c(56): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(89): warning:  #550-D: variable "returnedPtr" was set but never used
+src\usr_proc.c(200): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_rtx.h(63): error:  #65: expected a ";"
+compiling k_memory.c...
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_rtx.h(63): error:  #65: expected a ";"
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_rtx.h(63): error:  #65: expected a ";"
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+compiling k_memory.c...
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_rtx.h(63): error:  #77-D: this declaration has no storage class or type specifier
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
 linking...
-Program Size: Code=4744 RO-data=412 RW-data=72 ZI-data=800  
+context_switching.axf: Error: L6200E: Symbol proc_stack multiply defined (by k_memory.o and k_rtx_init.o).
+context_switching.axf: Error: L6200E: Symbol proc_stack multiply defined (by k_process.o and k_rtx_init.o).
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+context_switching.axf: Error: L6200E: Symbol proc_stack multiply defined (by k_memory.o and k_rtx_init.o).
+context_switching.axf: Error: L6200E: Symbol proc_stack multiply defined (by k_process.o and k_rtx_init.o).
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+context_switching.axf: Error: L6200E: Symbol proc_mem multiply defined (by k_memory.o and k_rtx_init.o).
+context_switching.axf: Error: L6200E: Symbol proc_mem multiply defined (by k_process.o and k_rtx_init.o).
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=824  
+"context_switching.axf" - 0 Error(s), 7 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
+src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
+src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=800  
+"context_switching.axf" - 0 Error(s), 7 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=800  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=800  
 "context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(113): warning:  #177-D: variable "j" was declared but never referenced
-src\k_memory.c(194): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(204): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(236): warning:  #223-D: function "rpq_enqueue" declared implicitly
-src\k_memory.c(243): warning:  #1-D: last line of file ends without a newline
 compiling k_process.c...
-src\k_process.c(52): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
 linking...
-Program Size: Code=4764 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 6 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(203): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(235): warning:  #223-D: function "rpq_enqueue" declared implicitly
-src\k_memory.c(242): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=4764 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(52): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
 linking...
-Program Size: Code=4764 RO-data=412 RW-data=72 ZI-data=800  
+Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
 "context_switching.axf" - 0 Error(s), 1 Warning(s).

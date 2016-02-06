@@ -110,6 +110,7 @@ PCB* rpq_dequeue(void) {
 		if(headReady) {
 			temp = headReady;
 			headReady = headReady->next;
+			temp->next = NULL;
 			return temp;
 		}
 		return NULL;
@@ -307,7 +308,7 @@ PCB *scheduler(void)
 		printf("-----------------------\n");
 		printf("In scheduler\n");
 		printf("value of temp in scheduler %d\n", temp->m_pid);
-		rpq_enqueue(temp);
+		//rpq_enqueue(temp);
 		return temp;
 }
 
@@ -329,9 +330,12 @@ int process_switch(PCB *p_pcb_old)
 	printf("Process switch old state %d \n", p_pcb_old->m_state);
 	if (state == NEW) {
 		printf("current state is new\n");
-		if (gp_current_process != p_pcb_old && p_pcb_old->m_state != NEW) {
-			printf("current procss not old and old not new\n");
-			p_pcb_old->m_state = RDY;
+		if (gp_current_process != p_pcb_old) {
+			if (p_pcb_old->m_state != BOR) {
+				printf("current procss not old and old not new\n");
+				p_pcb_old->m_state = RDY;
+				rpq_enqueue(p_pcb_old);
+			}
 			p_pcb_old->mp_sp = (U32 *) __get_MSP();
 		}
 		gp_current_process->m_state = RUN;
@@ -345,7 +349,10 @@ int process_switch(PCB *p_pcb_old)
 		printf("current procss not old\n");
 		if (state == RDY){
 			printf("current procss not old and current state is ready\n");
-			p_pcb_old->m_state = RDY; 
+			if (p_pcb_old->m_state != BOR) {
+				p_pcb_old->m_state = RDY; 
+				rpq_enqueue(p_pcb_old);
+			}
 			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
 			gp_current_process->m_state = RUN;
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    

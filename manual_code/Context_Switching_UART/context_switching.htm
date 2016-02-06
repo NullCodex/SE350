@@ -1,9 +1,9 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html><head>
-<title>Static Call Graph - [N:\SE350Memory\SE350\manual_code\Context_Switching_UART\context_switching.axf]</title></head>
+<title>Static Call Graph - [C:\Users\Akash\Documents\Development\SE350\manual_code\Context_Switching_UART\context_switching.axf]</title></head>
 <body><HR>
-<H1>Static Call Graph for image N:\SE350Memory\SE350\manual_code\Context_Switching_UART\context_switching.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sat Feb 06 00:17:24 2016
+<H1>Static Call Graph for image C:\Users\Akash\Documents\Development\SE350\manual_code\Context_Switching_UART\context_switching.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sat Feb 06 03:37:48 2016
 <BR><P>
 <H3>Maximum Stack Usage =        160 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -232,7 +232,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_lpc17xx.o(RESET)
 </UL>
-<P><STRONG><a name="[5c]"></a>__rte</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, hal.o(.emb_text))
+<P><STRONG><a name="[5d]"></a>__rte</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, hal.o(.emb_text))
 <BR><BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_switch
 </UL>
 
@@ -481,7 +481,7 @@ Global Symbols
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;proc4
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;proc5
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;proc6
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_switch
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_release_memory_block
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_request_memory_block
@@ -569,33 +569,33 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tfp_printf
 </UL>
 
-<P><STRONG><a name="[5b]"></a>process_switch</STRONG> (Thumb, 174 bytes, Stack size 16 bytes, k_process.o(.text))
+<P><STRONG><a name="[5c]"></a>rpq_enqueue</STRONG> (Thumb, 144 bytes, Stack size 8 bytes, k_process.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = rpq_enqueue
+</UL>
+<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_process_priority
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_switch
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_init
+</UL>
+
+<P><STRONG><a name="[5b]"></a>process_switch</STRONG> (Thumb, 194 bytes, Stack size 16 bytes, k_process.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = process_switch &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rte
+<BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_enqueue
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rte
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tfp_printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_release_processor
 </UL>
 
-<P><STRONG><a name="[5f]"></a>rpq_enqueue</STRONG> (Thumb, 144 bytes, Stack size 8 bytes, k_process.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = rpq_enqueue
-</UL>
-<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_process_priority
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_init
-</UL>
-
-<P><STRONG><a name="[5e]"></a>rpq_dequeue</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, k_process.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
+<P><STRONG><a name="[5f]"></a>rpq_dequeue</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, k_process.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;removeProcessByID
 </UL>
 
-<P><STRONG><a name="[5d]"></a>scheduler</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, k_process.o(.text))
+<P><STRONG><a name="[5e]"></a>scheduler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, k_process.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = scheduler &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_dequeue
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_enqueue
+<BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_dequeue
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tfp_printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_release_processor
@@ -605,7 +605,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = k_release_processor &rArr; process_switch &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
 <BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;null_process
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;scheduler
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_switch
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tfp_printf
 </UL>
@@ -629,7 +629,7 @@ Global Symbols
 <P><STRONG><a name="[58]"></a>removeProcessByID</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, k_process.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = removeProcessByID
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_dequeue
+<BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_dequeue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_process_priority
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_request_memory_block
@@ -639,15 +639,15 @@ Global Symbols
 
 <P><STRONG><a name="[61]"></a>set_process_priority</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, k_process.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getProcessByID
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_enqueue
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_enqueue
 <LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;removeProcessByID
 </UL>
 
-<P><STRONG><a name="[57]"></a>process_init</STRONG> (Thumb, 792 bytes, Stack size 24 bytes, k_process.o(.text))
+<P><STRONG><a name="[57]"></a>process_init</STRONG> (Thumb, 284 bytes, Stack size 24 bytes, k_process.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = process_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
 <BR>[Calls]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_test_procs
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_enqueue
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rpq_enqueue
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_stack
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tfp_printf
 </UL>

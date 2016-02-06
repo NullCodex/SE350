@@ -30,7 +30,6 @@
 /*----- Types -----*/
 typedef unsigned char U8;
 typedef unsigned int U32;
-
 /* process states, four states
 * BOR - Blocked on resource
 * WFM - Waiting for message
@@ -51,6 +50,7 @@ typedef struct pcb
 	U32 m_priority; /* process priority */
 	PROC_STATE_E m_state;   /* state of the process */   
 	struct pcb *next;
+	struct mem_block* proc_mem;
 } PCB;
 
 /* initialization table item */
@@ -59,7 +59,7 @@ typedef struct proc_init
 	int m_pid;	        /* process id */ 
 	int m_priority;         /* initial priority, not used in this example. */ 
 	int m_stack_size;       /* size of stack in words */
-	void (*mpf_start_pc) ();/* entry point of the process */    
+	void (*mpf_start_pc) ();/* entry point of the process */
 } PROC_INIT;
 
 
