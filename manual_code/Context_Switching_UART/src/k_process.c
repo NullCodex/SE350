@@ -115,14 +115,34 @@ PCB* rpq_dequeue(void) {
 		return NULL;
 }
 
-PCB* removeBlockedProcess(int pid) {
+PCB* getProcessByID(int process_id) {
+	PCB* temp = headReady;
+	
+	// iterate through the ready queue 
+	while(temp != NULL) {
+		if(temp->m_pid == process_id) {
+			return temp;
+		}
+		temp = temp->next;
+	}
+	
+	// return -1 if not found, according to specs
+	return NULL;
+}
+
+// Removes process by ID by iterating through the ready queue
+PCB* removeProcessByID(int pid) {
 	PCB* temp;
 	PCB* prev;
 	PCB* blocked;
+	
+	// if the head of the ready queue is to be removed
 	if(headReady->m_pid == pid) {
 		return rpq_dequeue();
 	}
 	temp = headReady;
+	
+	// iterate
 	while(temp->next != NULL) {
 		if(temp->next->m_pid == pid) {
 			blocked = temp->next;
@@ -134,6 +154,7 @@ PCB* removeBlockedProcess(int pid) {
 		temp = temp->next;
 	}
 	
+	// if the last element is to be removed
 	if(tailReady->m_pid == pid) {
 		blocked = tailReady;
 		prev->next = NULL;
@@ -141,23 +162,22 @@ PCB* removeBlockedProcess(int pid) {
 		return blocked;
 	}
 	
+	// should never come here
 	return NULL;
-}
-
-int set_process_priority(int process_id, int priority) {
-	// HOW TO DO THIS
 }
 
 int get_process_priority(int process_id) {
 	PCB* temp = headReady;
 	
+	// iterate through the ready queue 
 	while(temp != NULL) {
 		if(temp->m_pid == process_id) {
 			return temp->m_priority;
-			break;
 		}
 		temp = temp->next;
 	}
+	
+	// return -1 if not found, according to specs
 	return -1;
 }
 
@@ -200,6 +220,24 @@ void rpq_enqueue (PCB *current_process) {
 		}
 	}
 }
+
+int set_process_priority(int process_id, int priority) {
+	// gets the process by ID
+	PCB* process = getProcessByID(process_id);
+	
+	// remove the process from the ready queue (by id)
+	removeProcessByID(process_id);
+	
+	//set the new priority
+	process->m_priority = priority;
+	
+	// insert into correct position based on new priority
+	rpq_enqueue(process);
+	
+	// not sure what to return here
+	return process->m_pid;
+}
+
 
 /**
  * @biref: initialize all processes in the system

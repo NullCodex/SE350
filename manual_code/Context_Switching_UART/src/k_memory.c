@@ -207,7 +207,7 @@ void *k_request_memory_block(void) {
 				printf("gp_current_process: %d\n",gp_current_process->m_state);
 				gp_current_process->m_state = BOR;
 			//	rpq_dequeue();
-				removeBlockedProcess(gp_current_process->m_pid);
+				removeProcessByID(gp_current_process->m_pid);
  				bpq_enqueue(gp_current_process);
         k_release_processor();
 				
