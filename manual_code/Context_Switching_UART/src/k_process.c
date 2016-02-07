@@ -167,7 +167,7 @@ PCB* removeProcessByID(int pid) {
 	return NULL;
 }
 
-int get_process_priority(int process_id) {
+int k_get_process_priority(int process_id) {
 	PCB* temp = headReady;
 	
 	// iterate through the ready queue 
@@ -222,19 +222,24 @@ void rpq_enqueue (PCB *current_process) {
 	}
 }
 
-int set_process_priority(int process_id, int priority) {
+int k_set_process_priority(int process_id, int priority) {
 	// gets the process by ID
 	PCB* process = getProcessByID(process_id);
-	
-	// remove the process from the ready queue (by id)
-	removeProcessByID(process_id);
-	
-	//set the new priority
-	process->m_priority = priority;
-	
-	// insert into correct position based on new priority
-	rpq_enqueue(process);
-	
+
+		if(priority < process->m_priority) {
+			printf("have to switch to %d" , process->m_pid);
+			// remove the process from the ready queue (by id)
+			removeProcessByID(process_id);
+
+			//set the new priority
+			process->m_priority = priority;
+
+			// insert into correct position based on new priority
+			rpq_enqueue(process);
+			
+			k_release_processor();
+		}
+
 	// not sure what to return here
 	return process->m_pid;
 }
@@ -407,7 +412,15 @@ int k_release_processor(void)
 	//	p_pcb_old->m_state = NEW;
 	//	gp_current_process->m_state = NEW;
 	} 
-	//rpq_enqueue(p_pcb_old);
+	
+	// means that there is no other process with a higher priority on the ready queue
+	
+	if(p_pcb_old->m_priority < gp_current_process->m_priority) {
+		// since we're not switching to the low priority process, need to enqueue back
+		rpq_enqueue(gp_current_process);
+		gp_current_process = p_pcb_old;
+	}
 	process_switch(p_pcb_old);
+	//rpq_enqueue(p_pcb_old);
 	return RTX_OK;
 }
