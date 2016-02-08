@@ -19,6 +19,7 @@ U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
 typedef struct mem_block {
 	U32 addr;
 	struct mem_block* next;
+	int released;
 } mem_block;
 
 mem_block* headBlock = NULL;
@@ -94,14 +95,18 @@ void memory_init(void)
 	}
   
 	/* allocate memory for heap, not implemented yet*/
+	
   headBlock = (void*) (p_end + sizeof(mem_block*));
 	headBlock->addr = ((U32) headBlock + sizeof(mem_block*));
+	headBlock->released = 1;
 	headBlock->next = NULL;
-	for (i = 0; i < 29; i++) {
+	for (i = 0; i < 1; i++) {
 		headBlock->next = (void *) (headBlock->addr + 128);
 		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*));
+		headBlock->next->released = 1;
 		headBlock = headBlock->next;
 	}
+	headBlock->next = NULL;
 	headBlock = (void*) (p_end + sizeof(mem_block*)); 
 	print_free_blocks();
 
@@ -193,6 +198,7 @@ void *k_request_memory_block(void) {
 		k_release_processor();
 	}
 	headBlock = headBlock->next;
+	toRet->released = 0;
 	toRet->next = NULL;
 	//print_free_blocks();
 	return (void*) toRet->addr;
@@ -200,7 +206,7 @@ void *k_request_memory_block(void) {
 
 int k_release_memory_block(void *p_mem_blk) {
 	mem_block* curr_node;
-	PCB* current_process;
+	PCB* current_process = NULL;
 #ifdef DEBUG_0 
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
@@ -208,18 +214,24 @@ int k_release_memory_block(void *p_mem_blk) {
 		return RTX_ERR;
 	}
 	
-	if((U32)headBlock == (U32)p_mem_blk - sizeof(mem_block*)) {
+	if((U32)headBlock >= (U32)p_mem_blk - sizeof(mem_block*)) {
 		return RTX_ERR;
 	} 
 	if (headBlocked != NULL ) {
 		current_process = bpq_dequeue();
 		current_process->m_state = RDY;
 		rpq_enqueue(current_process);
-		current_process = NULL;
 	}
 	
 	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*));
+	if (curr_node->released == 1) {
+		return RTX_ERR;
+	}
 	curr_node->next = headBlock;
+	curr_node->released = 1;
 	headBlock = curr_node;
+	if (current_process != NULL && (current_process->m_priority <= gp_current_process->m_priority)) {
+		k_release_processor();
+	}
 	return RTX_OK;
 }

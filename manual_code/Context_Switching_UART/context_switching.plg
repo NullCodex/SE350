@@ -4,1326 +4,614 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 N:\SE350\SE350\manual_code\Context_Switching_UART\context_switching.uvproj
-Project File Date:  02/07/2016
+Project File Date:  02/08/2016
 
 <h2>Output:</h2>
 Build target 'Context Switching SIM'
-<<<<<<< HEAD
+compiling main_svc.c...
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
 compiling usr_proc.c...
-src\usr_proc.c(212): error:  #55-D: too many arguments in invocation of macro "uart1_put_string"
-src\usr_proc.c(202): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(106): warning:  #111-D: statement is unreachable
+src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
+src\usr_proc.c(182): warning:  #128-D: loop is not reachable
+src\usr_proc.c(154): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(155): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(195): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(223): warning:  #550-D: variable "returnedPtr" was set but never used
+linking...
+Program Size: Code=5808 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 9 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(106): warning:  #111-D: statement is unreachable
+src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
+src\usr_proc.c(182): warning:  #128-D: loop is not reachable
+src\usr_proc.c(154): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(155): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(195): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(223): warning:  #550-D: variable "returnedPtr" was set but never used
+linking...
+Program Size: Code=5808 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 7 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(78): error:  #20: identifier "PID_P2" is undefined
+src\usr_proc.c(171): warning:  #128-D: loop is not reachable
+src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
 Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(78): error:  #20: identifier "PID_P2" is undefined
+src\usr_proc.c(171): warning:  #128-D: loop is not reachable
+src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(94): error:  #20: identifier "PID_P2" is undefined
+src\usr_proc.c(171): warning:  #128-D: loop is not reachable
+src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(94): error:  #20: identifier "PID_P2" is undefined
+src\usr_proc.c(171): warning:  #128-D: loop is not reachable
+src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(171): warning:  #128-D: loop is not reachable
+src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+linking...
+Program Size: Code=5840 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5840 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5840 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(172): warning:  #128-D: loop is not reachable
+src\usr_proc.c(144): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(145): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(185): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(213): warning:  #550-D: variable "returnedPtr" was set but never used
+linking...
+Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5808 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5804 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling uart_polling.c...
+compiling k_memory.c...
+src\k_memory.c(22): error:  #20: identifier "bool" is undefined
+src\k_memory.c(101): error:  #20: identifier "true" is undefined
+src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(200): error:  #20: identifier "false" is undefined
+src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5880 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5880 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(250): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5920 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5920 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5920 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(84): error:  #20: identifier "rel_val" is undefined
+src\usr_proc.c(173): warning:  #128-D: loop is not reachable
+src\usr_proc.c(145): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(146): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(186): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(214): warning:  #550-D: variable "returnedPtr" was set but never used
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(173): warning:  #128-D: loop is not reachable
+src\usr_proc.c(145): warning:  #177-D: variable "returnedPtr" was declared but never referenced
+src\usr_proc.c(146): warning:  #550-D: variable "p_priority" was set but never used
+src\usr_proc.c(186): warning:  #177-D: variable "x" was declared but never referenced
+src\usr_proc.c(214): warning:  #550-D: variable "returnedPtr" was set but never used
+linking...
+Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5932 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(75): error:  #20: identifier "PID_P2" is undefined
+src\usr_proc.c(107): error:  #20: identifier "PID_P1" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(75): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+src\usr_proc.c(107): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(75): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+src\usr_proc.c(107): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(75): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+src\usr_proc.c(107): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+linking...
+Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
 Rebuild target 'Context Switching SIM'
 assembling startup_LPC17xx.s...
 compiling system_LPC17xx.c...
-=======
->>>>>>> Final
 compiling uart_polling.c...
+src\uart_polling.c(114): error:  #20: identifier "PID_P2" is undefined
 compiling printf.c...
 compiling main_svc.c...
 compiling uart_irq.c...
+compiling HAL.c...
 compiling k_rtx_init.c...
 compiling k_memory.c...
-src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
-src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
+src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
 compiling k_process.c...
 src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
 compiling usr_proc.c...
-<<<<<<< HEAD
-src\usr_proc.c(202): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "p_priority" was set but never used
-linking...
-Program Size: Code=5748 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 10 Warning(s).
-=======
-src\usr_proc.c(109): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #550-D: variable "mem_blk_t" was set but never used
-src\usr_proc.c(206): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5604 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 11 Warning(s).
->>>>>>> Final
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5748 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-<<<<<<< HEAD
-=======
-src\usr_proc.c(107): warning:  #111-D: statement is unreachable
-src\usr_proc.c(85): warning:  #550-D: variable "mem_blk_t" was set but never used
->>>>>>> Final
-src\usr_proc.c(202): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "p_priority" was set but never used
-linking...
-<<<<<<< HEAD
-Program Size: Code=5748 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(202): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5752 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(202): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5752 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(202): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5752 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(238): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5768 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(207): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5776 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(207): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5824 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(238): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-=======
-Program Size: Code=5604 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(203): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5584 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
->>>>>>> Final
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(193): warning:  #111-D: statement is unreachable
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(176): warning:  #550-D: variable "memStuff" was set but never used
-src\usr_proc.c(196): error:  #169: expected a declaration
-src\usr_proc.c(225): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
 Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(193): warning:  #111-D: statement is unreachable
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(176): warning:  #550-D: variable "memStuff" was set but never used
-src\usr_proc.c(207): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 6 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-linking...
-Program Size: Code=5592 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
-src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
-linking...
-Program Size: Code=5592 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 6 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(211): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(213): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(194): warning:  #177-D: variable "curr_node" was declared but never referenced
-src\k_memory.c(252): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(230): warning:  #177-D: variable "currentProcess" was declared but never referenced
-linking...
-Program Size: Code=5600 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 6 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5848 RO-data=412 RW-data=72 ZI-data=800  
-=======
-Program Size: Code=5604 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(239): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5848 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(239): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5848 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(239): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5816 RO-data=412 RW-data=72 ZI-data=800  
-=======
-Program Size: Code=5604 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(239): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5856 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5856 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5856 RO-data=412 RW-data=72 ZI-data=800  
-=======
-Program Size: Code=5608 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5608 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-<<<<<<< HEAD
-src\k_process.c(239): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5856 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5856 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(124): error:  #120: return value type does not match the function type
-src\k_process.c(237): warning:  #223-D: function "k_release_processor" declared implicitly
-Target not created
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(237): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5876 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5876 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(242): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5880 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-=======
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5520 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5516 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5520 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5524 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(213): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(194): warning:  #177-D: variable "curr_node" was declared but never referenced
-src\k_memory.c(252): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(230): warning:  #177-D: variable "currentProcess" was declared but never referenced
-linking...
-Program Size: Code=5516 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5488 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(213): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
-src\k_memory.c - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5496 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5496 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(20): error:  #18: expected a ")"
-src\k_memory.c(20): error:  #77-D: this declaration has no storage class or type specifier
-src\k_memory.c(20): error:  #65: expected a ";"
-src\k_memory.c(120): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(121): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5032 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(124): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5072 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(124): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5068 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(127): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5096 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(128): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5104 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(128): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5112 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(129): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5120 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(129): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5120 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(129): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5120 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(129): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5124 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(129): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5120 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(139): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5176 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(139): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5168 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(139): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5168 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(139): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5172 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(140): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5188 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(141): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5188 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5188 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(134): error:  #268: declaration may not appear after executable statement in block
-src\k_memory.c(136): error:  #132: expression must have pointer-to-struct-or-union type
-src\k_memory.c(137): warning:  #223-D: function "print_free_memory" declared implicitly
-src\k_memory.c(146): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(134): error:  #268: declaration may not appear after executable statement in block
-src\k_memory.c(136): error:  #132: expression must have pointer-to-struct-or-union type
-src\k_memory.c(137): warning:  #223-D: function "print_free_memory" declared implicitly
-src\k_memory.c(146): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(134): error:  #268: declaration may not appear after executable statement in block
-src\k_memory.c(137): warning:  #223-D: function "print_free_memory" declared implicitly
-src\k_memory.c(146): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(138): warning:  #223-D: function "print_free_memory" declared implicitly
-src\k_memory.c(147): warning:  #1-D: last line of file ends without a newline
-linking...
-context_switching.axf: Error: L6218E: Undefined symbol print_free_memory (referred from k_memory.o).
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(147): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5212 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(147): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5212 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(147): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5212 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(195): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5404 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5404 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(195): error:  #42: operand types are incompatible ("U32" and "U32 *")
-src\k_memory.c(208): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(191): warning:  #177-D: variable "curr_node" was declared but never referenced
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(208): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(191): warning:  #177-D: variable "curr_node" was declared but never referenced
-linking...
-Program Size: Code=5448 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(205): error:  #852: expression must be a pointer to a complete object type
-src\k_memory.c(206): error:  #852: expression must be a pointer to a complete object type
-src\k_memory.c(210): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(191): warning:  #177-D: variable "curr_node" was declared but never referenced
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(205): error:  #852: expression must be a pointer to a complete object type
-src\k_memory.c(206): error:  #852: expression must be a pointer to a complete object type
-src\k_memory.c(210): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(191): warning:  #177-D: variable "curr_node" was declared but never referenced
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(211): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5464 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5464 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(204): warning:  #550-D: variable "returnedCode" was set but never used
-linking...
-Program Size: Code=5484 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5488 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5488 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 6 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(204): warning:  #550-D: variable "returnedCode" was set but never used
-linking...
-Program Size: Code=5488 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(182): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(205): warning:  #223-D: function "bpq_dequeue" declared implicitly
-src\k_memory.c(207): warning:  #223-D: function "rpq_enqueue" declared implicitly
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(204): warning:  #550-D: variable "returnedCode" was set but never used
-linking...
-context_switching.axf: Error: L6218E: Undefined symbol bpq_dequeue (referred from k_memory.o).
-Target not created
-Build target 'Context Switching SIM'
-linking...
-context_switching.axf: Error: L6218E: Undefined symbol bpq_dequeue (referred from k_memory.o).
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(204): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(205): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(204): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(205): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5516 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5544 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5544 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-<<<<<<< HEAD
-src\k_process.c(226): error:  #127: expected a statement
-src\k_process.c(253): warning:  #12-D: parsing restarts here after previous syntax error
-src\k_process.c(254): warning:  #940-D: missing return statement at end of non-void function "k_set_process_priority"
-=======
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(312): error:  #20: identifier "gp_old_process" is undefined
->>>>>>> Final
-Target not created
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-<<<<<<< HEAD
-src\k_process.c(226): error:  #20: identifier "headPriority" is undefined
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-=======
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(312): error:  #20: identifier "p_old_process" is undefined
->>>>>>> Final
-Target not created
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-<<<<<<< HEAD
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5956 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5956 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(244): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5956 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5904 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5904 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-=======
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(312): error:  #20: identifier "p_pcb_old" is undefined
-Target not created
->>>>>>> Final
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5936 RO-data=412 RW-data=72 ZI-data=800  
-=======
-Program Size: Code=5544 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5936 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(219): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5936 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5936 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5940 RO-data=412 RW-data=72 ZI-data=800  
-=======
-Program Size: Code=5544 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5544 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(240): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5552 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5552 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5940 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-=======
-Program Size: Code=5548 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5548 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
->>>>>>> Final
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-<<<<<<< HEAD
-Program Size: Code=5940 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=800  
-=======
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(239): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5548 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(242): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(204): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(205): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(242): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
->>>>>>> Final
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(242): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5576 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling main_svc.c...
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(242): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-<<<<<<< HEAD
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(154): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(232): error:  #268: declaration may not appear after executable statement in block
-src\k_process.c(246): warning:  #223-D: function "k_release_processor" declared implicitly
-Target not created
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(247): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-=======
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5552 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 7 Warning(s).
 Build target 'Context Switching SIM'
 compiling uart_polling.c...
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(219): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(216): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(216): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(215): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5552 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(215): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5548 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(215): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5552 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
->>>>>>> Final
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(219): warning:  #223-D: function "rpq_enqueue" declared implicitly
-src\k_memory.c(222): error:  #65: expected a ";"
-compiling usr_proc.c...
-<<<<<<< HEAD
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(154): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling main_svc.c...
-compiling k_rtx_init.c...
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #9-D: nested comment is not allowed
-src\k_memory.c(210): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(212): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(193): warning:  #177-D: variable "curr_node" was declared but never referenced
-src\k_memory.c(251): warning:  #1-D: last line of file ends without a newline
-src\k_memory.c(229): warning:  #177-D: variable "currentProcess" was declared but never referenced
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(247): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(154): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 12 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(182): warning:  #128-D: loop is not reachable
-src\usr_proc.c(154): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(155): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(223): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(182): warning:  #128-D: loop is not reachable
-src\usr_proc.c(154): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(155): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(223): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(181): warning:  #128-D: loop is not reachable
-src\usr_proc.c(153): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(154): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(222): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-linking...
-Program Size: Code=5916 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-=======
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
+context_switching.axf: Error: L6200E: Symbol g_test_procs multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc6 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc5 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc4 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc3 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc2 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc1 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol set_test_procs multiply defined (by usr_proc.o and uart_polling.o).
 Target not created
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(219): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5576 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+context_switching.axf: Error: L6200E: Symbol g_test_procs multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc6 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc5 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc4 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc3 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc2 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol proc1 multiply defined (by usr_proc.o and uart_polling.o).
+context_switching.axf: Error: L6200E: Symbol set_test_procs multiply defined (by usr_proc.o and uart_polling.o).
+Target not created
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(211): warning:  #223-D: function "rpq_enqueue" declared implicitly
+compiling uart_polling.c...
+compiling usr_proc.c...
 linking...
-Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(211): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=800  
+Program Size: Code=5456 RO-data=412 RW-data=72 ZI-data=816  
 "context_switching.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(216): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(216): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(216): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(216): warning:  #223-D: function "rpq_enqueue" declared implicitly
+compiling uart_polling.c...
 compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
 linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 7 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(175): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(203): warning:  #550-D: variable "returnedPtr" was set but never used
-src\usr_proc.c(204): warning:  #177-D: variable "returnedCode" was declared but never referenced
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(203): warning:  #177-D: variable "current_process" was declared but never referenced
-linking...
-Program Size: Code=5548 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(217): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5568 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(217): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5576 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5576 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5576 RO-data=412 RW-data=72 ZI-data=800  
+Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
 "context_switching.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(217): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(225): warning:  #223-D: function "k_release_processor" declared implicitly
 linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
 "context_switching.axf" - 0 Error(s), 2 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(217): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=800  
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5460 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5456 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5416 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(116): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+src\usr_proc.c(132): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
+src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
 "context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(193): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(217): warning:  #223-D: function "rpq_enqueue" declared implicitly
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(242): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "removeProcessByID" declared implicitly
+src\k_memory.c(199): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(224): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Program Size: Code=5484 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
 Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
+src\usr_proc.c(76): error:  #136: struct "proc_init" has no field "m_id"
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(76): error:  #136: struct "proc_init" has no field "m_id"
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
 linking...
-Program Size: Code=5576 RO-data=412 RW-data=72 ZI-data=800  
+Program Size: Code=5496 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+linking...
+Program Size: Code=5496 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+linking...
+Program Size: Code=5484 RO-data=412 RW-data=72 ZI-data=816  
 "context_switching.axf" - 0 Error(s), 2 Warning(s).
 Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(243): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling k_memory.c...
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(235): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
 linking...
-Program Size: Code=5572 RO-data=412 RW-data=72 ZI-data=800  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
->>>>>>> Final
+Program Size: Code=5504 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5504 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(234): warning:  #223-D: function "k_release_processor" declared implicitly
+linking...
+Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(149): error:  #20: identifier "PID_P2" is undefined
+src\usr_proc.c(178): error:  #20: identifier "PID_P1" is undefined
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(178): error:  #20: identifier "PID_P1" is undefined
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+Target not created
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5712 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).

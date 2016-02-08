@@ -181,43 +181,43 @@ int k_get_process_priority(int process_id) {
 void rpq_enqueue (PCB *current_process) {
 	PCB* temp = headReady;
 	PCB* prev = NULL;
-	if(headReady != current_process) {
+	if(headReady != current_process && tailReady != current_process) {
+		
 		if (headReady == NULL) {
-		headReady = tailReady = current_process;
-	} else {
-		if (headReady == tailReady) {
-			if (headReady->m_priority <= current_process->m_priority) {
-				headReady->next = current_process;
-				tailReady = current_process;
-			} else {
-				current_process->next = tailReady;
-				headReady = current_process;
-				tailReady = current_process->next;
-			}
+			headReady = tailReady = current_process;
 		} else {
-			while (temp != tailReady->next) {
-				if (temp->m_priority <= current_process->m_priority) {
-					if (temp == tailReady) {
-						current_process->next = temp->next;
-						temp->next = current_process;
-						tailReady = current_process;
+			if (headReady == tailReady) {
+				if (headReady->m_priority <= current_process->m_priority) {
+					headReady->next = current_process;
+					tailReady = current_process;
+				} else {
+					current_process->next = tailReady;
+					headReady = current_process;
+					tailReady = current_process->next;
+				}
+			} else {
+				while (temp != tailReady->next) {
+					if (temp->m_priority <= current_process->m_priority) {
+						if (temp == tailReady) {
+							current_process->next = temp->next;
+							temp->next = current_process;
+							tailReady = current_process;
+							break;
+						}
+						prev = temp;
+						temp = temp->next;
+					} else {
+						if (headReady == temp) {
+							headReady = current_process;
+						}
+						current_process->next = temp;
+						prev->next = current_process;
 						break;
 					}
-					prev = temp;
-					temp = temp->next;
-				} else {
-					if (headReady == temp) {
-						headReady = current_process;
-					}
-					current_process->next = temp;
-					prev->next = current_process;
-					break;
 				}
 			}
 		}
 	}
-	}
-	
 }
 
 int k_set_process_priority(int process_id, int priority) {
@@ -242,9 +242,9 @@ int k_set_process_priority(int process_id, int priority) {
 			// if current process is moved to a lower priority, process switch will take care of enqueueing into 
 			// the right position
 			
-			if(old_p > priority) {
+	  		if(old_p >= priority) {
 				rpq_enqueue(process);
-			}
+		 	}
 	//		if(priority != headReady->m_priority) {
 				k_release_processor();
 	//		}
@@ -324,7 +324,7 @@ PCB *scheduler(void)
 			temp->next = NULL;
 			temp->m_state = RDY;
 			rpq_enqueue(temp);
-		} 
+		}
 		temp = rpq_dequeue();
 		printf("-----------------------\n");
 		printf("In scheduler\n");
@@ -438,7 +438,7 @@ int k_release_processor(void)
 		return RTX_ERR;
 	}
   
-	if ( p_pcb_old == NULL || p_pcb_old->m_state==BOR ) {
+	if ( p_pcb_old == NULL /*|| p_pcb_old->m_state==BOR*/ ) {
 		printf("old is null or old state is bor\n");
 		p_pcb_old = gp_current_process;
 	//	p_pcb_old->m_state = NEW;
@@ -447,11 +447,11 @@ int k_release_processor(void)
 	
 	// means that there is no other process with a higher priority on the ready queue
 	
-	/*if(p_pcb_old->m_priority < gp_current_process->m_priority) {
+	if(p_pcb_old->m_priority < gp_current_process->m_priority) {
 		// since we're not switching to the low priority process, need to enqueue back
 		rpq_enqueue(gp_current_process);
 		gp_current_process = p_pcb_old;
-	}*/
+	}
 	process_switch(p_pcb_old);
 	//rpq_enqueue(p_pcb_old);
 	p_pcb_old = NULL;
