@@ -176,8 +176,8 @@ void proc5(void)
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
-			
 			if ( i%30 == 0 ) {
+				ret_val = release_memory_block((void*)0x1000041c);
 				ret_val = release_processor();
 #ifdef DEBUG_0
 				printf("proc5: ret_val=%d\n", ret_val);
@@ -201,11 +201,13 @@ void proc6(void)
 	int ret_val = 20;
 	int x = 0;
 	void* returnedPtr;
+	int returnedCode;
+
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
 			while (i < 1000000) {
-			returnedPtr = request_memory_block();
+					returnedPtr = request_memory_block();
 			}
 			if ( i%30 == 0 ) {
 			ret_val = release_processor();

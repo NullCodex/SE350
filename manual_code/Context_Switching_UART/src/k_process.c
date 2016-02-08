@@ -185,8 +185,8 @@ int k_get_process_priority(int process_id) {
 void rpq_enqueue (PCB *current_process) {
 	PCB* temp = headReady;
 	PCB* prev = NULL;
-	
-	if (headReady == NULL) {
+	if(headReady != current_process) {
+		if (headReady == NULL) {
 		headReady = tailReady = current_process;
 	} else {
 		if (headReady == tailReady) {
@@ -220,6 +220,8 @@ void rpq_enqueue (PCB *current_process) {
 			}
 		}
 	}
+	}
+	
 }
 
 int k_set_process_priority(int process_id, int priority) {
@@ -309,6 +311,12 @@ PCB *scheduler(void)
 {
 
 		PCB* temp;
+		if (gp_current_process != NULL && gp_current_process->m_state != BOR) {
+			temp = gp_current_process;
+			temp->next = NULL;
+			temp->m_state = RDY;
+			rpq_enqueue(temp);
+		} 
 		temp = rpq_dequeue();
 		printf("-----------------------\n");
 		printf("In scheduler\n");
@@ -394,7 +402,7 @@ int process_switch(PCB *p_pcb_old)
  */
 int k_release_processor(void)
 {
-
+	
 	PCB *p_pcb_old = NULL;
 	
 	PCB* temp = headReady;

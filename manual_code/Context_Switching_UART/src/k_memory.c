@@ -170,6 +170,17 @@ void bpq_enqueue (PCB *current_process) {
 	}
 }
 
+PCB* bpq_dequeue(void) {
+		PCB* temp;
+		if(headBlocked) {
+			temp = headBlocked;
+			headBlocked = headBlocked->next;
+			temp->next = NULL;
+			return temp;
+		}
+		return NULL;
+}
+
 void *k_request_memory_block(void) {
 	mem_block *toRet = headBlock;
 #ifdef DEBUG_0 
@@ -183,13 +194,32 @@ void *k_request_memory_block(void) {
 	}
 	headBlock = headBlock->next;
 	toRet->next = NULL;
-	print_free_blocks();
-	return (void*) toRet;
+	//print_free_blocks();
+	return (void*) toRet->addr;
 }
 
 int k_release_memory_block(void *p_mem_blk) {
+	mem_block* curr_node;
+	PCB* current_process;
 #ifdef DEBUG_0 
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
+	if((U32)p_mem_blk >= (U32)gp_stack || (U32)p_mem_blk < 0x10000414) {
+		return RTX_ERR;
+	}
+	
+	if((U32)headBlock == (U32)p_mem_blk - sizeof(mem_block*)) {
+		return RTX_ERR;
+	} 
+	if (headBlocked != NULL ) {
+		current_process = bpq_dequeue();
+		current_process->m_state = RDY;
+		rpq_enqueue(current_process);
+		current_process = NULL;
+	}
+	
+	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*));
+	curr_node->next = headBlock;
+	headBlock = curr_node;
 	return RTX_OK;
 }
