@@ -28,7 +28,7 @@ void set_test_procs() {
 	g_test_procs[0].m_priority=MEDIUM;
 
 	g_test_procs[1].mpf_start_pc = &proc2;
-	g_test_procs[1].m_priority=MEDIUM;
+	g_test_procs[1].m_priority=LOW;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
 	g_test_procs[2].m_priority=LOW;
@@ -40,7 +40,7 @@ void set_test_procs() {
 	g_test_procs[4].m_priority=LOW;
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
-	g_test_procs[5].m_priority=LOW;
+	g_test_procs[5].m_priority=MEDIUM;
 }
 
 
@@ -58,7 +58,7 @@ void proc1(void)
 			uart0_put_string("\n\r");
 			counter++;
 			if ( counter == 2 ) {
-				ret_val = set_process_priority(g_test_procs[1].m_pid , HIGH);
+				ret_val = set_process_priority(g_test_procs[0].m_pid , HIGH);
 				break;
 			} else {
 				ret_val = release_processor();
@@ -78,6 +78,7 @@ void proc1(void)
 
 /*	
  * @brief: a process that prints 4x5 numbers 
+* 
  */
 void proc2(void)
 {
@@ -90,7 +91,7 @@ void proc2(void)
 			uart0_put_string("\n\r");
 			counter++;
 			if ( counter == 4 ) {
-				ret_val = set_process_priority(g_test_procs[0].m_pid , HIGH);
+				ret_val = set_process_priority(g_test_procs[1].m_pid , get_process_priority(g_test_procs[1].m_pid));
 				break;
 			} else {
 				ret_val = release_processor();

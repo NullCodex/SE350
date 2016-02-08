@@ -117,17 +117,15 @@ PCB* rpq_dequeue(void) {
 }
 
 PCB* getProcessByID(int process_id) {
-	PCB* temp = headReady;
+	int i;
 	
-	// iterate through the ready queue 
-	while(temp != NULL) {
-		if(temp->m_pid == process_id) {
-			return temp;
+	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+		if(gp_pcbs[i]->m_pid == process_id) {
+			return gp_pcbs[i];
 		}
-		temp = temp->next;
 	}
 	
-	// return -1 if not found, according to specs
+	// return NULL if not found, according to specs
 	return NULL;
 }
 
@@ -168,14 +166,12 @@ PCB* removeProcessByID(int pid) {
 }
 
 int k_get_process_priority(int process_id) {
-	PCB* temp = headReady;
+	int i;
 	
-	// iterate through the ready queue 
-	while(temp != NULL) {
-		if(temp->m_pid == process_id) {
-			return temp->m_priority;
+	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+		if(gp_pcbs[i]->m_pid == process_id) {
+			return gp_pcbs[i]->m_priority;
 		}
-		temp = temp->next;
 	}
 	
 	// return -1 if not found, according to specs
@@ -225,21 +221,33 @@ void rpq_enqueue (PCB *current_process) {
 int k_set_process_priority(int process_id, int priority) {
 	// gets the process by ID
 	PCB* process = getProcessByID(process_id);
+	int old_p;
 
-		if(priority < process->m_priority) {
+	// if the new priority is the same priority as the current process 
+		if(priority != process->m_priority) {
 			printf("have to switch to %d" , process->m_pid);
 			// remove the process from the ready queue (by id)
 			removeProcessByID(process_id);
 
+			printf("curremt priority: %d\n",process->m_priority);
+			old_p = process->m_priority;
+			
 			//set the new priority
 			process->m_priority = priority;
-
-			// insert into correct position based on new priority
-			rpq_enqueue(process);
 			
-			k_release_processor();
+			// if preemption has to take place (i.e., current process will have greater priority, 
+			// insert into correct position based on new priority
+			// if current process is moved to a lower priority, process switch will take care of enqueueing into 
+			// the right position
+			
+			if(old_p > priority) {
+				rpq_enqueue(process);
+			}
+	//		if(priority != headReady->m_priority) {
+				k_release_processor();
+	//		}
 		}
-
+		
 	// not sure what to return here
 	return process->m_pid;
 }
@@ -309,6 +317,7 @@ PCB *scheduler(void)
 {
 
 		PCB* temp;
+
 		temp = rpq_dequeue();
 		printf("-----------------------\n");
 		printf("In scheduler\n");
@@ -390,8 +399,7 @@ int k_release_processor(void)
 	
 	p_pcb_old = gp_current_process;
 	gp_current_process = scheduler();
-	
-	
+		
 	temp = headReady;
 	
 	while(temp != NULL) {
