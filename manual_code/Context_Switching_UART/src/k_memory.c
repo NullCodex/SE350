@@ -202,7 +202,7 @@ void *k_request_memory_block(void) {
 	toRet->released = 0;
 	toRet->next = NULL;
 	//print_free_blocks();
-	return (void*) (toRet->addr + 3*sizeof(int) + sizeof(msgbuf*));
+	return (void*) (toRet->addr + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 }
 
 int k_release_memory_block(void *p_mem_blk) {
@@ -224,7 +224,7 @@ int k_release_memory_block(void *p_mem_blk) {
 		rpq_enqueue(current_process);
 	}
 
-	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*) - 3*sizeof(int) - sizeof(msgbuf*));
+	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*) - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
 	if (curr_node->released == 1) {
 		return RTX_ERR;
 	}
