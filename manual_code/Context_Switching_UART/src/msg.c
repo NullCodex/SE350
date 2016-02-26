@@ -12,7 +12,7 @@ int send_message(int process_id, void* message_envelope) {
     Envelope* env;
 
     __disable_irq();
-    env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*));
+    env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
     env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
     env->delay = 0;
@@ -60,7 +60,7 @@ int delayed_send(int process_id, void* message_envelope, int delay) {
     Envelope* env;
 
     __disable_irq();
-    env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*));
+    env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
     env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
     env->delay = delay;
