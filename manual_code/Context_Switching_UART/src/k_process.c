@@ -181,37 +181,39 @@ int k_get_process_priority(int process_id) {
 void rpq_enqueue (PCB *current_process) {
 	PCB* temp = headReady;
 	PCB* prev = NULL;
-	
-	if (headReady == NULL) {
-		headReady = tailReady = current_process;
-	} else {
-		if (headReady == tailReady) {
-			if (headReady->m_priority <= current_process->m_priority) {
-				headReady->next = current_process;
-				tailReady = current_process;
-			} else {
-				current_process->next = tailReady;
-				headReady = current_process;
-				tailReady = current_process->next;
-			}
+	if(headReady != current_process && tailReady != current_process) {
+		
+		if (headReady == NULL) {
+			headReady = tailReady = current_process;
 		} else {
-			while (temp != tailReady->next) {
-				if (temp->m_priority <= current_process->m_priority) {
-					if (temp == tailReady) {
-						current_process->next = temp->next;
-						temp->next = current_process;
-						tailReady = current_process;
+			if (headReady == tailReady) {
+				if (headReady->m_priority <= current_process->m_priority) {
+					headReady->next = current_process;
+					tailReady = current_process;
+				} else {
+					current_process->next = tailReady;
+					headReady = current_process;
+					tailReady = current_process->next;
+				}
+			} else {
+				while (temp != tailReady->next) {
+					if (temp->m_priority <= current_process->m_priority) {
+						if (temp == tailReady) {
+							current_process->next = temp->next;
+							temp->next = current_process;
+							tailReady = current_process;
+							break;
+						}
+						prev = temp;
+						temp = temp->next;
+					} else {
+						if (headReady == temp) {
+							headReady = current_process;
+						}
+						current_process->next = temp;
+						prev->next = current_process;
 						break;
 					}
-					prev = temp;
-					temp = temp->next;
-				} else {
-					if (headReady == temp) {
-						headReady = current_process;
-					}
-					current_process->next = temp;
-					prev->next = current_process;
-					break;
 				}
 			}
 		}
@@ -240,9 +242,9 @@ int k_set_process_priority(int process_id, int priority) {
 			// if current process is moved to a lower priority, process switch will take care of enqueueing into 
 			// the right position
 			
-			if(old_p > priority) {
+	  		if(old_p >= priority) {
 				rpq_enqueue(process);
-			}
+		 	}
 	//		if(priority != headReady->m_priority) {
 				k_release_processor();
 	//		}
@@ -317,11 +319,17 @@ PCB *scheduler(void)
 {
 
 		PCB* temp;
-
+		if (gp_current_process != NULL && gp_current_process->m_state != BOR) {
+			temp = gp_current_process;
+			temp->next = NULL;
+			temp->m_state = RDY;
+			rpq_enqueue(temp);
+		}
 		temp = rpq_dequeue();
 		printf("-----------------------\n");
 		printf("In scheduler\n");
 		printf("value of temp in scheduler %d\n", temp->m_pid);
+		temp->next = NULL;
 		//rpq_enqueue(temp);
 		return temp;
 }
@@ -359,6 +367,22 @@ int process_switch(PCB *p_pcb_old)
 	
 	/* The following will only execute if the if block above is FALSE */
 
+	if (state == RDY) {
+		if (gp_current_process != p_pcb_old) {
+			if (p_pcb_old->m_state != BOR) {
+				p_pcb_old->m_state = RDY; 
+				rpq_enqueue(p_pcb_old);
+			}
+			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
+		}
+		gp_current_process->m_state = RUN;
+			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
+	} else {
+		printf("Testing error condition");
+			gp_current_process = p_pcb_old; // revert back to the old proc on error
+			return RTX_ERR;
+	}
+	/*
 	if (gp_current_process != p_pcb_old) {
 		printf("current procss not old\n");
 		if (state == RDY){
@@ -375,7 +399,7 @@ int process_switch(PCB *p_pcb_old)
 			gp_current_process = p_pcb_old; // revert back to the old proc on error
 			return RTX_ERR;
 		} 
-	}
+	}*/
 	return RTX_OK;
 }
 
@@ -386,7 +410,7 @@ int process_switch(PCB *p_pcb_old)
  */
 int k_release_processor(void)
 {
-
+	
 	PCB *p_pcb_old = NULL;
 	
 	PCB* temp = headReady;
@@ -430,5 +454,6 @@ int k_release_processor(void)
 	}
 	process_switch(p_pcb_old);
 	//rpq_enqueue(p_pcb_old);
+	p_pcb_old = NULL;
 	return RTX_OK;
 }

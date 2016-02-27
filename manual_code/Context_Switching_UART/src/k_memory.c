@@ -6,27 +6,28 @@
  */
 
 #include "k_memory.h"
+#include "msg.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
 #endif /* ! DEBUG_0 */
 
-typedef struct mem_block
-{
-    U32 block_address;
-    struct mem_block* next;
-} mem_block;
-
-mem_block* head = NULL;
 /* ----- Global Variables ----- */
 U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
                /* The first stack starts at the RAM high address */
 	       /* stack grows down. Fully decremental stack */
-extern PCB *gp_current_process;
-extern PCB *headReady;
-extern PCB *tailReady;
-extern PCB *headBlocked;
-extern PCB *tailBlocked;
+
+typedef struct mem_block {
+	U32 addr;
+	struct mem_block* next;
+	int released;
+} mem_block;
+
+mem_block* headBlock = NULL;
+extern PCB* headBlocked;
+extern PCB* tailBlocked;
+extern PCB* gp_current_process;
+
 /**
  * @brief: Initialize RAM as follows:
 
@@ -38,7 +39,7 @@ extern PCB *tailBlocked;
           |                           |
           |        HEAP               |
           |                           |
-          |---------------------------|
+          |---------------------------|<-- p_end
           |        PCB 2              |
           |---------------------------|
           |        PCB 1              |
@@ -55,11 +56,18 @@ extern PCB *tailBlocked;
 
 */
 
+void print_free_blocks() {
+	mem_block * temp = headBlock;
+	int c = 0;
+	while (temp != NULL) {
+		printf("Count: %d Free mem-block address: @ 0x%x\n", c, temp->addr);
+		temp = temp->next;
+		c++;
+	}
+}
 
 void memory_init(void)
 {
-	U32 curr_address;
-	mem_block* curr_node;
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
 	int i;
 
@@ -74,11 +82,11 @@ void memory_init(void)
 		gp_pcbs[i] = (PCB *)p_end;
 		p_end += sizeof(PCB);
 	}
+	/*
 #ifdef DEBUG_0
-	
 	printf("gp_pcbs[0] = 0x%x \n", gp_pcbs[0]);
 	printf("gp_pcbs[1] = 0x%x \n", gp_pcbs[1]);
-#endif
+#endif*/
 
 	/* prepare for alloc_stack() to allocate memory for stacks */
 
@@ -89,46 +97,54 @@ void memory_init(void)
 
 	/* allocate memory for heap, not implemented yet*/
 
-    // Need to calculate the low address and the high address
-    // Assume 30 blocks
-		head = NULL;
-    curr_address = (U32)p_end;
-    curr_address += sizeof(mem_block *);
-    curr_node = (mem_block*)curr_address;
-    curr_node->next = NULL;
-    curr_node->block_address = (U32)p_end;
-    head = curr_node;
-		curr_node = curr_node->next;
+  headBlock = (void*) (p_end + sizeof(mem_block*));
+	headBlock->addr = ((U32) headBlock + sizeof(mem_block*));
+	headBlock->released = 1;
+	headBlock->next = NULL;
+	for (i = 0; i < 1; i++) {
+		headBlock->next = (void *) (headBlock->addr + 128);
+		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*));
+		headBlock->next->released = 1;
+		headBlock = headBlock->next;
+	}
+	headBlock->next = NULL;
+	headBlock = (void*) (p_end + sizeof(mem_block*));
+	print_free_blocks();
 
-		
-		while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
-				curr_address += ( sizeof(mem_block*) + 128);
-        curr_node = (mem_block*) curr_address;
-        curr_node->next = head;
-        curr_node->block_address = curr_address - sizeof(mem_block*);
-        head = curr_node;
-				curr_node = curr_node->next;
-		}
-		/*
-		while (curr_address + ( sizeof(mem_block*) + 128) < RAM_END_ADDR){
-				curr_address += ( sizeof(mem_block*) + 128);
-        curr_node = (mem_block*) curr_address;
-        curr_node->next = head;
-        curr_node->block_address = curr_address - sizeof(mem_block*);
-        head = curr_node;
-		}
-		*/
+}
+
+/**
+ * @brief: allocate stack for a process, align to 8 bytes boundary
+ * @param: size, stack size in bytes
+ * @return: The top of the stack (i.e. high address)
+ * POST:  gp_stack is updated.
+ */
+
+U32 *alloc_stack(U32 size_b)
+{
+	U32 *sp;
+	sp = gp_stack; /* gp_stack is always 8 bytes aligned */
+
+	/* update gp_stack */
+	gp_stack = (U32 *)((U8 *)sp - size_b);
+
+	/* 8 bytes alignement adjustment to exception stack frame */
+	if ((U32)gp_stack & 0x04) {
+		--gp_stack;
+	}
+	return sp;
 }
 
 void bpq_enqueue (PCB *current_process) {
 	PCB* temp = headBlocked;
 	PCB* prev = NULL;
-	
+
 	if (headBlocked == NULL) {
 		headBlocked = tailBlocked = current_process;
+		headBlocked->next = NULL;
 	} else {
 		if (headBlocked == tailBlocked) {
-			if (headBlocked->m_priority < current_process->m_priority) {
+			if (headBlocked->m_priority <= current_process->m_priority) {
 				headBlocked->next = current_process;
 				tailBlocked = current_process;
 			} else {
@@ -138,7 +154,7 @@ void bpq_enqueue (PCB *current_process) {
 			}
 		} else {
 			while (temp != tailBlocked->next) {
-				if (temp->m_priority < current_process->m_priority) {
+				if (temp->m_priority <= current_process->m_priority) {
 					if (temp == tailBlocked) {
 						current_process->next = temp->next;
 						temp->next = current_process;
@@ -160,92 +176,63 @@ void bpq_enqueue (PCB *current_process) {
 	}
 }
 
-/**
- * @brief: allocate stack for a process, align to 8 bytes boundary
- * @param: size, stack size in bytes
- * @return: The top of the stack (i.e. high address)
- * POST:  gp_stack is updated.
- */
-
-U32 *alloc_stack(U32 size_b)
-{
-	U32 *sp;
-	U32	newHeadAddress = (U32) head;
-	sp = gp_stack; /* gp_stack is always 8 bytes aligned */
-
-	/* update gp_stack */
-	gp_stack = (U32 *)((U8 *)sp - size_b);
-
-	/* 8 bytes alignement adjustment to exception stack frame */
-	if ((U32)gp_stack & 0x04) {
-		--gp_stack;
-	}
-	
-	while(newHeadAddress > (U32)gp_stack) {
-		newHeadAddress -= 132;
-	}
-	head = (mem_block*)newHeadAddress;
-	return sp;
+PCB* bpq_dequeue(void) {
+		PCB* temp;
+		if(headBlocked) {
+			temp = headBlocked;
+			headBlocked = headBlocked->next;
+			temp->next = NULL;
+			return temp;
+		}
+		return NULL;
 }
 
 void *k_request_memory_block(void) {
-	void* mem_blk;
-	mem_block* curr_node;
-	/*
+	mem_block *toRet = headBlock;
 #ifdef DEBUG_0
 	printf("k_request_memory_block: entering...\n");
+
 #endif /* ! DEBUG_0 */
-	// return (void *) NULL;
-	
-
-    // Rough idea of what we want to do
-    __disable_irq(); //atomic(on);
-
-    while(head == NULL || head->next == NULL) {
-				printf("------------------------\n");
-				printf("no more memory\n");
-				printf("gp_current_process: %d\n",gp_current_process->m_state);
-				gp_current_process->m_state = BOR;
-			//	rpq_dequeue();
-				removeProcessByID(gp_current_process->m_pid);
- 				bpq_enqueue(gp_current_process);
-        k_release_processor();
-				
-				//return (void*)NULL;
-    }
-
-    mem_blk = (void*)head->block_address;
-    //curr_node = head->next;
-    //head->next = NULL;
-    //head = curr_node;
-		head = head->next;
-    __enable_irq(); //atomic (off)
-    return mem_blk;
+	while (headBlock == NULL) {
+		gp_current_process->m_state = BOR;
+		bpq_enqueue(gp_current_process);
+		k_release_processor();
+	}
+	headBlock = headBlock->next;
+	toRet->released = 0;
+	toRet->next = NULL;
+	//print_free_blocks();
+	return (void*) (toRet->addr + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 }
 
 int k_release_memory_block(void *p_mem_blk) {
-  U32 release_address;
-  mem_block* node;
-	PCB* currentProcess;
+	mem_block* curr_node;
+	PCB* current_process = NULL;
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
-    __disable_irq(); //atomic(on);
-    release_address = (U32)p_mem_blk;
+	if((U32)p_mem_blk >= (U32)gp_stack || (U32)p_mem_blk < 0x10000414) {
+		return RTX_ERR;
+	}
 
-		if(release_address > (U32)gp_stack || release_address < (U32)gp_pcbs[NUM_TEST_PROCS-1]) {
-				return RTX_ERR;
-		}
-		
-	//	if(headBlocked != NULL) {
-//				currentProcess = headBlocked;
-	//			bpq_dequeue();
-	//			currentProcess->m_state = RDY;
-	//			rpq_enqueue(currentProcess);
-//		}
-    node = (mem_block*)(release_address+sizeof(mem_block*));
-    node->next = head;
-    head = node;
-    __enable_irq(); //atomic (off);
-		return RTX_OK;
+	if((U32)headBlock >= (U32)p_mem_blk - sizeof(mem_block*)) {
+		return RTX_ERR;
+	}
+	if (headBlocked != NULL ) {
+		current_process = bpq_dequeue();
+		current_process->m_state = RDY;
+		rpq_enqueue(current_process);
+	}
+
+	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*) - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
+	if (curr_node->released == 1) {
+		return RTX_ERR;
+	}
+	curr_node->next = headBlock;
+	curr_node->released = 1;
+	headBlock = curr_node;
+	if (current_process != NULL && (current_process->m_priority <= gp_current_process->m_priority)) {
+		k_release_processor();
+	}
+	return RTX_OK;
 }

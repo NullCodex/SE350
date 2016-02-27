@@ -4,6 +4,52 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 N:\SE350Memory\SE350\manual_code\Context_Switching_UART\context_switching.uvproj
-Project File Date:  02/22/2016
+Project File Date:  02/27/2016
 
 <h2>Output:</h2>
+Load "N:\\SE350Memory\\SE350\\manual_code\\Context_Switching_UART\\context_switching.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Build target 'Context Switching SIM'
+compiling uart_polling.c...
+compiling printf.c...
+compiling main_svc.c...
+compiling uart_irq.c...
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\msg.h(14): error:  #20: identifier "Envelope" is undefined
+src\msg.h(14): error:  #29: expected an expression
+src\msg.h(31): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(199): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(224): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(235): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling k_process.c...
+src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(199): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(205): error:  #20: identifier "msgbuf" is undefined
+src\k_memory.c(205): error:  #29: expected an expression
+src\k_memory.c(205): error:  #20: identifier "Envelope" is undefined
+src\k_memory.c(205): error:  #29: expected an expression
+src\k_memory.c(224): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(227): error:  #20: identifier "msgbuf" is undefined
+src\k_memory.c(227): error:  #29: expected an expression
+src\k_memory.c(227): error:  #20: identifier "Envelope" is undefined
+src\k_memory.c(227): error:  #29: expected an expression
+src\k_memory.c(235): warning:  #223-D: function "k_release_processor" declared implicitly
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\msg.h(14): error:  #20: identifier "Envelope" is undefined
+src\msg.h(14): error:  #29: expected an expression
+src\msg.h(31): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(199): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(224): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(235): warning:  #223-D: function "k_release_processor" declared implicitly
+Target not created
