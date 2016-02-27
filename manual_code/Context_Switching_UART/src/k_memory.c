@@ -6,6 +6,7 @@
  */
 
 #include "k_memory.h"
+#include "queue.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -26,6 +27,7 @@ mem_block* headBlock = NULL;
 extern PCB* headBlocked;
 extern PCB* tailBlocked;
 extern PCB* gp_current_process;
+extern queue * ready_queue[NUM_PRIORITIES];
 
 /**
  * @brief: Initialize RAM as follows:
@@ -38,6 +40,8 @@ extern PCB* gp_current_process;
           |                           |
           |        HEAP               |
           |                           |
+					|---------------------------|
+					|				Ready Queue					|
           |---------------------------|<-- p_end
           |        PCB 2              |
           |---------------------------|
@@ -80,6 +84,11 @@ void memory_init(void)
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		gp_pcbs[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
+	}
+	
+	for (i = 0; i < NUM_PRIORITIES; i++) {
+		ready_queue[i] = (queue *)p_end;
+		p_end += sizeof(queue) + sizeof(PCB);
 	}
 	/*
 #ifdef DEBUG_0  
@@ -220,7 +229,7 @@ int k_release_memory_block(void *p_mem_blk) {
 	if (headBlocked != NULL ) {
 		current_process = bpq_dequeue();
 		current_process->m_state = RDY;
-		rpq_enqueue(current_process);
+		enqueue(ready_queue[current_process->m_priority],current_process);
 	}
 	
 	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*));

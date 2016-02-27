@@ -16,6 +16,7 @@
 #define NULL 0
 #define NUM_TEST_PROCS 6
 
+#define NUM_PRIORITIES 4
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2

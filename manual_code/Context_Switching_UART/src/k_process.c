@@ -17,6 +17,7 @@
 #include <system_LPC17xx.h>
 #include "uart_polling.h"
 #include "k_process.h"
+#include "queue.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -36,8 +37,11 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 */
 PCB *headBlocked = NULL;
 PCB *tailBlocked = NULL;
-PCB *headReady = NULL;
-PCB *tailReady = NULL;
+/* Akash PCB *headReady = NULL;
+PCB *tailReady = NULL;*/
+queue *ready_queue[NUM_PRIORITIES];
+queue *blocked_queue[NUM_PRIORITIES];
+
 
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
@@ -104,8 +108,21 @@ void null_process() {
 	}
 }
 
+PCB* rpq_dequeue(int id) {
+	int i = 0;
+	for (i = 0; i < NUM_PRIORITIES; i++) {
+		if (ready_queue[i]->head != NULL) {
+			if (id == -1) {
+				return (PCB*)dequeue(ready_queue[i]);
+			} else {
+				return (PCB*)dequeueByID(ready_queue[i], id);
+			}
+		}
+	}
+	return NULL;
+}
 
-PCB* rpq_dequeue(void) {
+/*PCB* rpq_dequeue(void) {
 		PCB* temp;
 		if(headReady) {
 			temp = headReady;
@@ -114,7 +131,7 @@ PCB* rpq_dequeue(void) {
 			return temp;
 		}
 		return NULL;
-}
+}*/
 
 PCB* getProcessByID(int process_id) {
 	int i;
@@ -131,7 +148,8 @@ PCB* getProcessByID(int process_id) {
 
 // Removes process by ID by iterating through the ready queue
 PCB* removeProcessByID(int pid) {
-	PCB* temp;
+	return (PCB*)rpq_dequeue(pid);
+	/*PCB* temp;
 	PCB* prev;
 	PCB* blocked;
 	
@@ -159,10 +177,10 @@ PCB* removeProcessByID(int pid) {
 		prev->next = NULL;
 		tailReady = prev;
 		return blocked;
-	}
+	}*/
 	
 	// should never come here
-	return NULL;
+	// Akash return NULL;
 }
 
 int k_get_process_priority(int process_id) {
@@ -177,7 +195,7 @@ int k_get_process_priority(int process_id) {
 	// return -1 if not found, according to specs
 	return -1;
 }
-
+/*
 void rpq_enqueue (PCB *current_process) {
 	PCB* temp = headReady;
 	PCB* prev = NULL;
@@ -219,7 +237,7 @@ void rpq_enqueue (PCB *current_process) {
 		}
 	}
 }
-
+*/
 int k_set_process_priority(int process_id, int priority) {
 	// gets the process by ID
 	PCB* process = getProcessByID(process_id);
@@ -243,7 +261,8 @@ int k_set_process_priority(int process_id, int priority) {
 			// the right position
 			
 	  		if(old_p >= priority) {
-				rpq_enqueue(process);
+					enqueue(ready_queue[process->m_priority], process);
+				// Akash rpq_enqueue(process);
 		 	}
 	//		if(priority != headReady->m_priority) {
 				k_release_processor();
@@ -276,7 +295,7 @@ void process_init()
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
 		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
 	}
-  
+	
 	/* initilize exception stack frame (i.e. initial context) for each process */
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		int j;
@@ -288,8 +307,8 @@ void process_init()
 		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
 		(gp_pcbs[i])->next = NULL;
 		
-		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
-		rpq_enqueue(gp_pcbs[i]);
+		printf("gp_pcbs huhuhuhuuh %d \n", (gp_pcbs[i])->m_priority);
+		// Akash rpq_enqueue(gp_pcbs[i]);
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
@@ -299,13 +318,22 @@ void process_init()
 		}
 		(gp_pcbs[i])->mp_sp = sp;
 	}
+	for (i = 0 ; i < NUM_PRIORITIES; i++) {
+		ready_queue[i]->head = NULL;
+		ready_queue[i]->tail = NULL;
+	}
+	for (i = 0 ; i < NUM_TEST_PROCS; i++) {
+		enqueue(ready_queue[gp_pcbs[i]->m_priority], gp_pcbs[i]);
+	}
 	
-	temp = headReady;
+/* Akash	temp = headReady;
 	
 	while(temp != NULL) {
 			printf("temp %d \n", (temp)->m_pid);
 			temp = temp->next;
 	}
+	*/
+
 }
 
 /*@brief: scheduler, pick the pid of the next to run process
@@ -323,9 +351,10 @@ PCB *scheduler(void)
 			temp = gp_current_process;
 			temp->next = NULL;
 			temp->m_state = RDY;
-			rpq_enqueue(temp);
+			enqueue(ready_queue[temp->m_priority], temp);
+			//Akashrpq_enqueue(temp);
 		}
-		temp = rpq_dequeue();
+		temp = rpq_dequeue(-1);
 		printf("-----------------------\n");
 		printf("In scheduler\n");
 		printf("value of temp in scheduler %d\n", temp->m_pid);
@@ -356,7 +385,8 @@ int process_switch(PCB *p_pcb_old)
 			if (p_pcb_old->m_state != BOR) {
 				printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
-				rpq_enqueue(p_pcb_old);
+				//Akash rpq_enqueue(p_pcb_old);
+				enqueue(ready_queue[p_pcb_old->m_priority], p_pcb_old);
 			}
 			p_pcb_old->mp_sp = (U32 *) __get_MSP();
 		}
@@ -370,8 +400,9 @@ int process_switch(PCB *p_pcb_old)
 	if (state == RDY) {
 		if (gp_current_process != p_pcb_old) {
 			if (p_pcb_old->m_state != BOR) {
-				p_pcb_old->m_state = RDY; 
-				rpq_enqueue(p_pcb_old);
+				p_pcb_old->m_state = RDY;
+				enqueue(ready_queue[p_pcb_old->m_priority], p_pcb_old);
+				// Akash rpq_enqueue(p_pcb_old);
 			}
 			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
 		}
@@ -413,7 +444,7 @@ int k_release_processor(void)
 	
 	PCB *p_pcb_old = NULL;
 	
-	PCB* temp = headReady;
+	/* Akash PCB* temp = headReady;
 	printf("-----------------------\n");
 	printf("in k_release processor\n");
 	while(temp != NULL) {
@@ -431,7 +462,7 @@ int k_release_processor(void)
 			temp = temp->next;
 	}
 //	printf("gp_current_process 0x%x \n", gp_current_process->m_state);
-	
+	*/
 	if ( gp_current_process == NULL  ) {
 		null_process();
 //		gp_current_process = p_pcb_old; // revert back to the old process
@@ -449,7 +480,8 @@ int k_release_processor(void)
 	
 	if(p_pcb_old->m_priority < gp_current_process->m_priority) {
 		// since we're not switching to the low priority process, need to enqueue back
-		rpq_enqueue(gp_current_process);
+		enqueue(ready_queue[gp_current_process->m_priority], gp_current_process);
+		// Akash rpq_enqueue(gp_current_process);
 		gp_current_process = p_pcb_old;
 	}
 	process_switch(p_pcb_old);

@@ -8,610 +8,1031 @@ Project File Date:  02/08/2016
 
 <h2>Output:</h2>
 Build target 'Context Switching SIM'
-compiling main_svc.c...
+compiling queue.c...
+src\queue.h(22): error:  #65: expected a ";"
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(19): warning:  #940-D: missing return statement at end of non-void function "enqueue"
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(234): warning:  #223-D: function "k_release_processor" declared implicitly
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+src\queue.h(22): error:  #65: expected a ";"
+src\k_process.c(42): error:  #20: identifier "queue" is undefined
+src\k_process.c(43): error:  #20: identifier "queue" is undefined
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(114): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(326): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(327): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(327): error:  #132: expression must have pointer-to-struct-or-union type
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
 compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(182): warning:  #128-D: loop is not reachable
-src\usr_proc.c(154): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(155): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(195): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(223): warning:  #550-D: variable "returnedPtr" was set but never used
-linking...
-Program Size: Code=5808 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 9 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(106): warning:  #111-D: statement is unreachable
-src\usr_proc.c(87): warning:  #177-D: variable "mem_blk_t" was declared but never referenced
-src\usr_proc.c(182): warning:  #128-D: loop is not reachable
-src\usr_proc.c(154): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(155): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(195): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(223): warning:  #550-D: variable "returnedPtr" was set but never used
-linking...
-Program Size: Code=5808 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 7 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(78): error:  #20: identifier "PID_P2" is undefined
-src\usr_proc.c(171): warning:  #128-D: loop is not reachable
-src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
 Target not created
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(78): error:  #20: identifier "PID_P2" is undefined
-src\usr_proc.c(171): warning:  #128-D: loop is not reachable
-src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+compiling queue.c...
+src\queue.c(11): error:  #147: declaration is incompatible with "void enqueue(void *, void *)" (declared at line 22 of "src\queue.h")
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(19): warning:  #940-D: missing return statement at end of non-void function "enqueue"
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
 Target not created
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(94): error:  #20: identifier "PID_P2" is undefined
-src\usr_proc.c(171): warning:  #128-D: loop is not reachable
-src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+compiling queue.c...
+src\queue.c(11): error:  #147: declaration is incompatible with "void enqueue(void *, void *)" (declared at line 22 of "src\queue.h")
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(19): warning:  #940-D: missing return statement at end of non-void function "enqueue"
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
 Target not created
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(94): error:  #20: identifier "PID_P2" is undefined
-src\usr_proc.c(171): warning:  #128-D: loop is not reachable
-src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
+compiling queue.c...
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
 Target not created
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(171): warning:  #128-D: loop is not reachable
-src\usr_proc.c(143): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(144): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(184): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(212): warning:  #550-D: variable "returnedPtr" was set but never used
-linking...
-Program Size: Code=5840 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
+compiling queue.c...
+src\queue.c(12): error:  #134: expected a field name
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5840 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
+compiling queue.c...
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(18): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(29): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5840 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
+compiling queue.c...
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+compiling queue.c...
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(172): warning:  #128-D: loop is not reachable
-src\usr_proc.c(144): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(145): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(185): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(213): warning:  #550-D: variable "returnedPtr" was set but never used
-linking...
-Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
+compiling queue.c...
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.h(19): error:  #110: expected either a definition or a tag name
+src\queue.h(19): warning:  #64-D: declaration does not declare anything
+src\queue.h(20): error:  #110: expected either a definition or a tag name
+src\queue.h(20): warning:  #64-D: declaration does not declare anything
+src\queue.h(21): error:  #618: struct or union declares no named members
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\queue.h(19): error:  #110: expected either a definition or a tag name
+src\queue.h(19): warning:  #64-D: declaration does not declare anything
+src\queue.h(20): error:  #110: expected either a definition or a tag name
+src\queue.h(20): warning:  #64-D: declaration does not declare anything
+src\queue.h(21): error:  #618: struct or union declares no named members
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(114): error:  #136: struct "queue" has no field "head"
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(326): error:  #136: struct "queue" has no field "head"
+src\k_process.c(327): error:  #136: struct "queue" has no field "tail"
+src\k_process.c(327): error:  #136: struct "queue" has no field "head"
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(12): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(13): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(16): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(25): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(13): error:  #29: expected an expression
+src\queue.c(13): error:  #32: expression must have arithmetic type
+src\queue.c(13): error:  #18: expected a ")"
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(18): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(29): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(12): error:  #20: identifier "q" is undefined
+src\queue.c(12): error:  #32: expression must have arithmetic type
+src\queue.c(12): error:  #29: expected an expression
+src\queue.c(12): error:  #32: expression must have arithmetic type
+src\queue.c(12): error:  #65: expected a ";"
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(18): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(29): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(14): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(15): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(18): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(26): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(27): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(29): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(30): warning:  #1-D: last line of file ends without a newline
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(10): error:  #101: "queue" has already been declared in the current scope
+src\queue.c(13): error:  #256: invalid redeclaration of type name "queue" (declared at line 21 of "src\queue.h")
+src\queue.c(22): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(33): error:  #393: pointer to incomplete class type is not allowed
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): error:  #132: expression must have pointer-to-struct-or-union type
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): error:  #132: expression must have pointer-to-struct-or-union type
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(17): error:  #132: expression must have pointer-to-struct-or-union type
+src\queue.c(28): error:  #132: expression must have pointer-to-struct-or-union type
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.h(19): error:  #110: expected either a definition or a tag name
+src\queue.h(19): warning:  #64-D: declaration does not declare anything
+src\queue.h(20): error:  #110: expected either a definition or a tag name
+src\queue.h(20): warning:  #64-D: declaration does not declare anything
+src\queue.h(21): error:  #618: struct or union declares no named members
+src\queue.c(13): error:  #136: struct "queue" has no field "head"
+src\queue.c(14): error:  #136: struct "queue" has no field "head"
+src\queue.c(15): error:  #136: struct "queue" has no field "tail"
+src\queue.c(15): error:  #136: struct "queue" has no field "head"
+src\queue.c(17): error:  #136: struct "queue" has no field "tail"
+src\queue.c(18): error:  #136: struct "queue" has no field "tail"
+src\queue.c(27): error:  #136: struct "queue" has no field "head"
+src\queue.c(28): error:  #136: struct "queue" has no field "head"
+src\queue.c(28): error:  #136: struct "queue" has no field "head"
+compiling k_process.c...
+src\queue.h(19): error:  #110: expected either a definition or a tag name
+src\queue.h(19): warning:  #64-D: declaration does not declare anything
+src\queue.h(20): error:  #110: expected either a definition or a tag name
+src\queue.h(20): warning:  #64-D: declaration does not declare anything
+src\queue.h(21): error:  #618: struct or union declares no named members
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(114): error:  #136: struct "queue" has no field "head"
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(326): error:  #136: struct "queue" has no field "head"
+src\k_process.c(327): error:  #136: struct "queue" has no field "tail"
+src\k_process.c(327): error:  #136: struct "queue" has no field "head"
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_process.c...
+src\k_process.c(113): error:  #20: identifier "NUM_PRIORITY" is undefined
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
+src\k_process.c(115): error:  #165: too few arguments in function call
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5808 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(31): error:  #29: expected an expression
+src\queue.c(32): warning:  #940-D: missing return statement at end of non-void function "dequeueByID"
+compiling k_process.c...
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_process.c...
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5860 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
+src\k_process.c(152): error:  #20: identifier "headReady" is undefined
+src\k_process.c(170): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(195): error:  #20: identifier "headReady" is undefined
+src\k_process.c(197): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(318): error:  #20: identifier "headReady" is undefined
+src\k_process.c(439): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+src\k_process.c(147): error:  #167: argument of type "queue **" is incompatible with parameter of type "queue *"
+src\k_process.c(179): warning:  #111-D: statement is unreachable
+src\k_process.c(196): error:  #20: identifier "headReady" is undefined
+src\k_process.c(198): error:  #20: identifier "tailReady" is undefined
+src\k_process.c(319): error:  #20: identifier "headReady" is undefined
+src\k_process.c(440): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+src\k_process.c(147): error:  #167: argument of type "queue **" is incompatible with parameter of type "queue *"
+src\k_process.c(179): warning:  #111-D: statement is unreachable
+src\k_process.c(319): error:  #20: identifier "headReady" is undefined
+src\k_process.c(440): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5804 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+src\k_process.c(183): warning:  #111-D: statement is unreachable
+src\k_process.c(323): error:  #20: identifier "headReady" is undefined
+src\k_process.c(444): error:  #20: identifier "headReady" is undefined
+Target not created
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(194): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(218): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5852 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
+context_switching.axf: Error: L6218E: Undefined symbol headBlocked (referred from k_memory.o).
+context_switching.axf: Error: L6218E: Undefined symbol rpq_enqueue (referred from k_memory.o).
+context_switching.axf: Error: L6218E: Undefined symbol tailBlocked (referred from k_memory.o).
+Target not created
+Rebuild target 'Context Switching SIM'
+assembling startup_LPC17xx.s...
+compiling system_LPC17xx.c...
 compiling uart_polling.c...
+compiling printf.c...
+compiling main_svc.c...
+compiling uart_irq.c...
+compiling queue.c...
+compiling HAL.c...
+compiling k_rtx_init.c...
 compiling k_memory.c...
-src\k_memory.c(22): error:  #20: identifier "bool" is undefined
-src\k_memory.c(101): error:  #20: identifier "true" is undefined
-src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(200): error:  #20: identifier "false" is undefined
-src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(234): warning:  #223-D: function "k_release_processor" declared implicitly
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+linking...
+context_switching.axf: Error: L6218E: Undefined symbol headBlocked (referred from k_memory.o).
+context_switching.axf: Error: L6218E: Undefined symbol rpq_enqueue (referred from k_memory.o).
+context_switching.axf: Error: L6218E: Undefined symbol tailBlocked (referred from k_memory.o).
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+context_switching.axf: Error: L6218E: Undefined symbol rpq_enqueue (referred from k_memory.o).
 Target not created
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+src\k_memory.c(224): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5880 RO-data=412 RW-data=72 ZI-data=816  
+context_switching.axf: Error: L6218E: Undefined symbol rpq_enqueue (referred from k_memory.o).
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(225): error:  #167: argument of type "PCB *" is incompatible with parameter of type "queue *"
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(317): error:  #44: expression must have pointer type
+src\k_process.c(317): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "void *"
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(317): error:  #44: expression must have pointer type
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5556 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5564 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5528 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5532 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5544 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(68): warning:  #223-D: function "printf" declared implicitly
+src\queue.c(67): warning:  #177-D: variable "size" was declared but never referenced
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(331): error:  #165: too few arguments in function call
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(331): error:  #167: argument of type "queue **" is incompatible with parameter of type "queue *"
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(68): warning:  #223-D: function "printf" declared implicitly
+src\queue.c(67): warning:  #177-D: variable "size" was declared but never referenced
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=8780 RO-data=424 RW-data=84 ZI-data=1068  
+"context_switching.axf" - 0 Error(s), 3 Warning(s).
+Rebuild target 'Context Switching SIM'
+assembling startup_LPC17xx.s...
+compiling system_LPC17xx.c...
+compiling uart_polling.c...
+compiling printf.c...
+compiling main_svc.c...
+compiling uart_irq.c...
+compiling queue.c...
+src\queue.c(68): warning:  #223-D: function "printf" declared implicitly
+src\queue.c(67): warning:  #177-D: variable "size" was declared but never referenced
+compiling HAL.c...
+compiling k_rtx_init.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=8780 RO-data=424 RW-data=84 ZI-data=1068  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(68): warning:  #177-D: variable "size" was declared but never referenced
+linking...
+Program Size: Code=5588 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(68): warning:  #177-D: variable "size" was declared but never referenced
+linking...
+Program Size: Code=5588 RO-data=412 RW-data=72 ZI-data=816  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Rebuild target 'Context Switching SIM'
+assembling startup_LPC17xx.s...
+compiling system_LPC17xx.c...
+compiling uart_polling.c...
+compiling printf.c...
+compiling main_svc.c...
+compiling uart_irq.c...
+compiling queue.c...
+compiling HAL.c...
+compiling k_rtx_init.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+compiling usr_proc.c...
+src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
+linking...
+Program Size: Code=5588 RO-data=412 RW-data=72 ZI-data=816  
 "context_switching.axf" - 0 Error(s), 2 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5880 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5568 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5568 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5568 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(250): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5580 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5912 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5580 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5920 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5552 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5592 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5560 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5560 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5556 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5556 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5548 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5548 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(301): error:  #29: expected an expression
+src\k_process.c(302): error:  #29: expected an expression
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5592 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5592 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5600 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+linking...
+Program Size: Code=5596 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5596 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5636 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5636 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
 linking...
-Program Size: Code=5920 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5636 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5920 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5596 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(84): error:  #20: identifier "rel_val" is undefined
-src\usr_proc.c(173): warning:  #128-D: loop is not reachable
-src\usr_proc.c(145): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(146): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(186): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(214): warning:  #550-D: variable "returnedPtr" was set but never used
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(173): warning:  #128-D: loop is not reachable
-src\usr_proc.c(145): warning:  #177-D: variable "returnedPtr" was declared but never referenced
-src\usr_proc.c(146): warning:  #550-D: variable "p_priority" was set but never used
-src\usr_proc.c(186): warning:  #177-D: variable "x" was declared but never referenced
-src\usr_proc.c(214): warning:  #550-D: variable "returnedPtr" was set but never used
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5928 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=5608 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5932 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=5608 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
 Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(75): error:  #20: identifier "PID_P2" is undefined
-src\usr_proc.c(107): error:  #20: identifier "PID_P1" is undefined
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(75): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-src\usr_proc.c(107): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(75): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-src\usr_proc.c(107): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(75): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-src\usr_proc.c(107): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
+Program Size: Code=5576 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5608 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=5608 RO-data=412 RW-data=64 ZI-data=848  
 "context_switching.axf" - 0 Error(s), 0 Warning(s).
 Rebuild target 'Context Switching SIM'
 assembling startup_LPC17xx.s...
 compiling system_LPC17xx.c...
 compiling uart_polling.c...
-src\uart_polling.c(114): error:  #20: identifier "PID_P2" is undefined
 compiling printf.c...
 compiling main_svc.c...
 compiling uart_irq.c...
+compiling queue.c...
 compiling HAL.c...
 compiling k_rtx_init.c...
 compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(222): warning:  #223-D: function "rpq_enqueue" declared implicitly
 compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-Target not created
-Build target 'Context Switching SIM'
-compiling uart_polling.c...
-linking...
-context_switching.axf: Error: L6200E: Symbol g_test_procs multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc6 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc5 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc4 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc3 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc2 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc1 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol set_test_procs multiply defined (by usr_proc.o and uart_polling.o).
-Target not created
-Build target 'Context Switching SIM'
-linking...
-context_switching.axf: Error: L6200E: Symbol g_test_procs multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc6 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc5 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc4 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc3 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc2 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol proc1 multiply defined (by usr_proc.o and uart_polling.o).
-context_switching.axf: Error: L6200E: Symbol set_test_procs multiply defined (by usr_proc.o and uart_polling.o).
-Target not created
-Build target 'Context Switching SIM'
-compiling uart_polling.c...
-compiling usr_proc.c...
-linking...
-Program Size: Code=5456 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling uart_polling.c...
-compiling usr_proc.c...
-linking...
-Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-src\k_memory.c(225): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 4 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(197): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5472 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5460 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5456 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5416 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_process.c...
-src\k_process.c(103): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_process.c(249): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5468 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(116): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-src\usr_proc.c(132): error:  #167: argument of type "PROC_INIT" is incompatible with parameter of type "int"
-src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5476 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #223-D: function "removeProcessByID" declared implicitly
-src\k_memory.c(199): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(224): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5484 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(76): error:  #136: struct "proc_init" has no field "m_id"
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(76): error:  #136: struct "proc_init" has no field "m_id"
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-linking...
-Program Size: Code=5496 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-linking...
-Program Size: Code=5496 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-linking...
-Program Size: Code=5484 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-src\k_memory.c(235): warning:  #223-D: function "k_release_processor" declared implicitly
-compiling usr_proc.c...
-linking...
-Program Size: Code=5504 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5504 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(198): warning:  #223-D: function "k_release_processor" declared implicitly
-src\k_memory.c(223): warning:  #223-D: function "rpq_enqueue" declared implicitly
-src\k_memory.c(234): warning:  #223-D: function "k_release_processor" declared implicitly
-linking...
-Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(186): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=5492 RO-data=412 RW-data=72 ZI-data=816  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(149): error:  #20: identifier "PID_P2" is undefined
-src\usr_proc.c(178): error:  #20: identifier "PID_P1" is undefined
-src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
-compiling usr_proc.c...
-src\usr_proc.c(178): error:  #20: identifier "PID_P1" is undefined
-src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
-Target not created
-Build target 'Context Switching SIM'
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
 compiling usr_proc.c...
 src\usr_proc.c(218): warning:  #1-D: last line of file ends without a newline
 linking...
-Program Size: Code=5712 RO-data=412 RW-data=72 ZI-data=816  
+Program Size: Code=5608 RO-data=412 RW-data=64 ZI-data=848  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling queue.c...
+src\queue.c(15): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "struct PCB *"
+src\queue.c(18): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(19): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "struct PCB *"
+src\queue.c(28): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(38): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(41): error:  #513: a value of type "struct PCB *" cannot be assigned to an entity of type "PCB *"
+src\queue.c(56): error:  #393: pointer to incomplete class type is not allowed
+src\queue.c(57): error:  #513: a value of type "struct PCB *" cannot be assigned to an entity of type "PCB *"
+src\queue.c(59): error:  #513: a value of type "PCB *" cannot be assigned to an entity of type "struct PCB *"
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Context Switching SIM'
+compiling queue.c...
+compiling k_memory.c...
+compiling k_process.c...
+src\k_process.c(285): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=5608 RO-data=412 RW-data=64 ZI-data=848  
 "context_switching.axf" - 0 Error(s), 1 Warning(s).
