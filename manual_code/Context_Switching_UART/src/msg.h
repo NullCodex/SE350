@@ -14,15 +14,6 @@ struct msgbuf {
     char mtext[(BLOCK_SIZE - 4*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*))/sizeof(char)];
 };
 
-typedef struct Envelope Envelope;
-struct Envelope{
-    int sender_id;
-    int destination_id;
-    int delay;
-    msgbuf *message;
-    struct Envelope* next;
-};
-
 int send_message(int, void*);
 
 void* receive_message(int*);
