@@ -9,6 +9,7 @@
 #define K_MEM_H_
 
 #include "k_rtx.h"
+#include "msg.h"
 
 /* ----- Definitions ----- */
 #define RAM_END_ADDR 0x10008000
@@ -28,14 +29,12 @@ int k_release_memory_block(void *);
 
 struct mem_block;
 
-typedef struct Envelope Envelope;
-
-struct Envelope{
+typedef struct Envelope{
     int sender_id;
     int destination_id;
     int delay;
-    msgbuf *message;
+    struct msgbuf* message;
     struct Envelope* next;
-};
+} Envelope;
 
 #endif /* ! K_MEM_H_ */

@@ -6,7 +6,7 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
-extern uint32_t timer_init ( uint8_t n_timer );  /* initialize timer n_timer */
+extern U32 timer_init (U8 );  /* initialize timer n_timer */
 
 int get_time(void);
 #endif /* ! _TIMER_H_ */
