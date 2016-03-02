@@ -21,8 +21,8 @@ int send_message(int process_id, void* message_envelope) {
     // create new mailbox for each pcb
     // enqueue into mailbox
 
-    if(receiving_proc->state == WFM) {
-        receiving_proc->state = RDY;
+    if(receiving_proc->m_state == WFM) {
+        receiving_proc->m_state = RDY;
         rpq_enqueue(receiving_proc);
     }
     __enable_irq();
@@ -34,9 +34,8 @@ void* receive_message(int* sender_id) {
     Envelope* received;
     msgbuf* message;
 
-
-    while(process->mailBox is empty) {
-        gp_current_process->state = WFM;
+    while(gp_current_process->mailBox == NULL) {
+        gp_current_process->m_state = WFM;
         // probably need another queue for blocked on mail
         // push it here
         k_release_processor();
@@ -44,19 +43,18 @@ void* receive_message(int* sender_id) {
 
     __disable_irq();
 
-    received = pop mailque;
-    message = received->message;
+    //received = pop mailque;
+    message = (msgbuf* )received->message;
 
-    *sender_id = received->send_id;
+    *sender_id = received->sender_id;
 
     __enable_irq();
 
     return (void*)message;
-
 }
 
 int delayed_send(int process_id, void* message_envelope, int delay) {
-    PCB* receiving_proc = getProcessByID(process_id);
+		PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
 
     __disable_irq();
@@ -70,8 +68,8 @@ int delayed_send(int process_id, void* message_envelope, int delay) {
     // create new mailbox for each pcb
     // enqueue into mailbox
 
-    if(receiving_proc->state == WFM) {
-        receiving_proc->state = RDY;
+    if(receiving_proc->m_state == WFM) {
+        receiving_proc->m_state = RDY;
         rpq_enqueue(receiving_proc);
     }
     __enable_irq();

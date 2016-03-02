@@ -1,4 +1,4 @@
-#ifndef MSG_H_
+#ifndef MSG_H
 #define MSG_H
 
 #include "k_memory.h"
@@ -7,12 +7,10 @@
 #define DEFAULT 0
 #define KCD_REG 1
 
-typedef struct msgbuf msgbuf;
-
-struct msgbuf {
+typedef struct MSGBUF {
     int mtype;
-    char mtext[(BLOCK_SIZE - 4*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*))/sizeof(char)];
-};
+    char mtext[(128 - 4*sizeof(int) - sizeof(struct msgbuf*) - sizeof(struct Envelope*))/sizeof(char)];
+} msgbuf;
 
 int send_message(int, void*);
 
