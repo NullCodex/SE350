@@ -16,6 +16,7 @@
 #define NULL 0
 #define NUM_TEST_PROCS 6
 
+#define HIGHEST -1 								  /* meant for i processes *
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -35,7 +36,7 @@ typedef unsigned int U32;
 * WFM - Waiting for message
 *
 */
-typedef enum {NEW = 0, RDY, RUN, BOR, WFM} PROC_STATE_E;
+typedef enum {NEW = 0, RDY, RUN, BOR, WFM, WAITING_FOR_INTERRUPT} PROC_STATE_E;
 
 /*
   PCB data structure definition.

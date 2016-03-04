@@ -39,6 +39,14 @@ PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
 
+// system processes
+PCB* timer_process;
+PCB* uart_process;
+PCB* wall_clock_display;
+PCB* kcd_process;
+PCB* crt_process;
+PCB* set_process_priority;
+
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
@@ -265,6 +273,36 @@ void process_init()
 	U32 *sp;
 	PCB* temp;
   
+	// need to allocate memory for these processes
+	// creating the system processes
+	set_priority_process->m_pid = PID_SET_PRIO;
+	set_priority_process->m_state = WAITING_FOR_INTERRUPT;
+	set_priority_process->m_priority = -1;
+	
+	wall_clock_display->m_pid = PID_CLOCK;
+	wall_clock_process->m_state = WAITING_FOR_INTERRUPT;
+	wall_clock_process->m_priority = -1;
+	
+	wall_clock_display->m_pid = PID_CLOCK;
+	wall_clock_process->m_state = WAITING_FOR_INTERRUPT;
+	wall_clock_process->m_priority = -1;
+	
+	crt_process->m_pid = PID_CRT;
+	crt_process->m_state = WAITING_FOR_INTERRUPT;
+	crt_process->m_priority = -1;
+	
+	kcd_process->m_pid = PID_KCD;
+	kcd_process->m_state = WAITING_FOR_INTERRUPT;
+	kcd_process->m_priority = -1;
+	
+	timer_process->m_pid = PID_TIMER_IPROC;
+	timer_process->m_state = WAITING_FOR_INTERRUPT;
+	timer_process->m_priority = -1;
+	
+	uart_process->m_pid = PID_UART_IPROC;
+	uart_process->m_state = WAITING_FOR_INTERRUPT;
+	uart_process->m_priority = -1;
+	
         /* fill out the initialization table */
 
 	set_test_procs();
@@ -317,7 +355,6 @@ void process_init()
 
 PCB *scheduler(void)
 {
-
 		PCB* temp;
 		if (gp_current_process != NULL && gp_current_process->m_state != BOR) {
 			temp = gp_current_process;
