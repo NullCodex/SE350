@@ -18,6 +18,7 @@
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
 #define NUM_API_PROCS 1
+#define NUM_TOTAL_PROCS NUM_TEST_PROCS+NUM_API_PROCS
 
 /* Process IDs */
 #define PID_NULL 0

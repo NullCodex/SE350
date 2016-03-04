@@ -42,7 +42,7 @@ PCB *headBlockedMail = NULL;
 Envelope* headTimer = NULL;
 
 /* process initialization table */
-PROC_INIT g_proc_table[NUM_TEST_PROCS];
+PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 PROC_INIT g_api_procs[NUM_API_PROCS];
 //extern void timer_i_process(void);
@@ -274,18 +274,17 @@ int k_set_process_priority(int process_id, int priority) {
 
 void set_api_procs() {
 	int i;
-	for( i = 0; i < NUM_API_PROCS; i++ ) {
-		g_api_procs[i].m_pid=(U32)(i+1);
-		g_api_procs[i].m_stack_size=0x100;
-	}
+	g_api_procs[0].m_pid= PID_TIMER_IPROC;
+	g_api_procs[0].m_stack_size=0x100;
   
-	g_api_procs[0].mpf_start_pc = &k_set_process_priority;
+	g_api_procs[0].mpf_start_pc = &process_init;
 	g_api_procs[0].m_priority   = HIGHEST;
 }
 
 void process_init() 
 {
 	int i;
+	int j = 0;
 	U32 *sp;
 	PCB* temp;
   
@@ -300,6 +299,15 @@ void process_init()
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
 		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
+	}
+	
+	for (; i < NUM_TOTAL_PROCS; i++ ) {
+		g_proc_table[i].m_pid = g_api_procs[j].m_pid;
+		g_proc_table[i].m_stack_size = g_api_procs[j].m_stack_size;
+		g_proc_table[i].mpf_start_pc = g_api_procs[j].mpf_start_pc;
+		// added a priority to the table
+		g_proc_table[i].m_priority = g_api_procs[j].m_priority;
+		printf("gapi_pcbs %d \n", (g_api_procs[j]).m_priority);
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
