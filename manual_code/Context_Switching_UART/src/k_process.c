@@ -38,6 +38,8 @@ PCB *headBlocked = NULL;
 PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
+PCB *headBlockedMail = NULL;
+Envelope* headTimer = NULL;
 
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
@@ -48,7 +50,65 @@ extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 *
 */
 
-/*PCB* bpq_dequeue(void) {
+void timer_enqueue (Envelope *env) {
+	Envelope* temp = headTimer;
+	Envelope* prev = NULL;
+	if(headTimer == NULL) {
+		env->next = headTimer;
+		headTimer = env;
+	} else {
+		while(temp && temp->delay < env->delay) {
+			prev = temp;
+			temp = temp->next;
+		}
+		env->next = prev->next;
+		prev->next = env;
+	}
+}
+
+Envelope* timer_dequeue(void) {
+		Envelope* temp;
+		if(headTimer) {
+			temp = headTimer;
+			headTimer = headTimer->next;
+			temp->next = NULL;
+			return temp;
+		}
+		return NULL;
+}
+
+void mail_benqueue(PCB* process) {
+	if(headBlockedMail) {
+		process->next = headBlockedMail;
+		headBlockedMail = process;
+	} else {
+		process->next = NULL;
+		headBlockedMail = process;
+	}
+}
+
+// Assuming the list is not empty
+PCB* remove_from_mail_blocked(int pid) {
+	PCB* prev = NULL;
+	PCB* current = headBlockedMail;
+	if(headBlockedMail->m_pid == pid && headBlocked->next == NULL) {
+		headBlocked = NULL;
+		return current;
+	}
+	while(current) {
+		if(current->m_pid == pid) {
+			prev->next = current->next;
+			current->next = NULL;
+			return current;
+		}
+		prev = current;
+		current = current->next;
+	}
+	
+	return NULL;
+}
+/*
+PCB* bpq_dequeue(void) {
 		PCB* temp;
 		if(headBlocked) {
 			temp = headBlocked;
@@ -96,8 +156,8 @@ void bpq_enqueue (PCB *current_process) {
 			}
 		}
 	}
-}*/
-
+}
+*/
 void null_process() {
 	while (1) {
 		k_release_processor () ;
@@ -287,6 +347,7 @@ void process_init()
 		(gp_pcbs[i])->m_state = NEW;
 		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
 		(gp_pcbs[i])->next = NULL;
+		(gp_pcbs[i])->mailBox = NULL;
 		
 		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
 		rpq_enqueue(gp_pcbs[i]);

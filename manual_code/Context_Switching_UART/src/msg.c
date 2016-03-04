@@ -20,6 +20,7 @@ int send_message(int process_id, void* message_envelope) {
 
     // create new mailbox for each pcb
     // enqueue into mailbox
+		push_mailBox(receiving_proc, env);
 
     if(receiving_proc->m_state == WFM) {
         receiving_proc->m_state = RDY;
@@ -38,12 +39,14 @@ void* receive_message(int* sender_id) {
         gp_current_process->m_state = WFM;
         // probably need another queue for blocked on mail
         // push it here
+				mail_benqueue(gp_current_process);
         k_release_processor();
     }
 
     __disable_irq();
 
     //received = pop mailque;
+		received = dequeue_mailBox(gp_current_process);
     message = (msgbuf* )received->message;
 
     *sender_id = received->sender_id;
@@ -63,17 +66,22 @@ int delayed_send(int process_id, void* message_envelope, int delay) {
     env->destination_id = process_id;
     env->delay = delay;
     env->message = message_envelope;
-
-    // after timer expires then we can push
-    // create new mailbox for each pcb
-    // enqueue into mailbox
-
-    if(receiving_proc->m_state == WFM) {
-        receiving_proc->m_state = RDY;
-        rpq_enqueue(receiving_proc);
-    }
+		timer_enqueue(env);
+		
     __enable_irq();
 
     return RTX_OK;
 }
 
+
+void push_mailBox(PCB* process, Envelope* env) {
+	env->next = process->mailBox;
+	process->mailBox = env;
+}
+
+// Asssuming that the mailbox is not empty
+Envelope* dequeue_mailBox(PCB* process) {
+	Envelope* message = process->mailBox;
+	process->mailBox = process->mailBox->next;
+	return message;
+}

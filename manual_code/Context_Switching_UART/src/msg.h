@@ -17,4 +17,7 @@ int send_message(int, void*);
 void* receive_message(int*);
 
 int delayed_send(int, void*, int);
+
+void push_mailBox(PCB*, struct Envelope*);
+struct Envelope* dequeue_mailBox(PCB*);
 #endif
