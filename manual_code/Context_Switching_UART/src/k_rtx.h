@@ -17,7 +17,7 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
-#define NUM_SYSTEM_PROCS 1
+
 
 /* Process IDs */
 #define PID_NULL 0
@@ -37,7 +37,6 @@
 #define PID_TIMER_IPROC  14
 #define PID_UART_IPROC   15
 
-#define HIGHEST -1 								  /* meant for i processes */
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -71,7 +70,6 @@ typedef struct pcb
 	U32 m_pid;		/* process id */
 	U32 m_priority; /* process priority */
 	PROC_STATE_E m_state;   /* state of the process */
-	BOOL m_i_process;			/* flag for checking for i-process */
 	struct pcb *next;
 	struct Envelope* mailBox;
 } PCB;
@@ -83,7 +81,6 @@ typedef struct proc_init
 	int m_priority;         /* initial priority, not used in this example. */
 	int m_stack_size;       /* size of stack in words */
 	void (*mpf_start_pc) ();/* entry point of the process */
-	BOOL m_i_process;			/* flag for checking for i-process */
 } PROC_INIT;
 
 

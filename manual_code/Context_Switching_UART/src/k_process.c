@@ -107,57 +107,7 @@ PCB* remove_from_mail_blocked(int pid) {
 	
 	return NULL;
 }
-/*
-PCB* bpq_dequeue(void) {
-		PCB* temp;
-		if(headBlocked) {
-			temp = headBlocked;
-			headBlocked = headBlocked->next;
-			return temp;
-		}
-		return NULL;
-}
 
-void bpq_enqueue (PCB *current_process) {
-	PCB* temp = headBlocked;
-	PCB* prev = NULL;
-	
-	if (headBlocked == NULL) {
-		headBlocked = tailBlocked = current_process;
-	} else {
-		if (headBlocked == tailBlocked) {
-			if (headBlocked->m_priority < current_process->m_priority) {
-				headBlocked->next = current_process;
-				tailBlocked = current_process;
-			} else {
-				current_process->next = tailBlocked;
-				headBlocked = current_process;
-				tailBlocked = current_process->next;
-			}
-		} else {
-			while (temp != tailBlocked->next) {
-				if (temp->m_priority < current_process->m_priority) {
-					if (temp == tailBlocked) {
-						current_process->next = temp->next;
-						temp->next = current_process;
-						tailBlocked = current_process;
-						break;
-					}
-					prev = temp;
-					temp = temp->next;
-				} else {
-					if (headBlocked == temp) {
-						headBlocked = current_process;
-					}
-					current_process->next = temp;
-					prev->next = current_process;
-					break;
-				}
-			}
-		}
-	}
-}
-*/
 void null_process() {
 	while (1) {
 		k_release_processor () ;
