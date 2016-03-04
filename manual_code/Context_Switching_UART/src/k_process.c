@@ -17,7 +17,6 @@
 #include <system_LPC17xx.h>
 #include "uart_polling.h"
 #include "k_process.h"
-#include "k_timer.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -39,17 +38,11 @@ PCB *headBlocked = NULL;
 PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
-
-// system processes
-// PCB* timer_process;
-//PCB* uart_process;
-//PCB* wall_clock_display;
-//PCB* kcd_process;
-//PCB* crt_process;
-// PCB* set_process_priority;
+PCB *headBlockedMail = NULL;
+Envelope* headTimer = NULL;
 
 /* process initialization table */
-PROC_INIT g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS];
+PROC_INIT g_proc_table[NUM_TEST_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 
 /**
@@ -57,6 +50,114 @@ extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 *
 */
 
+void timer_enqueue (Envelope *env) {
+	Envelope* temp = headTimer;
+	Envelope* prev = NULL;
+	if(headTimer == NULL) {
+		env->next = headTimer;
+		headTimer = env;
+	} else {
+		while(temp && temp->delay < env->delay) {
+			prev = temp;
+			temp = temp->next;
+		}
+		env->next = prev->next;
+		prev->next = env;
+	}
+}
+
+Envelope* timer_dequeue(void) {
+		Envelope* temp;
+		if(headTimer) {
+			temp = headTimer;
+			headTimer = headTimer->next;
+			temp->next = NULL;
+			return temp;
+		}
+		return NULL;
+}
+
+void mail_benqueue(PCB* process) {
+	if(headBlockedMail) {
+		process->next = headBlockedMail;
+		headBlockedMail = process;
+	} else {
+		process->next = NULL;
+		headBlockedMail = process;
+	}
+}
+
+// Assuming the list is not empty
+PCB* remove_from_mail_blocked(int pid) {
+	PCB* prev = NULL;
+	PCB* current = headBlockedMail;
+	if(headBlockedMail->m_pid == pid && headBlocked->next == NULL) {
+		headBlocked = NULL;
+		return current;
+	}
+	while(current) {
+		if(current->m_pid == pid) {
+			prev->next = current->next;
+			current->next = NULL;
+			return current;
+		}
+		prev = current;
+		current = current->next;
+	}
+	
+	return NULL;
+}
+/*
+PCB* bpq_dequeue(void) {
+		PCB* temp;
+		if(headBlocked) {
+			temp = headBlocked;
+			headBlocked = headBlocked->next;
+			return temp;
+		}
+		return NULL;
+}
+
+void bpq_enqueue (PCB *current_process) {
+	PCB* temp = headBlocked;
+	PCB* prev = NULL;
+	
+	if (headBlocked == NULL) {
+		headBlocked = tailBlocked = current_process;
+	} else {
+		if (headBlocked == tailBlocked) {
+			if (headBlocked->m_priority < current_process->m_priority) {
+				headBlocked->next = current_process;
+				tailBlocked = current_process;
+			} else {
+				current_process->next = tailBlocked;
+				headBlocked = current_process;
+				tailBlocked = current_process->next;
+			}
+		} else {
+			while (temp != tailBlocked->next) {
+				if (temp->m_priority < current_process->m_priority) {
+					if (temp == tailBlocked) {
+						current_process->next = temp->next;
+						temp->next = current_process;
+						tailBlocked = current_process;
+						break;
+					}
+					prev = temp;
+					temp = temp->next;
+				} else {
+					if (headBlocked == temp) {
+						headBlocked = current_process;
+					}
+					current_process->next = temp;
+					prev->next = current_process;
+					break;
+				}
+			}
+		}
+	}
+}
+*/
 void null_process() {
 	while (1) {
 		k_release_processor () ;
@@ -223,8 +324,7 @@ void process_init()
 	int i;
 	U32 *sp;
 	PCB* temp;
-	int stack_size = 0x100;
-	
+  
         /* fill out the initialization table */
 
 	set_test_procs();
@@ -234,39 +334,23 @@ void process_init()
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
-		g_proc_table[i].m_i_process = FALSE;
 		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
 	}
-	
-	// creating the system processes
-	// To create a new system process: increase NUM_SYSTEM PROCS
-	// 																 add the process below like timer process
-	g_proc_table[i].m_pid = PID_TIMER_IPROC;
-	g_proc_table[i].m_stack_size = stack_size;
-	g_proc_table[i].mpf_start_pc = &timer_i_process;
-	g_proc_table[i].m_priority = HIGHEST;
-	g_proc_table[i].m_i_process = TRUE;
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
-	for ( i = 0; i < (NUM_TEST_PROCS); i++ ) {
+	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		int j;
 		
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
-		// setting all processes to ready state in the beginning, if they are user procs
+		// setting all processes to ready state in the beginning
 		// adding all to the ready queue
-		if(g_proc_table[i].m_i_process == FALSE) {
-			(gp_pcbs[i])->m_state = NEW;
-			rpq_enqueue(gp_pcbs[i]);
-		}
-		// if they are i processes, don't enqueue into ready queue
-		else {
-			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
-		}
-		
+		(gp_pcbs[i])->m_state = NEW;
 		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
 		(gp_pcbs[i])->next = NULL;
+		(gp_pcbs[i])->mailBox = NULL;
 		
 		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
+		rpq_enqueue(gp_pcbs[i]);
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
@@ -294,6 +378,7 @@ void process_init()
 
 PCB *scheduler(void)
 {
+
 		PCB* temp;
 		if (gp_current_process != NULL && gp_current_process->m_state != BOR) {
 			temp = gp_current_process;

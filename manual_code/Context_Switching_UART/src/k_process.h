@@ -11,6 +11,7 @@
 #define K_PROCESS_H_
 
 #include "k_rtx.h"
+#include "k_memory.h"
 
 /* ----- Definitions ----- */
 
@@ -22,6 +23,10 @@ void process_init(void);               /* initialize all procs in the system */
 PCB *scheduler(void);                  /* pick the pid of the next to run process */
 int k_release_process(void);           /* kernel release_process function */
 PCB* getProcessByID(int);
+void mail_benqueue(PCB*);
+PCB* remove_from_mail_blocked(int);
+void timer_enqueue(Envelope*);
+Envelope* timer_dequeue();
 
 
 extern U32 *alloc_stack(U32 size_b);   /* allocate stack for a process */
