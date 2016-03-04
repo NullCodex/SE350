@@ -44,6 +44,8 @@ Envelope* headTimer = NULL;
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+PROC_INIT g_api_procs[NUM_API_PROCS];
+//extern void timer_i_process(void);
 
 /**
 *	Null Process
@@ -269,6 +271,18 @@ int k_set_process_priority(int process_id, int priority) {
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
  */
+
+void set_api_procs() {
+	int i;
+	for( i = 0; i < NUM_API_PROCS; i++ ) {
+		g_api_procs[i].m_pid=(U32)(i+1);
+		g_api_procs[i].m_stack_size=0x100;
+	}
+  
+	g_api_procs[0].mpf_start_pc = &k_set_process_priority;
+	g_api_procs[0].m_priority   = HIGHEST;
+}
+
 void process_init() 
 {
 	int i;
@@ -278,6 +292,7 @@ void process_init()
         /* fill out the initialization table */
 
 	set_test_procs();
+	set_api_procs();
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
 		g_proc_table[i].m_stack_size = g_test_procs[i].m_stack_size;

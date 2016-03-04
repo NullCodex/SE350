@@ -17,7 +17,7 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
-
+#define NUM_API_PROCS 1
 
 /* Process IDs */
 #define PID_NULL 0
@@ -37,6 +37,7 @@
 #define PID_TIMER_IPROC  14
 #define PID_UART_IPROC   15
 
+#define HIGHEST -1
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
