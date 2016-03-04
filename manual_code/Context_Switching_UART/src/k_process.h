@@ -11,7 +11,6 @@
 #define K_PROCESS_H_
 
 #include "k_rtx.h"
-#include "common.h"
 
 /* ----- Definitions ----- */
 

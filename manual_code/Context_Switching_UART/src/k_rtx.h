@@ -9,14 +9,35 @@
 #define K_RTX_H_
 
 /*----- Definitations -----*/
+#define BOOL unsigned char
 
-#define RTX_ERR -1
-#define RTX_OK  0
-
+#define TRUE 1
+#define FALSE 0
 #define NULL 0
+#define RTX_ERR -1
+#define RTX_OK 0
 #define NUM_TEST_PROCS 6
+#define NUM_SYSTEM_PROCS 1
 
-#define HIGHEST -1 								  /* meant for i processes *
+/* Process IDs */
+#define PID_NULL 0
+#define PID_P1   1
+#define PID_P2   2
+#define PID_P3   3
+#define PID_P4   4
+#define PID_P5   5
+#define PID_P6   6
+#define PID_A    7
+#define PID_B    8
+#define PID_C    9
+#define PID_SET_PRIO     10
+#define PID_CLOCK        11
+#define PID_KCD          12
+#define PID_CRT          13
+#define PID_TIMER_IPROC  14
+#define PID_UART_IPROC   15
+
+#define HIGHEST -1 								  /* meant for i processes */
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -50,6 +71,7 @@ typedef struct pcb
 	U32 m_pid;		/* process id */
 	U32 m_priority; /* process priority */
 	PROC_STATE_E m_state;   /* state of the process */
+	BOOL m_i_process;			/* flag for checking for i-process */
 	struct pcb *next;
 	struct Envelope* mailBox;
 } PCB;
@@ -61,6 +83,7 @@ typedef struct proc_init
 	int m_priority;         /* initial priority, not used in this example. */
 	int m_stack_size;       /* size of stack in words */
 	void (*mpf_start_pc) ();/* entry point of the process */
+	BOOL m_i_process;			/* flag for checking for i-process */
 } PROC_INIT;
 
 

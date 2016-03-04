@@ -17,6 +17,7 @@
 #include <system_LPC17xx.h>
 #include "uart_polling.h"
 #include "k_process.h"
+#include "k_timer.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -40,71 +41,21 @@ PCB *headReady = NULL;
 PCB *tailReady = NULL;
 
 // system processes
-PCB* timer_process;
-PCB* uart_process;
-PCB* wall_clock_display;
-PCB* kcd_process;
-PCB* crt_process;
-PCB* set_process_priority;
+// PCB* timer_process;
+//PCB* uart_process;
+//PCB* wall_clock_display;
+//PCB* kcd_process;
+//PCB* crt_process;
+// PCB* set_process_priority;
 
 /* process initialization table */
-PROC_INIT g_proc_table[NUM_TEST_PROCS];
+PROC_INIT g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 
 /**
 *	Null Process
 *
 */
-
-/*PCB* bpq_dequeue(void) {
-		PCB* temp;
-		if(headBlocked) {
-			temp = headBlocked;
-			headBlocked = headBlocked->next;
-			return temp;
-		}
-		return NULL;
-}
-
-void bpq_enqueue (PCB *current_process) {
-	PCB* temp = headBlocked;
-	PCB* prev = NULL;
-	
-	if (headBlocked == NULL) {
-		headBlocked = tailBlocked = current_process;
-	} else {
-		if (headBlocked == tailBlocked) {
-			if (headBlocked->m_priority < current_process->m_priority) {
-				headBlocked->next = current_process;
-				tailBlocked = current_process;
-			} else {
-				current_process->next = tailBlocked;
-				headBlocked = current_process;
-				tailBlocked = current_process->next;
-			}
-		} else {
-			while (temp != tailBlocked->next) {
-				if (temp->m_priority < current_process->m_priority) {
-					if (temp == tailBlocked) {
-						current_process->next = temp->next;
-						temp->next = current_process;
-						tailBlocked = current_process;
-						break;
-					}
-					prev = temp;
-					temp = temp->next;
-				} else {
-					if (headBlocked == temp) {
-						headBlocked = current_process;
-					}
-					current_process->next = temp;
-					prev->next = current_process;
-					break;
-				}
-			}
-		}
-	}
-}*/
 
 void null_process() {
 	while (1) {
@@ -272,36 +223,7 @@ void process_init()
 	int i;
 	U32 *sp;
 	PCB* temp;
-  
-	// need to allocate memory for these processes
-	// creating the system processes
-	set_priority_process->m_pid = PID_SET_PRIO;
-	set_priority_process->m_state = WAITING_FOR_INTERRUPT;
-	set_priority_process->m_priority = -1;
-	
-	wall_clock_display->m_pid = PID_CLOCK;
-	wall_clock_process->m_state = WAITING_FOR_INTERRUPT;
-	wall_clock_process->m_priority = -1;
-	
-	wall_clock_display->m_pid = PID_CLOCK;
-	wall_clock_process->m_state = WAITING_FOR_INTERRUPT;
-	wall_clock_process->m_priority = -1;
-	
-	crt_process->m_pid = PID_CRT;
-	crt_process->m_state = WAITING_FOR_INTERRUPT;
-	crt_process->m_priority = -1;
-	
-	kcd_process->m_pid = PID_KCD;
-	kcd_process->m_state = WAITING_FOR_INTERRUPT;
-	kcd_process->m_priority = -1;
-	
-	timer_process->m_pid = PID_TIMER_IPROC;
-	timer_process->m_state = WAITING_FOR_INTERRUPT;
-	timer_process->m_priority = -1;
-	
-	uart_process->m_pid = PID_UART_IPROC;
-	uart_process->m_state = WAITING_FOR_INTERRUPT;
-	uart_process->m_priority = -1;
+	int stack_size = 0x100;
 	
         /* fill out the initialization table */
 
@@ -312,22 +234,39 @@ void process_init()
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
+		g_proc_table[i].m_i_process = FALSE;
 		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
 	}
+	
+	// creating the system processes
+	// To create a new system process: increase NUM_SYSTEM PROCS
+	// 																 add the process below like timer process
+	g_proc_table[i].m_pid = PID_TIMER_IPROC;
+	g_proc_table[i].m_stack_size = stack_size;
+	g_proc_table[i].mpf_start_pc = &timer_i_process;
+	g_proc_table[i].m_priority = HIGHEST;
+	g_proc_table[i].m_i_process = TRUE;
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < (NUM_TEST_PROCS); i++ ) {
 		int j;
 		
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
-		// setting all processes to ready state in the beginning
+		// setting all processes to ready state in the beginning, if they are user procs
 		// adding all to the ready queue
-		(gp_pcbs[i])->m_state = NEW;
+		if(g_proc_table[i].m_i_process == FALSE) {
+			(gp_pcbs[i])->m_state = NEW;
+			rpq_enqueue(gp_pcbs[i]);
+		}
+		// if they are i processes, don't enqueue into ready queue
+		else {
+			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
+		}
+		
 		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
 		(gp_pcbs[i])->next = NULL;
 		
 		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
-		rpq_enqueue(gp_pcbs[i]);
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
