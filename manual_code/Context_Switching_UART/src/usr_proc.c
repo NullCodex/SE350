@@ -223,6 +223,7 @@ void proc6(void)
 	while(1) {
 		p_msg_env_received = (msgbuf*) receive_message(&g_test_procs[4].m_pid);
 		printf("Print message characters: %c, %c \n", p_msg_env_received->mtext[0], p_msg_env_received->mtext[1]);
+		set_process_priority(g_test_procs[5].m_pid, LOW);
 		i++;
 	}
 }
