@@ -231,6 +231,9 @@ PCB* removeProcessByID(int pid) {
 		if(temp->next->m_pid == pid) {
 			blocked = temp->next;
 			temp->next = temp->next->next;
+			if (blocked == tailReady) {
+				tailReady = temp;
+			} 
 			blocked->next = NULL;
 			return blocked;
 		}
@@ -338,6 +341,7 @@ int k_set_process_priority(int process_id, int priority) {
 	// not sure what to return here
 	return process->m_pid;
 }
+
 
 
 /**

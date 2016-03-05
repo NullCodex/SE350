@@ -202,7 +202,9 @@ void proc5(void)
 	p_msg_env->mtext[0] = '%';
 	p_msg_env->mtext[1] = 'W';
 	while (1) {
-		retCode = send_message(g_test_procs[4].m_pid, (void *)p_msg_env);
+		retCode = send_message(g_test_procs[5].m_pid, (void *)p_msg_env);
+		set_process_priority(g_test_procs[5].m_pid, HIGH);
+		i++;
 	}
 	
 	/*
@@ -217,12 +219,10 @@ void proc5(void)
 void proc6(void)
 {
 	int i=0;
-	
+	msgbuf *p_msg_env_received;
 	while(1) {
-		if ( i < 2 )  {
-			uart1_put_string("proc6: \n\r");
-		}
-		release_processor();
+		p_msg_env_received = (msgbuf*) receive_message(&g_test_procs[4].m_pid);
+		printf("Print message characters: %c, %c \n", p_msg_env_received->mtext[0], p_msg_env_received->mtext[1]);
 		i++;
 	}
 }

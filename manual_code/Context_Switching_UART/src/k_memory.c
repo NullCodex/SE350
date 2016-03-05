@@ -101,7 +101,7 @@ void memory_init(void)
 	headBlock->addr = ((U32) headBlock + sizeof(mem_block*));
 	headBlock->released = 1;
 	headBlock->next = NULL;
-	for (i = 0; i < 1; i++) {
+	for (i = 0; i < 30; i++) {
 		headBlock->next = (void *) (headBlock->addr + BLOCK_SIZE);
 		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*));
 		headBlock->next->released = 1;
