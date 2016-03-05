@@ -63,7 +63,7 @@ void set_test_procs() {
 	g_test_procs[0].m_priority   = MEDIUM;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
-	g_test_procs[1].m_priority   = HIGH;
+	g_test_procs[1].m_priority   = LOW;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
 	g_test_procs[2].m_priority   = LOW;
@@ -72,7 +72,7 @@ void set_test_procs() {
 	g_test_procs[3].m_priority   = LOW;
 	
 	g_test_procs[4].mpf_start_pc = &proc5;
-	g_test_procs[4].m_priority   = LOW;
+	g_test_procs[4].m_priority   = HIGH;
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
 	g_test_procs[5].m_priority   = LOW;
@@ -194,15 +194,25 @@ void proc4(void)
 }
 void proc5(void)
 {
-	int i=0;
+	msgbuf *p_msg_env = request_memory_block();
 	
+	int i=0;
+	int retCode;
+	p_msg_env->mtype = DEFAULT;
+	p_msg_env->mtext[0] = '%';
+	p_msg_env->mtext[1] = 'W';
+	while (1) {
+		retCode = send_message(g_test_procs[4].m_pid, (void *)p_msg_env);
+	}
+	
+	/*
 	while(1) {
 		if ( i < 2 )  {
 			uart1_put_string("proc5: \n\r");
 		}
 		release_processor();
 		i++;
-	}
+	}*/
 }
 void proc6(void)
 {

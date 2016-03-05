@@ -58,6 +58,7 @@ typedef unsigned int U32;
 * WFM - Waiting for message
 *
 */
+
 typedef enum {NEW = 0, RDY, RUN, BOR, WFM, WAITING_FOR_INTERRUPT} PROC_STATE_E;
 
 /*
@@ -76,6 +77,7 @@ typedef struct pcb
 	struct pcb *next;
 	struct Envelope* mailBox;
 } PCB;
+
 
 /* initialization table item */
 typedef struct proc_init

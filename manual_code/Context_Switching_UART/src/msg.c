@@ -2,7 +2,8 @@
 
 extern PCB* gp_current_process;
 
-int send_message(int process_id, void* message_envelope) {
+
+int k_send_message(int process_id, void* message_envelope) {
     PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
 
@@ -26,7 +27,8 @@ int send_message(int process_id, void* message_envelope) {
     return RTX_OK;
 }
 
-void* receive_message(int* sender_id) {
+
+void* k_receive_message(int* sender_id) {
     Envelope* received;
     msgbuf* message;
 
@@ -51,7 +53,8 @@ void* receive_message(int* sender_id) {
     return (void*)message;
 }
 
-int delayed_send(int process_id, void* message_envelope, int delay) {
+
+int k_delayed_send(int process_id, void* message_envelope, int delay) {
 		PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
 

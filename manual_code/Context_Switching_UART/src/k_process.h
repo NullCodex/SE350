@@ -13,6 +13,7 @@
 #include "k_rtx.h"
 #include "k_timer.h"
 #include "k_memory.h"
+#include "common.h"
 
 /* ----- Definitions ----- */
 
@@ -28,6 +29,8 @@ void mail_benqueue(PCB*);
 PCB* remove_from_mail_blocked(int);
 void timer_enqueue(Envelope*);
 Envelope* timer_dequeue();
+void printTimeOutQueue();
+void printTimerBlockedQueue();
 
 
 extern U32 *alloc_stack(U32 size_b);   /* allocate stack for a process */

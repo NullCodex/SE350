@@ -33,19 +33,11 @@
 #define PID_CLOCK        11
 #define PID_KCD          12
 #define PID_CRT          13
-<<<<<<< HEAD
-#define PID_TIMER_IPROC  14
-=======
 #define PID_TIMER_IPROC  7 //14
->>>>>>> 53e722c0e58447a2e87c678d50d45acf6024b52b
 #define PID_UART_IPROC   15
 
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
-<<<<<<< HEAD
-#define HIGHEST -1
-=======
->>>>>>> 53e722c0e58447a2e87c678d50d45acf6024b52b
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -72,8 +64,7 @@ typedef struct proc_init
 } PROC_INIT;
 
 /* message buffer */
-<<<<<<< HEAD
-typedef struct msgbuf
+typedef struct MSGBUF
 {
 #ifdef K_MSG_ENV
 	void *mp_next;		/* ptr to next message received*/
@@ -83,25 +74,6 @@ typedef struct msgbuf
 #endif
 	int mtype;              /* user defined message type */
 	char mtext[1];          /* body of the message */
-} MSG_BUF;
-
-#endif // COMMON_H_
-=======
-typedef struct MSGBUF
-{
-	int mtype;              /* user defined message type */
-	char mtext[1];          /* body of the message */
 } msgbuf;
 
-typedef struct Envelope{
-    int sender_id;
-    int destination_id;
-    int delay;
-    struct msgbuf* message;
-    struct Envelope* next;
-} Envelope;
-
-
-
 #endif // COMMON_H_
->>>>>>> 53e722c0e58447a2e87c678d50d45acf6024b52b
