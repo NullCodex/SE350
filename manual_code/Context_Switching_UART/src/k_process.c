@@ -158,6 +158,31 @@ void bpq_enqueue (PCB *current_process) {
 	}
 }
 */
+
+void printTimerBlockedQueue() {
+	PCB* iter = headBlockedMail;
+	while(iter) {
+		printf("Current process in received blocked queue is: %d \n", iter->m_pid);
+		iter = iter->next;
+	}
+}
+
+void printTimeOutQueue() {
+	Envelope* iter = headTimer;
+	msgbuf* iterMessage = NULL;
+	int i = 0;
+	
+	while(iter) {
+		printf("Current envelope message: ");
+		iterMessage = (msgbuf*)iter->message;
+		for(i = 0; i < sizeof(iterMessage->mtext)/sizeof(char); i++) {
+			printf("%c", iterMessage->mtext[i]); 
+		}
+		printf("\n");
+		iter = iter->next;
+	}
+}
+
 void null_process() {
 	while (1) {
 		k_release_processor () ;
