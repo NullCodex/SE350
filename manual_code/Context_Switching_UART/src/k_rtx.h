@@ -10,11 +10,32 @@
 
 /*----- Definitations -----*/
 
-#define RTX_ERR -1
-#define RTX_OK  0
+#define BOOL unsigned char
 
+#define TRUE 1
+#define FALSE 0
 #define NULL 0
+#define RTX_ERR -1
+#define RTX_OK 0
 #define NUM_TEST_PROCS 6
+
+/* Process IDs */
+#define PID_NULL 0
+#define PID_P1   1
+#define PID_P2   2
+#define PID_P3   3
+#define PID_P4   4
+#define PID_P5   5
+#define PID_P6   6
+#define PID_A    7
+#define PID_B    8
+#define PID_C    9
+#define PID_SET_PRIO     10
+#define PID_CLOCK        11
+#define PID_KCD          12
+#define PID_CRT          13
+#define PID_TIMER_IPROC  7 //14
+#define PID_UART_IPROC   15
 
 #define HIGH    0
 #define MEDIUM  1
@@ -53,14 +74,14 @@ typedef struct pcb
 	struct Envelope* mailBox;
 } PCB;
 
-/* initialization table item */
-typedef struct proc_init
-{
-	int m_pid;	        /* process id */
-	int m_priority;         /* initial priority, not used in this example. */
-	int m_stack_size;       /* size of stack in words */
-	void (*mpf_start_pc) ();/* entry point of the process */
-} PROC_INIT;
+/* initialization table item, exposed to user space */
+/*typedef struct proc_init
+//{	
+//	int m_pid;	        /* process id */ 
+//	int m_priority;         /* initial priority, not used in this example. */ 
+//	int m_stack_size;       /* size of stack in words */
+//	void (*mpf_start_pc) ();/* entry point of the process */    
+//} PROC_INIT;
 
 
 #endif // ! K_RTX_H_

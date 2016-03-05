@@ -10,10 +10,12 @@
 
 #include "k_rtx.h"
 #include "msg.h"
+#include "common.h"
 
 /* ----- Definitions ----- */
 #define RAM_END_ADDR 0x10008000
 #define BLOCK_SIZE 128
+
 
 /* ----- Variables ----- */
 /* This symbol is defined in the scatter file (see RVCT Linker User Guide) */
@@ -28,13 +30,5 @@ void *k_request_memory_block(void);
 int k_release_memory_block(void *);
 
 struct mem_block;
-
-typedef struct Envelope{
-    int sender_id;
-    int destination_id;
-    int delay;
-    struct msgbuf* message;
-    struct Envelope* next;
-} Envelope;
 
 #endif /* ! K_MEM_H_ */

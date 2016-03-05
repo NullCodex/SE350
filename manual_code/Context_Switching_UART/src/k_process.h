@@ -12,6 +12,7 @@
 
 #include "k_rtx.h"
 #include "k_memory.h"
+#include "common.h"
 
 /* ----- Definitions ----- */
 
