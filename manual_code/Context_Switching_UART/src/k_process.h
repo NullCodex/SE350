@@ -11,6 +11,7 @@
 #define K_PROCESS_H_
 
 #include "k_rtx.h"
+#include "k_timer.h"
 #include "k_memory.h"
 
 /* ----- Definitions ----- */

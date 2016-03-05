@@ -45,6 +45,7 @@ Envelope* headTimer = NULL;
 PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 PROC_INIT g_api_procs[NUM_API_PROCS];
+extern PCB* timer_process;
 //extern void timer_i_process(void);
 
 /**
@@ -277,8 +278,9 @@ void set_api_procs() {
 	g_api_procs[0].m_pid= PID_TIMER_IPROC;
 	g_api_procs[0].m_stack_size=0x100;
   
-	g_api_procs[0].mpf_start_pc = &process_init;
+	g_api_procs[0].mpf_start_pc = &timer_i_process;
 	g_api_procs[0].m_priority   = HIGHEST;
+	g_api_procs[0].is_i_process = TRUE;
 }
 
 void process_init() 
@@ -298,20 +300,23 @@ void process_init()
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
-		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
+		g_proc_table[i].is_i_process = FALSE;
+		printf("gtest_pcbs pid %d \n", (g_test_procs[i]).m_pid);
+		printf("gtest_pcbs stack %d \n", (g_test_procs[i]).m_stack_size);
 	}
 	
-	for (; i < NUM_TOTAL_PROCS; i++ ) {
+	for (; i < NUM_TOTAL_PROCS; i++, j++ ) {
 		g_proc_table[i].m_pid = g_api_procs[j].m_pid;
 		g_proc_table[i].m_stack_size = g_api_procs[j].m_stack_size;
 		g_proc_table[i].mpf_start_pc = g_api_procs[j].mpf_start_pc;
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_api_procs[j].m_priority;
+		g_proc_table[i].is_i_process = g_api_procs[j].is_i_process;
 		printf("gapi_pcbs %d \n", (g_api_procs[j]).m_priority);
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		int j;
 		
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
@@ -322,8 +327,14 @@ void process_init()
 		(gp_pcbs[i])->next = NULL;
 		(gp_pcbs[i])->mailBox = NULL;
 		
-		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
-		rpq_enqueue(gp_pcbs[i]);
+		if(g_proc_table[i].is_i_process == FALSE) {
+			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
+			rpq_enqueue(gp_pcbs[i]);
+		} else {
+			if(gp_pcbs[i]->m_pid == PID_CLOCK) {
+				timer_process = gp_pcbs[i];
+			}
+		}
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  

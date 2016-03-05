@@ -29,12 +29,4 @@ int k_release_memory_block(void *);
 
 struct mem_block;
 
-typedef struct Envelope{
-    int sender_id;
-    int destination_id;
-    int delay;
-    struct msgbuf* message;
-    struct Envelope* next;
-} Envelope;
-
 #endif /* ! K_MEM_H_ */

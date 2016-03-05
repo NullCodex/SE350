@@ -2,6 +2,10 @@
 #define MSG_H
 
 #include "k_memory.h"
+#include "k_rtx.h"
+#include "printf.h"
+#include "k_process.h"
+#include "k_timer.h"
 
 /* ----- Definitions ----- */
 #define DEFAULT 0

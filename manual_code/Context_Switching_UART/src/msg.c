@@ -1,9 +1,4 @@
 #include "msg.h"
-#include "k_rtx.h"
-#include "k_memory.h"
-#include "printf.h"
-#include "k_process.h"
-#include "timer.h"
 
 extern PCB* gp_current_process;
 

@@ -13,6 +13,8 @@
 #define BIT(X) (1<<X)
 
 volatile uint32_t g_timer_count = 0; // increment every 1 ms
+extern PCB* gp_current_process;
+PCB* timer_process;
 
 /**
  * @brief: initialize timer. Only timer 0 is supported
@@ -112,6 +114,29 @@ __asm void TIMER0_IRQHandler(void)
 	POP{r4-r11, pc}
 } 
 
+int switch_to_timer(PCB *p_pcb_old) 
+{
+	PROC_STATE_E state;
+	
+	state = timer_process->m_state;
+	printf("-------------------------------------\n");
+	printf("Process switch old id %d \n", p_pcb_old->m_pid);
+	printf("Process switch old state %d \n", p_pcb_old->m_state);
+	
+	if (state == WAITING_FOR_INTERRUPT) {
+			p_pcb_old->m_state = RDY; 
+			rpq_enqueue(p_pcb_old);
+			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
+			timer_process->m_state = RUN;
+			__set_MSP((U32) timer_process->mp_sp); //switch to the new proc's stack    
+	} else {
+		printf("Testing error condition");
+		//	timer_process = p_pcb_old; // revert back to the old proc on error
+			return RTX_ERR;
+	}
+	return RTX_OK;
+}
+
 /**
  * @brief: c TIMER0 IRQ Handler
  */
@@ -119,13 +144,15 @@ void c_TIMER0_IRQHandler(void)
 {
 	
 	/* ack inttrupt, see section  21.6.1 on pg 493 of LPC17XX_UM */
+	// means that the interrupt has been handled
 	LPC_TIM0->IR = BIT(0);  
 	
-	g_timer_count++ ;
+	switch_to_timer(gp_current_process);
+	g_timer_count++;
 }
 
 
 // should be called from delayed_send()
 void timer_i_process(void) {
-	
+	printf("in the timer process: %d", g_timer_count);
 }
