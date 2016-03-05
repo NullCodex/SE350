@@ -33,19 +33,12 @@
 #define PID_CLOCK        11
 #define PID_KCD          12
 #define PID_CRT          13
-<<<<<<< HEAD
 #define PID_TIMER_IPROC  14
-=======
-#define PID_TIMER_IPROC  7 //14
->>>>>>> 53e722c0e58447a2e87c678d50d45acf6024b52b
 #define PID_UART_IPROC   15
 
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
-<<<<<<< HEAD
 #define HIGHEST -1
-=======
->>>>>>> 53e722c0e58447a2e87c678d50d45acf6024b52b
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -62,31 +55,17 @@ typedef unsigned int U32;
 
 /* common data structures in both kernel and user spaces */
 
-/* initialization table item, exposed to user space */
+/* initialization table item */
 typedef struct proc_init
-{	
-	int m_pid;	        /* process id */ 
-	int m_priority;         /* initial priority, not used in this example. */ 
+{
+	int m_pid;	        /* process id */
+	int m_priority;         /* initial priority, not used in this example. */
 	int m_stack_size;       /* size of stack in words */
-	void (*mpf_start_pc) ();/* entry point of the process */    
+	int is_i_process; 			/* flag for checking if i process */
+	void (*mpf_start_pc) ();/* entry point of the process */
 } PROC_INIT;
 
 /* message buffer */
-<<<<<<< HEAD
-typedef struct msgbuf
-{
-#ifdef K_MSG_ENV
-	void *mp_next;		/* ptr to next message received*/
-	int m_send_pid;		/* sender pid */
-	int m_recv_pid;		/* receiver pid */
-	int m_kdata[5];		/* extra 20B kernel data place holder */
-#endif
-	int mtype;              /* user defined message type */
-	char mtext[1];          /* body of the message */
-} MSG_BUF;
-
-#endif // COMMON_H_
-=======
 typedef struct MSGBUF
 {
 	int mtype;              /* user defined message type */
@@ -104,4 +83,3 @@ typedef struct Envelope{
 
 
 #endif // COMMON_H_
->>>>>>> 53e722c0e58447a2e87c678d50d45acf6024b52b

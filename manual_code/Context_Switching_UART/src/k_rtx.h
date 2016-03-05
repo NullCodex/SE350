@@ -79,23 +79,4 @@ typedef struct pcb
 } PCB;
 
 
-/* initialization table item */
-typedef struct proc_init
-{
-	int m_pid;	        /* process id */
-	int m_priority;         /* initial priority, not used in this example. */
-	int m_stack_size;       /* size of stack in words */
-	int is_i_process; 			/* flag for checking if i process */
-	void (*mpf_start_pc) ();/* entry point of the process */
-} PROC_INIT;
-
-typedef struct Envelope{
-    int sender_id;
-    int destination_id;
-    int delay;
-    struct msgbuf* message;
-    struct Envelope* next;
-} Envelope;
-
-
 #endif // ! K_RTX_H_
