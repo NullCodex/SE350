@@ -19,7 +19,7 @@
 /* This symbol is defined in the scatter file (see RVCT Linker User Guide) */
 extern unsigned int Image$$RW_IRAM1$$ZI$$Limit;
 extern PCB **gp_pcbs;
-extern PROC_INIT g_proc_table[NUM_TEST_PROCS];
+extern PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 
 /* ----- Functions ------ */
 void memory_init(void);
