@@ -1,7 +1,7 @@
 #include "msg.h"
+#include "k_rtx.h"
 
 extern PCB* gp_current_process;
-
 
 int k_send_message(int process_id, void* message_envelope) {
     PCB* receiving_proc = getProcessByID(process_id);
@@ -26,7 +26,6 @@ int k_send_message(int process_id, void* message_envelope) {
 
     return RTX_OK;
 }
-
 
 void* k_receive_message(int* sender_id) {
     Envelope* received;
@@ -53,6 +52,25 @@ void* k_receive_message(int* sender_id) {
     return (void*)message;
 }
 
+
+void* k_non_blocking_receive_message(int* sender_id) {
+    Envelope* received;
+    msgbuf* message;
+    __disable_irq();
+
+    //received = pop mailque;
+		if(gp_current_process->mailBox == NULL) {
+			return NULL;
+		}
+		received = dequeue_mailBox(gp_current_process);
+    message = (msgbuf* )received->message;
+
+    *sender_id = received->sender_id;
+
+    __enable_irq();
+
+    return (void*)message;
+}
 
 int k_delayed_send(int process_id, void* message_envelope, int delay) {
 		PCB* receiving_proc = getProcessByID(process_id);

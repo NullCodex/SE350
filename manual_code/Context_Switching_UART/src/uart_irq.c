@@ -7,7 +7,9 @@
 
 #include <LPC17xx.h>
 #include "uart.h"
+#include "common.h"
 #include "uart_polling.h"
+#include "rtx.h"
 #ifdef DEBUG_0
 #include "printf.h"
 #endif
@@ -15,6 +17,9 @@
 
 uint8_t g_buffer[]= "You Typed a Q\n\r";
 uint8_t *gp_buffer = g_buffer;
+uint8_t g_input[];
+uint8_t *gp_input = g_input;
+int buffer_index = 0;
 uint8_t g_send_char = 0;
 uint8_t g_char_in;
 uint8_t g_char_out;
@@ -177,6 +182,26 @@ __asm void UART0_IRQHandler(void)
 RESTORE
 	POP{r4-r11, pc}
 } 
+
+/**
+*	Wrapper around creating a message and sending it to KCD
+*/
+void send_to_KCD () {
+	msgbuf* to_send = k_request_memory_block();
+	char char_out;
+	buffer_index = 0;
+	to_send->mtype = DEFAULT;
+	char_out = g_input[buffer_index];
+	while (char_out != '\r') {
+		to_send->mtext[buffer_index] = char_out;
+		buffer_index++;
+		char_out = g_input[buffer_index];
+	}
+	buffer_index = 0;
+	k_send_message(PID_KCD, (void *) to_send);
+}
+
+
 /**
  * @brief: c UART0 IRQ Handler
  */
@@ -199,11 +224,17 @@ void c_UART0_IRQHandler(void)
 		uart1_put_char(g_char_in);
 		uart1_put_string("\n\r");
 #endif // DEBUG_0
-		g_buffer[12] = g_char_in; // nasty hack
-		g_send_char = 1;
+		g_input[buffer_index] = g_char_in;
+		
+		buffer_index++;
+		if (g_char_in == '\r') {
+			g_send_char = 1;
+			buffer_index = 0;
+			send_to_KCD();
+		}
 		
 		/* setting the g_switch_flag */
-		if ( g_char_in == 'S' ) {
+		if ( g_char_in == '\r') {
 			g_switch_flag = 1; 
 		} else {
 			g_switch_flag = 0;

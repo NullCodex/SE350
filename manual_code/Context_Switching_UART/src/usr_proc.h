@@ -8,6 +8,9 @@
 #ifndef USR_PROC_H_
 #define USR_PROC_H
 
+#include "rtx.h"
+#include "uart_polling.h"
+
 void set_test_procs(void);
 void proc1(void);
 void proc2(void);

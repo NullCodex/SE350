@@ -42,6 +42,7 @@ PCB *headBlockedMail = NULL;
 Envelope* headTimer = NULL;
 
 /* process initialization table */
+
 PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 PROC_INIT g_api_procs[NUM_API_PROCS];
@@ -184,6 +185,9 @@ PCB* removeProcessByID(int pid) {
 		if(temp->next->m_pid == pid) {
 			blocked = temp->next;
 			temp->next = temp->next->next;
+			if (blocked == tailReady) {
+				tailReady = temp;
+			} 
 			blocked->next = NULL;
 			return blocked;
 		}
@@ -293,6 +297,7 @@ int k_set_process_priority(int process_id, int priority) {
 }
 
 
+
 /**
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
@@ -341,6 +346,7 @@ void process_init()
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
+
 	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		int j;
 		
@@ -352,6 +358,7 @@ void process_init()
 		(gp_pcbs[i])->next = NULL;
 		(gp_pcbs[i])->mailBox = NULL;
 		
+	
 		if(g_proc_table[i].is_i_process == FALSE) {
 			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
 			rpq_enqueue(gp_pcbs[i]);
@@ -390,7 +397,8 @@ PCB *scheduler(void)
 {
 
 		PCB* temp;
-		if (gp_current_process != NULL && gp_current_process->m_state != BOR) {
+		
+		if (gp_current_process != NULL && gp_current_process->m_state != BOR && gp_current_process->m_state != WFM) {
 			temp = gp_current_process;
 			temp->next = NULL;
 			temp->m_state = RDY;
@@ -424,7 +432,8 @@ int process_switch(PCB *p_pcb_old)
 	if (state == NEW) {
 		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR && p_pcb_old->is_i_process == FALSE) {
+			if (p_pcb_old->m_state != BOR) {
+		
 				printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
 				rpq_enqueue(p_pcb_old);
@@ -438,10 +447,11 @@ int process_switch(PCB *p_pcb_old)
 	
 	/* The following will only execute if the if block above is FALSE */
 
-	if (state == RDY || state == WAITING_FOR_INTERRUPT) {
+	if (state == RDY) {
 		printf("current state is ready\n");
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR && p_pcb_old->is_i_process == FALSE) {
+
+			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
 				p_pcb_old->m_state = RDY; 
 				rpq_enqueue(p_pcb_old);
 			}
