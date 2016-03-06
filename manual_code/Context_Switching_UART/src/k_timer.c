@@ -15,6 +15,7 @@
 volatile uint32_t g_timer_count = 0; // increment every 1 ms
 extern PCB* gp_current_process;
 PCB* timer_process;
+PCB* g_pcb_old;
 
 /**
  * @brief: initialize timer. Only timer 0 is supported
@@ -98,6 +99,17 @@ int get_time(void) {
 	return g_timer_count;
 }
 
+// following the exact C pseudo-code for handler
+void i_scheduler(void) {
+	g_pcb_old = gp_current_process;
+	gp_current_process = timer_process;
+	
+	printf(" -------------------");
+	printf(" switching to TIMER ");
+	
+//	gp_current_process = scheduler();
+}
+
 /**
  * @brief: use CMSIS ISR for TIMER0 IRQ Handler
  * NOTE: This example shows how to save/restore all registers rather than just
@@ -109,33 +121,12 @@ __asm void TIMER0_IRQHandler(void)
 {
 	PRESERVE8
 	IMPORT c_TIMER0_IRQHandler
+	IMPORT timer_i_process
 	PUSH{r4-r11, lr}
 	BL c_TIMER0_IRQHandler
+	BL timer_i_proces
 	POP{r4-r11, pc}
 } 
-
-int switch_to_timer(PCB *p_pcb_old) 
-{
-	PROC_STATE_E state;
-	
-	state = timer_process->m_state;
-	printf("-------------------------------------\n");
-	printf("Process switch old id %d \n", p_pcb_old->m_pid);
-	printf("Process switch old state %d \n", p_pcb_old->m_state);
-	
-	if (state == WAITING_FOR_INTERRUPT) {
-			p_pcb_old->m_state = RDY; 
-			rpq_enqueue(p_pcb_old);
-			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
-			timer_process->m_state = RUN;
-			__set_MSP((U32) timer_process->mp_sp); //switch to the new proc's stack    
-	} else {
-		printf("Testing error condition");
-		//	timer_process = p_pcb_old; // revert back to the old proc on error
-			return RTX_ERR;
-	}
-	return RTX_OK;
-}
 
 /**
  * @brief: c TIMER0 IRQ Handler
@@ -147,7 +138,6 @@ void c_TIMER0_IRQHandler(void)
 	// means that the interrupt has been handled
 	LPC_TIM0->IR = BIT(0);  
 	
-	switch_to_timer(gp_current_process);
 	g_timer_count++;
 }
 
@@ -155,4 +145,5 @@ void c_TIMER0_IRQHandler(void)
 // should be called from delayed_send()
 void timer_i_process(void) {
 	printf("in the timer process: %d", g_timer_count);
+	Envelope* iter;
 }

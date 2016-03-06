@@ -356,7 +356,8 @@ void process_init()
 			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
 			rpq_enqueue(gp_pcbs[i]);
 		} else {
-			if(gp_pcbs[i]->m_pid == PID_CLOCK) {
+			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
+				(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
 				timer_process = gp_pcbs[i];
 			}
 		}
@@ -423,7 +424,7 @@ int process_switch(PCB *p_pcb_old)
 	if (state == NEW) {
 		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR) {
+			if (p_pcb_old->m_state != BOR && p_pcb_old->is_i_process == FALSE) {
 				printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
 				rpq_enqueue(p_pcb_old);
@@ -437,9 +438,10 @@ int process_switch(PCB *p_pcb_old)
 	
 	/* The following will only execute if the if block above is FALSE */
 
-	if (state == RDY) {
+	if (state == RDY || state == WAITING_FOR_INTERRUPT) {
+		printf("current state is ready\n");
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR) {
+			if (p_pcb_old->m_state != BOR && p_pcb_old->is_i_process == FALSE) {
 				p_pcb_old->m_state = RDY; 
 				rpq_enqueue(p_pcb_old);
 			}
