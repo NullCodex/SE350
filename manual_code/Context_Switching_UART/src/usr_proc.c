@@ -41,8 +41,6 @@
  * 
  */
 
-#include "rtx.h"
-#include "uart_polling.h"
 #include "usr_proc.h"
 
 #ifdef DEBUG_0
@@ -66,13 +64,13 @@ void set_test_procs() {
 	g_test_procs[1].m_priority   = LOW;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
-	g_test_procs[2].m_priority   = LOW;
+	g_test_procs[2].m_priority   = HIGH;
 	
 	g_test_procs[3].mpf_start_pc = &proc4;
 	g_test_procs[3].m_priority   = LOW;
 	
 	g_test_procs[4].mpf_start_pc = &proc5;
-	g_test_procs[4].m_priority   = HIGH;
+	g_test_procs[4].m_priority   = LOW;
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
 	g_test_procs[5].m_priority   = LOW;
@@ -146,7 +144,7 @@ void proc3(void)
 			uart1_put_string("\n\r");
 			counter++;
 			if ( counter == 2 ) {
-				ret_val = set_process_priority(g_test_procs[1].m_pid, HIGH);
+				ret_val = set_process_priority(g_test_procs[1].m_pid, LOW);
 				break;
 			} else {
 				ret_val = release_processor();

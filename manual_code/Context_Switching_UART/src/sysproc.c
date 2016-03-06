@@ -38,40 +38,40 @@ void crt_proc(void) {
 
 
 void kcd_proc(void) {
-    // int sender_id;
-    // int count;
-    // char* str;
-    // msgbuf* message = NULL;
-    // char commands[NUM_PROCS][max_command][max_lengthofcommand]; //process id, number of commands registered to a single id, max length of a command
-    // int num_commands[NUM_PROCS];
+  /*  int sender_id;
+    int count;
+    char* str;
+    msgbuf* message = NULL;
+    char commands[NUM_PROCS][max_command][max_lengthofcommand]; //process id, number of commands registered to a single id, max length of a command
+    int num_commands[NUM_PROCS];
 
 
 
-    // while(1) {
-    //     message = k_receive_message(&sender_id);
-    //     if (message->mtype = DEFAULT)
-    //     {
+    while(1) {
+			message = k_receive_message(&sender_id);
+			if (message->mtype = DEFAULT)
+			{
 
-    //     } else if(message->mtype == KCD_REG) {
-    //         count = num_commands[sender_id];
+			} else if(message->mtype == KCD_REG) {
+				count = num_commands[sender_id];
 
-    //         for (i = 0; i < max_lengthofcommand; i++) {
-    //             if (msg->mtext[i] != NULL) {
-    //                 commands[sender_id][count][i] = messsage->mtext[i];
-    //             }
-    //             else {
-    //                 commands[sender_id][count][i] = '\n';
-    //                 break;
-    //             }
+				for (i = 0; i < max_lengthofcommand; i++) {
+					if (msg->mtext[i] != NULL) {
+						commands[sender_id][count][i] = messsage->mtext[i];
+					}
+					else {
+						commands[sender_id][count][i] = '\n';
+            break;
+					}
 
-    //         }
-    //         if (i == max_lengthofcommand) {
-    //             commands[sender_id][count][i] = '\n';
-    //         }
-    //         num_commands[sender_id] = count + 1;
-    //         k_release_memory_block(message);
-    //     }
-    // }
+        }
+        if (i == max_lengthofcommand) {
+					commands[sender_id][count][i] = '\n';
+				}
+        num_commands[sender_id] = count + 1;
+        k_release_memory_block(message);
+		}
+	}*/
 }
 
 void print_wall_clock(int hour, int minute, int second){
