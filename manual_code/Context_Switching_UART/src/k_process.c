@@ -47,6 +47,7 @@ PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 PROC_INIT g_api_procs[NUM_API_PROCS];
 extern PCB* timer_process;
+// extern PCB* uart_process;
 //extern void timer_i_process(void);
 
 /**
@@ -280,10 +281,15 @@ void set_api_procs() {
 	int i;
 	g_api_procs[0].m_pid= PID_TIMER_IPROC;
 	g_api_procs[0].m_stack_size=0x100;
-  
-	g_api_procs[0].mpf_start_pc = &timer_i_process;
+	g_api_procs[0].mpf_start_pc = NULL;
 	g_api_procs[0].m_priority   = HIGHEST;
 	g_api_procs[0].is_i_process = TRUE;
+	
+	g_api_procs[1].m_pid= PID_UART_IPROC;
+	g_api_procs[1].m_stack_size=0x100;
+	g_api_procs[1].mpf_start_pc = NULL;
+	g_api_procs[1].m_priority   = HIGHEST;
+	g_api_procs[1].is_i_process = TRUE;
 }
 
 void process_init() 
@@ -336,9 +342,12 @@ void process_init()
 			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
 			rpq_enqueue(gp_pcbs[i]);
 		} else {
+			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
 			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
-				(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
 				timer_process = gp_pcbs[i];
+			}
+			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
+			//	uart_process = gp_pcbs[i];
 			}
 		}
 		
