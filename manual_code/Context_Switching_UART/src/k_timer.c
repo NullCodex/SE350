@@ -138,19 +138,11 @@ Envelope* timer_dequeue(void) {
  */
 __asm void TIMER0_IRQHandler(void)
 {
-		PRESERVE8
-	IMPORT timer_i_process
-	IMPORT k_release_processor
-	PUSH{r4-r11, lr}
-	BL timer_i_process
-	LDR R4, =__cpp(&g_switch_flag)
-	LDR R4, [R4]
-	MOV R5, #0     
-	CMP R4, R5
-	BEQ  RESTORE    ; if g_switch_flag == 0, then restore the process that was interrupted
-	BL k_release_processor  ; otherwise (i.e g_switch_flag == 1, then switch to the other process)
-RESTORE
-	POP{r4-r11, pc}
+	  PRESERVE8
+    IMPORT timer_i_process
+    PUSH{r4-r11, lr}
+    BL timer_i_process
+    POP{r4-r11, pc}
 } 
 
 /**

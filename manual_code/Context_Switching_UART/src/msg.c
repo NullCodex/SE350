@@ -20,7 +20,10 @@ int k_send_message(int process_id, void* message_envelope) {
 
     if(receiving_proc->m_state == WFM) {
 			
-			// we need to call k_release_processor() here <----- FOR JAMESON
+				if (receiving_proc->m_priority > gp_current_process->m_priority) {
+					__enable_irq();
+					k_release_processor();
+				}
         receiving_proc->m_state = RDY;
         rpq_enqueue(receiving_proc);
     }
