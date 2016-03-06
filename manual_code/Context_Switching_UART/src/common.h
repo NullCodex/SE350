@@ -17,8 +17,8 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
-#define NUM_API_PROCS 1
-#define NUM_TOTAL_PROCS 7
+#define NUM_API_PROCS 2
+#define NUM_TOTAL_PROCS 8
 
 /* Process IDs */
 #define PID_NULL 0

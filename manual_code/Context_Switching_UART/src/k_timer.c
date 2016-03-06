@@ -14,6 +14,8 @@
 
 volatile uint32_t g_timer_count = 0; // increment every 1 ms
 extern PCB* gp_current_process;
+extern uint32_t g_switch_flag;
+
 PCB* timer_process;
 PCB* g_pcb_old;
 Envelope* headTimer = NULL;
@@ -136,10 +138,18 @@ Envelope* timer_dequeue(void) {
  */
 __asm void TIMER0_IRQHandler(void)
 {
-	PRESERVE8
+		PRESERVE8
 	IMPORT timer_i_process
+	IMPORT k_release_processor
 	PUSH{r4-r11, lr}
 	BL timer_i_process
+	LDR R4, =__cpp(&g_switch_flag)
+	LDR R4, [R4]
+	MOV R5, #0     
+	CMP R4, R5
+	BEQ  RESTORE    ; if g_switch_flag == 0, then restore the process that was interrupted
+	BL k_release_processor  ; otherwise (i.e g_switch_flag == 1, then switch to the other process)
+RESTORE
 	POP{r4-r11, pc}
 } 
 
@@ -177,7 +187,8 @@ void timer_i_process(void)
 		Envelope* env = timer_dequeue();
 		k_send_message(env->destination_id, env);
 	}
-
+	g_switch_flag = 1;
+	
 	__enable_irq();
 }
 

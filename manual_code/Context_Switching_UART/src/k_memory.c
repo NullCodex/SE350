@@ -188,6 +188,7 @@ PCB* bpq_dequeue(void) {
 }
 
 void *k_request_memory_block(void) {
+
 	mem_block *toRet = headBlock;
 #ifdef DEBUG_0
 	printf("k_request_memory_block: entering...\n");
@@ -202,6 +203,7 @@ void *k_request_memory_block(void) {
 	toRet->released = 0;
 	toRet->next = NULL;
 	//print_free_blocks();
+	
 	return (void*) (toRet->addr + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 }
 
