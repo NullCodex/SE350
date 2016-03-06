@@ -7,7 +7,9 @@
 #define K_TIMER_H_
 
 #include "k_rtx.h"
+#include "common.h"
 #include "stdint.h"
+#include "msg.h"
 
 extern uint32_t timer_init ( uint8_t n_timer );  /* initialize timer n_timer */
 

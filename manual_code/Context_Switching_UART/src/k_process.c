@@ -39,7 +39,7 @@ PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
 PCB *headBlockedMail = NULL;
-Envelope* headTimer = NULL;
+extern Envelope* headTimer;
 
 /* process initialization table */
 
@@ -53,33 +53,6 @@ extern PCB* timer_process;
 *	Null Process
 *
 */
-
-void timer_enqueue (Envelope *env) {
-	Envelope* temp = headTimer;
-	Envelope* prev = NULL;
-	if(headTimer == NULL) {
-		env->next = headTimer;
-		headTimer = env;
-	} else {
-		while(temp && temp->delay < env->delay) {
-			prev = temp;
-			temp = temp->next;
-		}
-		env->next = prev->next;
-		prev->next = env;
-	}
-}
-
-Envelope* timer_dequeue(void) {
-		Envelope* temp;
-		if(headTimer) {
-			temp = headTimer;
-			headTimer = headTimer->next;
-			temp->next = NULL;
-			return temp;
-		}
-		return NULL;
-}
 
 void mail_benqueue(PCB* process) {
 	if(headBlockedMail) {
@@ -158,7 +131,7 @@ PCB* rpq_dequeue(void) {
 PCB* getProcessByID(int process_id) {
 	int i;
 	
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		if(gp_pcbs[i]->m_pid == process_id) {
 			return gp_pcbs[i];
 		}
@@ -210,7 +183,7 @@ PCB* removeProcessByID(int pid) {
 int k_get_process_priority(int process_id) {
 	int i;
 	
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		if(gp_pcbs[i]->m_pid == process_id) {
 			return gp_pcbs[i]->m_priority;
 		}

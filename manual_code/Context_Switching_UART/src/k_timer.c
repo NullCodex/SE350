@@ -16,6 +16,7 @@ volatile uint32_t g_timer_count = 0; // increment every 1 ms
 extern PCB* gp_current_process;
 PCB* timer_process;
 PCB* g_pcb_old;
+Envelope* headTimer = NULL;
 
 /**
  * @brief: initialize timer. Only timer 0 is supported
@@ -99,15 +100,31 @@ int get_time(void) {
 	return g_timer_count;
 }
 
-// following the exact C pseudo-code for handler
-void i_scheduler(void) {
-	g_pcb_old = gp_current_process;
-	gp_current_process = timer_process;
-	
-	printf(" -------------------");
-	printf(" switching to TIMER ");
-	
-//	gp_current_process = scheduler();
+void timer_enqueue (Envelope *env) {
+	Envelope* temp = headTimer;
+	Envelope* prev = NULL;
+	if(headTimer == NULL) {
+		env->next = headTimer;
+		headTimer = env;
+	} else {
+		while(temp && temp->delay < env->delay) {
+			prev = temp;
+			temp = temp->next;
+		}
+		env->next = prev->next;
+		prev->next = env;
+	}
+}
+
+Envelope* timer_dequeue(void) {
+		Envelope* temp;
+		if(headTimer) {
+			temp = headTimer;
+			headTimer = headTimer->next;
+			temp->next = NULL;
+			return temp;
+		}
+		return NULL;
 }
 
 /**
@@ -120,30 +137,54 @@ void i_scheduler(void) {
 __asm void TIMER0_IRQHandler(void)
 {
 	PRESERVE8
-	IMPORT c_TIMER0_IRQHandler
 	IMPORT timer_i_process
 	PUSH{r4-r11, lr}
-	BL c_TIMER0_IRQHandler
-	BL timer_i_proces
+	BL timer_i_process
 	POP{r4-r11, pc}
 } 
 
 /**
  * @brief: c TIMER0 IRQ Handler
  */
-void c_TIMER0_IRQHandler(void)
+void timer_i_process(void)
 {
+	Envelope* iter = headTimer;
+	__disable_irq();
+	
+	g_pcb_old = gp_current_process;
 	
 	/* ack inttrupt, see section  21.6.1 on pg 493 of LPC17XX_UM */
 	// means that the interrupt has been handled
 	LPC_TIM0->IR = BIT(0);  
 	
 	g_timer_count++;
+	
+	printf("in the timer process: %d", g_timer_count);
+  
+	// get pending requests from the queue
+	while(timer_process->mailBox != NULL) {
+		Envelope* env = dequeue_mailBox(timer_process);
+		timer_enqueue(env);
+	}
+	
+	// Need to confirm this with Jameson
+	while(iter != NULL) {
+		iter->delay = iter->delay - 1;
+		iter = iter->next;
+	}
+		
+  while((headTimer != NULL) && headTimer->delay == 0) {
+		Envelope* env = timer_dequeue();
+		k_send_message(env->destination_id, env);
+	}
+
+	__enable_irq();
+}
+
+int hasNextHeadTimer() {
+	return headTimer == NULL;
 }
 
 
 // should be called from delayed_send()
-void timer_i_process(void) {
-	printf("in the timer process: %d", g_timer_count);
-	Envelope* iter;
-}
+

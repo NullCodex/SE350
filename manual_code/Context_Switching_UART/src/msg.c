@@ -19,6 +19,8 @@ int k_send_message(int process_id, void* message_envelope) {
 		push_mailBox(receiving_proc, env);
 
     if(receiving_proc->m_state == WFM) {
+			
+			// we need to call k_release_processor() here <----- FOR JAMESON
         receiving_proc->m_state = RDY;
         rpq_enqueue(receiving_proc);
     }
