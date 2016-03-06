@@ -409,7 +409,7 @@ PCB *scheduler(void)
 {
 
 		PCB* temp;
-		if (gp_current_process != NULL && gp_current_process->m_state != BOR) {
+		if (gp_current_process != NULL && gp_current_process->m_state != BOR && gp_current_process->m_state != WFM) {
 			temp = gp_current_process;
 			temp->next = NULL;
 			temp->m_state = RDY;
@@ -459,7 +459,7 @@ int process_switch(PCB *p_pcb_old)
 
 	if (state == RDY) {
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR) {
+			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
 				p_pcb_old->m_state = RDY; 
 				rpq_enqueue(p_pcb_old);
 			}

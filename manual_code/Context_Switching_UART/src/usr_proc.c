@@ -104,32 +104,43 @@ void proc1(void)
  * @brief: a process that prints five numbers
  *         and then releases a memory block
  */
+// void proc2(void)
+// {
+// 	int i = 0;
+// 	int ret_val = 20;
+// 	void *p_mem_blk;
+	
+// 	p_mem_blk = request_memory_block();
+// 	set_process_priority(g_test_procs[1].m_pid, MEDIUM);
+// 	while ( 1) {
+// 		if ( i != 0 && i%5 == 0 ) {
+// 			uart0_put_string("\n\r");
+// 			ret_val = release_memory_block(p_mem_blk);
+// #ifdef DEBUG_0
+// 			printf("proc2: ret_val=%d\n", ret_val);
+// #endif /* DEBUG_0 */
+// 			if ( ret_val == -1 ) {
+// 				break;
+// 			}
+// 		}
+// 		uart0_put_char('0' + i%10);
+// 		i++;
+// 	}
+// 	uart0_put_string("proc2: end of testing\n\r");
+// 	set_process_priority(g_test_procs[1].m_pid, LOWEST);
+// 	while ( 1 ) {
+// 		release_processor();
+// 	}
+// }
 void proc2(void)
 {
-	int i = 0;
-	int ret_val = 20;
-	void *p_mem_blk;
-	
-	p_mem_blk = request_memory_block();
-	set_process_priority(g_test_procs[1].m_pid, MEDIUM);
-	while ( 1) {
-		if ( i != 0 && i%5 == 0 ) {
-			uart0_put_string("\n\r");
-			ret_val = release_memory_block(p_mem_blk);
-#ifdef DEBUG_0
-			printf("proc2: ret_val=%d\n", ret_val);
-#endif /* DEBUG_0 */
-			if ( ret_val == -1 ) {
-				break;
-			}
-		}
-		uart0_put_char('0' + i%10);
+	int i=0;
+	msgbuf *p_msg_env_received;
+	while(1) {
+		p_msg_env_received = (msgbuf*) non_blocking_receive_message(&g_test_procs[4].m_pid);
+		printf("Print message characters: %c, %c \n", p_msg_env_received->mtext[0], p_msg_env_received->mtext[1]);
+		set_process_priority(g_test_procs[5].m_pid, LOW);
 		i++;
-	}
-	uart0_put_string("proc2: end of testing\n\r");
-	set_process_priority(g_test_procs[1].m_pid, LOWEST);
-	while ( 1 ) {
-		release_processor();
 	}
 }
 
@@ -162,6 +173,7 @@ void proc3(void)
 	}
 }
 
+
 void proc4(void)
 {
 	int i = 0;
@@ -190,6 +202,7 @@ void proc4(void)
 		release_processor();
 	}
 }
+
 void proc5(void)
 {
 	msgbuf *p_msg_env = request_memory_block();
@@ -200,8 +213,10 @@ void proc5(void)
 	p_msg_env->mtext[0] = '%';
 	p_msg_env->mtext[1] = 'W';
 	while (1) {
-		retCode = send_message(g_test_procs[5].m_pid, (void *)p_msg_env);
+		//retCode = delayed_send(g_test_procs[5].m_pid, (void *)p_msg_env, 2);
 		set_process_priority(g_test_procs[5].m_pid, HIGH);
+		set_process_priority(g_test_procs[1].m_pid, HIGH);
+		printf("testing derp\n");
 		i++;
 	}
 	
@@ -219,7 +234,7 @@ void proc6(void)
 	int i=0;
 	msgbuf *p_msg_env_received;
 	while(1) {
-		p_msg_env_received = (msgbuf*) receive_message(&g_test_procs[4].m_pid);
+		p_msg_env_received = (msgbuf*) non_blocking_receive_message(&g_test_procs[4].m_pid);
 		printf("Print message characters: %c, %c \n", p_msg_env_received->mtext[0], p_msg_env_received->mtext[1]);
 		set_process_priority(g_test_procs[5].m_pid, LOW);
 		i++;
