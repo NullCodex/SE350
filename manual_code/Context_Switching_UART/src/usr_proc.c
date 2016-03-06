@@ -38,7 +38,7 @@ void set_test_procs() {
 	}
   
 	g_test_procs[0].mpf_start_pc = &proc1;
-	g_test_procs[0].m_priority   = MEDIUM;
+	g_test_procs[0].m_priority   = LOW;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
 	g_test_procs[1].m_priority   = MEDIUM;
@@ -50,10 +50,10 @@ void set_test_procs() {
 	g_test_procs[3].m_priority   = LOW;
 	
 	g_test_procs[4].mpf_start_pc = &proc5;
-	g_test_procs[4].m_priority   = HIGH;
+	g_test_procs[4].m_priority   = LOW;
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
-	g_test_procs[5].m_priority   = LOW;
+	g_test_procs[5].m_priority   = HIGH;
 
 }
 

@@ -438,9 +438,9 @@ int process_switch(PCB *p_pcb_old)
 				rpq_enqueue(p_pcb_old);
 			}
 			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
-		}
-		gp_current_process->m_state = RUN;
+				gp_current_process->m_state = RUN;
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
+		}
 	} else {
 		printf("Testing error condition");
 			gp_current_process = p_pcb_old; // revert back to the old proc on error
@@ -516,7 +516,9 @@ int k_release_processor(void)
 		rpq_enqueue(gp_current_process);
 		gp_current_process = p_pcb_old;
 	}
+
 	process_switch(p_pcb_old);
+
 	//rpq_enqueue(p_pcb_old);
 	p_pcb_old = NULL;
 	return RTX_OK;
