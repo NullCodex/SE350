@@ -5,8 +5,8 @@
 #include "msg.h"
 #include "common.h"
 
-void crt_proc(void);
-void UART_iprocess(void);
+#define K_MSG_ENV
+
 void kcd_proc(void);
 void print_wall_clock(int, int, int);
 void wall_clock(void);

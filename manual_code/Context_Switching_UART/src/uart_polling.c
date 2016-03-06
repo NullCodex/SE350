@@ -78,7 +78,6 @@ int uart_init(int n_uart) {
 int uart_get_char(int n_uart)
 {
   LPC_UART_TypeDef *pUart;
-
   if (n_uart == 0) {
     pUart = (LPC_UART_TypeDef *) LPC_UART0;
   } else if (n_uart == 1) {
@@ -118,10 +117,12 @@ int uart_put_char(int n_uart, unsigned char c)
  */
 int uart_put_string(int n_uart, unsigned char *s)
 {
+	__disable_irq();
   if (n_uart >1 ) return -1;    /* only uart0, 1 are supported for now      */
   while (*s !=0) {              /* loop through each char in the string */
     uart_put_char(n_uart, *s++);/* print the char, then ptr increments  */
   }
+	__enable_irq();
   return 0;
 }
 

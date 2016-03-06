@@ -10,13 +10,16 @@
 #include "common.h"
 #include "uart_polling.h"
 #include "rtx.h"
+#include "k_rtx.h"
 #ifdef DEBUG_0
 #include "printf.h"
 #endif
+#define K_MSG_ENV
 
-
-uint8_t g_buffer[]= "You Typed a Q\n\r";
-uint8_t *gp_buffer = g_buffer;
+PCB* uart_process;
+LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
+uint8_t g_buffer[MAX_BUFFER_SIZE];
+uint8_t *gp_buffer;
 uint8_t g_input[];
 uint8_t *gp_input = g_input;
 int buffer_index = 0;
@@ -164,15 +167,15 @@ int uart_irq_init(int n_uart) {
  * NOTE: This example shows how to save/restore all registers rather than just
  *       those backed up by the exception stack frame. We add extra
  *       push and pop instructions in the assembly routine. 
- *       The actual c_UART0_IRQHandler does the rest of irq handling
+ *       The actual UART_iprocess does the rest of irq handling
  */
 __asm void UART0_IRQHandler(void)
 {
 	PRESERVE8
-	IMPORT c_UART0_IRQHandler
+	IMPORT UART_iprocess
 	IMPORT k_release_processor
 	PUSH{r4-r11, lr}
-	BL c_UART0_IRQHandler
+	BL UART_iprocess
 	LDR R4, =__cpp(&g_switch_flag)
 	LDR R4, [R4]
 	MOV R5, #0     
@@ -186,11 +189,12 @@ RESTORE
 /**
 *	Wrapper around creating a message and sending it to KCD
 */
-void send_to_KCD () {
+void send_to_KCD(void) {
 	msgbuf* to_send = k_request_memory_block();
 	char char_out;
 	buffer_index = 0;
 	to_send->mtype = DEFAULT;
+	to_send->sender_id = PID_UART_IPROC;
 	char_out = g_input[buffer_index];
 	while (char_out != '\r') {
 		to_send->mtext[buffer_index] = char_out;
@@ -203,15 +207,16 @@ void send_to_KCD () {
 
 
 /**
- * @brief: c UART0 IRQ Handler
+ * @brief: UART_iprocess uart Handler
  */
-void c_UART0_IRQHandler(void)
+void UART_iprocess(void)
 {
+	msgbuf* to_disp_message;
+	int sender_id;
 	uint8_t IIR_IntId;	    // Interrupt ID from IIR 		 
-	LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
 	
 #ifdef DEBUG_0
-	uart1_put_string("Entering c_UART0_IRQHandler\n\r");
+	uart1_put_string("Entering UART_iprocess\n\r");
 #endif // DEBUG_0
 
 	/* Reading IIR automatically acknowledges the interrupt */
@@ -224,26 +229,35 @@ void c_UART0_IRQHandler(void)
 		uart1_put_char(g_char_in);
 		uart1_put_string("\n\r");
 #endif // DEBUG_0
+		// Disp the character (API)
+		to_disp_message->mtype = CRT_DISPLAY;
+		to_disp_message->sender_id = PID_UART_IPROC;
+		to_disp_message->mtext[0] = g_char_in;
+		g_send_char = 1;
+		k_send_message(PID_CRT, (void *)to_disp_message);
 		g_input[buffer_index] = g_char_in;
 		
 		buffer_index++;
 		if (g_char_in == '\r') {
-			g_send_char = 1;
 			buffer_index = 0;
 			send_to_KCD();
 		}
 		
 		/* setting the g_switch_flag */
-		if ( g_char_in == '\r') {
+		if ( g_char_in == 'S') {
 			g_switch_flag = 1; 
 		} else {
 			g_switch_flag = 0;
 		}
 	} else if (IIR_IntId & IIR_THRE) {
+		// Get the message from crt_display - receive message by sender id
+		sender_id = PID_CRT;
+		to_disp_message = k_receive_message(&sender_id);
+		
 	/* THRE Interrupt, transmit holding register becomes empty */
 
 		if (*gp_buffer != '\0' ) {
-			g_char_out = *gp_buffer;
+			g_char_out = to_disp_message->mtext[0];
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);
@@ -251,6 +265,7 @@ void c_UART0_IRQHandler(void)
 			
 			// you could use the printf instead
 			printf("Writing a char = %c \n\r", g_char_out);
+			k_release_memory_block((void*)to_disp_message);
 #endif // DEBUG_0			
 			pUart->THR = g_char_out;
 			gp_buffer++;
@@ -270,4 +285,30 @@ void c_UART0_IRQHandler(void)
 #endif // DEBUG_0
 		return;
 	}	
+}
+
+/**
+*	CRT_DISPLAY process to display the input to the console
+*/
+void crt_proc(void) {
+	
+    msgbuf* message;
+		int sender_id;
+		char str;
+    while(1) {
+			message = k_receive_message(&sender_id);
+			// Display character by character as they are input to the console
+			str = message->mtext[0];
+			sender_id = message->sender_id;
+			if (message->mtype == CRT_DISPLAY) {
+				if (g_send_char == 1) {
+					message->sender_id = PID_CRT;
+					k_send_message(PID_UART_IPROC, (void*)message);
+					pUart->IER = IER_THRE | IER_RLS | IER_RBR;
+				}
+			} else {
+				k_release_memory_block((void*)message);
+			}
+			//str = NULL;
+    }
 }

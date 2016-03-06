@@ -17,6 +17,12 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
+#define NUM_COMMANDS	3
+
+/* Helper macros */
+#define ARRAYSIZE(array) (sizeof(array)/sizeof(array[0]))
+#define BLOCK_SIZE 128
+#define MAX_BUFFER_SIZE (BLOCK_SIZE - sizeof(msgbuf*))
 
 /* Process IDs */
 #define PID_NULL 0
@@ -66,6 +72,9 @@ typedef struct proc_init
 /* message buffer */
 typedef struct MSGBUF
 {
+	#ifdef K_MSG_ENV
+	int sender_id;					// Expose this to the kernal code
+	#endif		
 	int mtype;              /* user defined message type */
 	char mtext[1];          /* body of the message */
 } msgbuf;

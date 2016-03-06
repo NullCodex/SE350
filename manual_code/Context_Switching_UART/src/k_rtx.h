@@ -75,7 +75,7 @@ typedef struct pcb
 } PCB;
 
 /* initialization table item, exposed to user space */
-/*typedef struct proc_init
+/*typedef struct proc_init*/
 //{	
 //	int m_pid;	        /* process id */ 
 //	int m_priority;         /* initial priority, not used in this example. */ 

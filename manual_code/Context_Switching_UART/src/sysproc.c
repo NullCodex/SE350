@@ -1,77 +1,49 @@
 #include "sysproc.h"
 
-void UART_iprocess(void) {
-    // msgbuf * message = NULL;
-    // msgbuf * message_to_send = NULL;
-    // int sender_id;
-    // char char_read;
-
-    // while(1){
-    //     message = k_receive_message(sender_id);
-    //     char_read = message->mtext[0];
-    //     k_release_memory_block(message);
-    //     create new message?
-    //     message_to_send->mtext[0] = char_read;
-    //     k_send_message(PID_KCD , message);
-
-    // }
-}
-
-
-
-void crt_proc(void) {
-    // msgbuf* message;
-    // char* str;
-
-    // while(1) {
-    //     message = k_receive_message(NULL);
-    //     __disable_irq();
-    //     str = message->mtext;
-    //     printf("\n\r");
-    //     printf("%s\n\r", str);
-    //     str = NULL;
-
-    //     k_release_memory_block(message);
-    //     __enable_irq();
-    // }
-}
-
+char commands[NUM_TEST_PROCS][NUM_COMMANDS];
 
 void kcd_proc(void) {
-  /*  int sender_id;
-    int count;
-    char* str;
+		int msg_sent = -1;
+		int i;
+		int j;
     msgbuf* message = NULL;
-    char commands[NUM_PROCS][max_command][max_lengthofcommand]; //process id, number of commands registered to a single id, max length of a command
-    int num_commands[NUM_PROCS];
-
-
-
+    //char commands[NUM_PROCS][max_command][max_lengthofcommand]; //process id, number of commands registered to a single id, max length of a command
+		int num_commands = ARRAYSIZE(commands);
+		char* toExecute;
+		
     while(1) {
-			message = k_receive_message(&sender_id);
-			if (message->mtype = DEFAULT)
+			for (i = 0; i < ARRAYSIZE(message->mtext); i++) {
+				toExecute += message->mtext[i];
+			}
+			if (message->mtype == DEFAULT)
 			{
-
-			} else if(message->mtype == KCD_REG) {
-				count = num_commands[sender_id];
-
-				for (i = 0; i < max_lengthofcommand; i++) {
-					if (msg->mtext[i] != NULL) {
-						commands[sender_id][count][i] = messsage->mtext[i];
+				
+				// Check if the command is registered
+				if (num_commands > 0) {
+					for (i = 0; i < NUM_TEST_PROCS; i++) {
+						for (j = 0; j < NUM_COMMANDS; j++) {
+							if (commands[i][j] == *toExecute) {
+								printf("To Execute Command: %s\n", commands[i][j]);
+								//TODO: IDK what to do here...how to execute this proc?
+								message->mtype = DEFAULT;
+								msg_sent = k_send_message(i, (void *)message);
+								break;
+							}
+						}
 					}
-					else {
-						commands[sender_id][count][i] = '\n';
-            break;
-					}
-
-        }
-        if (i == max_lengthofcommand) {
-					commands[sender_id][count][i] = '\n';
 				}
-        num_commands[sender_id] = count + 1;
-        k_release_memory_block(message);
+			} else if(message->mtype == KCD_REG) {
+				
+				for (i = 0; i < NUM_COMMANDS; i++) {
+					if (commands[i] == NULL) {
+						commands[message->sender_id][i] = *toExecute;
+					}
+				}
 		}
-	}*/
+		if (msg_sent == -1) {
+			k_release_memory_block((void*)message);
+		}
+	}
 }
 
 void print_wall_clock(int hour, int minute, int second){
@@ -166,7 +138,7 @@ void wall_clock(void){
         
         //start the clock
         if (message->mtext[0] == 'W' && message->mtext[1] == NULL) {
-            message->mtext[0] == ' ';
+            message->mtext[0] = ' ';
             clock_on = TRUE;
         }
 
@@ -186,7 +158,7 @@ void wall_clock(void){
                 __disable_irq();
                 print_wall_clock(hour,minute,second);
                 __enable_irq();
-                k_release_memory_block(message);
+                k_release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
                 
                 } else if (message->mtext[1] == 'R') { 
@@ -199,14 +171,14 @@ void wall_clock(void){
                     __enable_irq();
 
                     //deallocate then create a new one.
-                    k_release_memory_block(message);
+                    k_release_memory_block((void *)message);
 
                 } else if (message->mtext[1] == 'T') {
                     hour = 0;
                     minute = 0;
                     second = 0;
                     clock_on = FALSE;
-                    k_release_memory_block(message);
+                    k_release_memory_block((void*)message);
 
                 } else if (message->mtext[1] == 'S' && check_format(message->mtext)) {
                     for(i = 3; i < 10; i = i + 3) { 
@@ -234,14 +206,14 @@ void wall_clock(void){
                     __disable_irq();
                     print_wall_clock(hour,minute,second);
                     __enable_irq();
-                    k_release_memory_block(message);
+                    k_release_memory_block((void*)message);
             } else{ 
                 //else prints out the message
                 k_send_message(PID_CRT, msg);
             }
         } else { 
             //if message is null or clock is off, deallocates the message
-            k_release_memory_block(message);
+            k_release_memory_block((void*)message);
         }
     }
 }

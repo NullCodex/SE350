@@ -27,9 +27,9 @@ PCB* getProcessByID(int);
 void mail_benqueue(PCB*);
 PCB* remove_from_mail_blocked(int);
 void timer_enqueue(Envelope*);
-Envelope* timer_dequeue();
-void printTimeOutQueue();
-void printTimerBlockedQueue();
+Envelope* timer_dequeue(void);
+void printTimeOutQueue(void);
+void printTimerBlockedQueue(void);
 
 
 extern U32 *alloc_stack(U32 size_b);   /* allocate stack for a process */
