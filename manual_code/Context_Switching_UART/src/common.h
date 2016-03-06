@@ -80,14 +80,14 @@ typedef struct MSGBUF
 	int sender_id;					// Expose this to the kernal code
 	#endif		
 	int mtype;              /* user defined message type */
-	char mtext[1];          /* body of the message */
+	 char mtext[(128 - 4*sizeof(int) - sizeof(struct msgbuf*) - sizeof(struct Envelope*))/sizeof(char)];          /* body of the message */
 } msgbuf;
 
 typedef struct Envelope{
     int sender_id;
     int destination_id;
     int delay;
-    struct msgbuf* message;
+    msgbuf* message;
     struct Envelope* next;
 } Envelope;
 

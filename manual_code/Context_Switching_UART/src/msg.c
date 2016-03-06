@@ -19,13 +19,14 @@ int k_send_message(int process_id, void* message_envelope) {
 		push_mailBox(receiving_proc, env);
 
     if(receiving_proc->m_state == WFM) {
-				receiving_proc = remove_from_mail_blocked(process_id);
+				receiving_proc = remove_from_mail_blocked(receiving_proc->m_pid);
 				receiving_proc->m_state = RDY;
         rpq_enqueue(receiving_proc);
+			
 				if (receiving_proc->m_priority <= gp_current_process->m_priority) {
+					__enable_irq();
 					k_release_processor();
 				}
-       
     }
     __enable_irq();
 
@@ -80,6 +81,7 @@ void* k_non_blocking_receive_message(int* sender_id) {
 int k_delayed_send(int process_id, void* message_envelope, int delay) {
 		PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
+		msgbuf* msg;
 
     __disable_irq();
     env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
@@ -87,6 +89,7 @@ int k_delayed_send(int process_id, void* message_envelope, int delay) {
     env->destination_id = process_id;
     env->delay = delay;
     env->message = message_envelope;
+		msg = env->message;
 		timer_enqueue(env);
 		
     __enable_irq();

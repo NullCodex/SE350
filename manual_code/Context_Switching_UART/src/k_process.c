@@ -69,7 +69,7 @@ void mail_benqueue(PCB* process) {
 PCB* remove_from_mail_blocked(int pid) {
 	PCB* prev = NULL;
 	PCB* current = headBlockedMail;
-	if(headBlockedMail->m_pid == pid && headBlocked->next == NULL) {
+	if(headBlockedMail->m_pid == pid && headBlockedMail->next == NULL) {
 		headBlocked = NULL;
 		return current;
 	}
@@ -404,9 +404,6 @@ PCB *scheduler(void)
 			rpq_enqueue(temp);
 		}
 		temp = rpq_dequeue();
-		printf("-----------------------\n");
-		printf("In scheduler\n");
-		printf("value of temp in scheduler %d\n", temp->m_pid);
 		temp->next = NULL;
 		//rpq_enqueue(temp);
 		return temp;
@@ -425,15 +422,15 @@ int process_switch(PCB *p_pcb_old)
 	PROC_STATE_E state;
 	
 	state = gp_current_process->m_state;
-	printf("-------------------------------------\n");
-	printf("Process switch old id %d \n", p_pcb_old->m_pid);
-	printf("Process switch old state %d \n", p_pcb_old->m_state);
+//	printf("-------------------------------------\n");
+//	printf("Process switch old id %d \n", p_pcb_old->m_pid);
+//	printf("Process switch old state %d \n", p_pcb_old->m_state);
 	if (state == NEW) {
-		printf("current state is new\n");
+//		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
 			if (p_pcb_old->m_state != BOR) {
 		
-				printf("current procss not old and old not new\n");
+	//			printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
 				rpq_enqueue(p_pcb_old);
 			}
@@ -447,7 +444,7 @@ int process_switch(PCB *p_pcb_old)
 	/* The following will only execute if the if block above is FALSE */
 
 	if (state == RDY) {
-		printf("current state is ready\n");
+//		printf("current state is ready\n");
 		if (gp_current_process != p_pcb_old) {
 
 			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
@@ -459,7 +456,7 @@ int process_switch(PCB *p_pcb_old)
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
 		}
 	} else {
-		printf("Testing error condition");
+	//	printf("Testing error condition");
 			gp_current_process = p_pcb_old; // revert back to the old proc on error
 			return RTX_ERR;
 	}
@@ -495,12 +492,12 @@ int k_release_processor(void)
 	PCB *p_pcb_old = NULL;
 	
 	PCB* temp = headReady;
-	printf("-----------------------\n");
-	printf("in k_release processor\n");
-	while(temp != NULL) {
-			printf("before scheduler %d \n", (temp)->m_pid);
-			temp = temp->next;
-	}
+//	printf("-----------------------\n");
+//	printf("in k_release processor\n");
+//	while(temp != NULL) {
+//			printf("before scheduler %d \n", (temp)->m_pid);
+//			temp = temp->next;
+//	}
 	
 	p_pcb_old = gp_current_process;
 	gp_current_process = scheduler();
@@ -508,7 +505,7 @@ int k_release_processor(void)
 	temp = headReady;
 	
 	while(temp != NULL) {
-			printf("after scheduler %d \n", (temp)->m_pid);
+//			printf("after scheduler %d \n", (temp)->m_pid);
 			temp = temp->next;
 	}
 //	printf("gp_current_process 0x%x \n", gp_current_process->m_state);
@@ -520,7 +517,7 @@ int k_release_processor(void)
 	}
   
 	if ( p_pcb_old == NULL /*|| p_pcb_old->m_state==BOR*/ ) {
-		printf("old is null or old state is bor\n");
+//		printf("old is null or old state is bor\n");
 		p_pcb_old = gp_current_process;
 	//	p_pcb_old->m_state = NEW;
 	//	gp_current_process->m_state = NEW;
