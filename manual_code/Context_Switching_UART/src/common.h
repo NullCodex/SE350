@@ -17,8 +17,8 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
-#define NUM_API_PROCS 2
-#define NUM_TOTAL_PROCS 8
+#define NUM_API_PROCS 4
+#define NUM_TOTAL_PROCS 10
 #define NUM_COMMANDS	3
 
 /* Helper macros */
@@ -46,11 +46,11 @@
 
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
-#define HIGHEST -1
-#define HIGH    0
-#define MEDIUM  1
-#define LOW     2
-#define LOWEST  3
+#define HIGHEST 1
+#define HIGH    2
+#define MEDIUM  3
+#define LOW     4
+#define LOWEST  5
 
 /* Message Types */
 #define DEFAULT 0

@@ -14,6 +14,8 @@
 #include "k_timer.h"
 #include "k_memory.h"
 #include "common.h"
+#include "sysproc.h"
+#include "uart.h"
 
 /* ----- Definitions ----- */
 

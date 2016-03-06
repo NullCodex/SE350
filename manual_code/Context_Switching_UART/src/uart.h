@@ -60,5 +60,7 @@
      
 /* initialize the n_uart to use interrupt */
 int uart_irq_init(int n_uart);		
+void UART_iprocess(void);
+void crt_proc(void);
 
 #endif /* ! UART_IRQ_H_ */

@@ -19,13 +19,13 @@ int k_send_message(int process_id, void* message_envelope) {
 		push_mailBox(receiving_proc, env);
 
     if(receiving_proc->m_state == WFM) {
-			
-				if (receiving_proc->m_priority > gp_current_process->m_priority) {
-					__enable_irq();
+				receiving_proc = remove_from_mail_blocked(process_id);
+				receiving_proc->m_state = RDY;
+        rpq_enqueue(receiving_proc);
+				if (receiving_proc->m_priority <= gp_current_process->m_priority) {
 					k_release_processor();
 				}
-        receiving_proc->m_state = RDY;
-        rpq_enqueue(receiving_proc);
+       
     }
     __enable_irq();
 

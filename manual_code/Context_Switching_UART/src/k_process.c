@@ -47,7 +47,7 @@ PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 PROC_INIT g_api_procs[NUM_API_PROCS];
 extern PCB* timer_process;
-// extern PCB* uart_process;
+extern PCB* uart_process;
 //extern void timer_i_process(void);
 
 /**
@@ -287,9 +287,21 @@ void set_api_procs() {
 	
 	g_api_procs[1].m_pid= PID_UART_IPROC;
 	g_api_procs[1].m_stack_size=0x100;
-	g_api_procs[1].mpf_start_pc = NULL;
+	g_api_procs[1].mpf_start_pc = &UART_iprocess;
 	g_api_procs[1].m_priority   = HIGHEST;
 	g_api_procs[1].is_i_process = TRUE;
+	
+	g_api_procs[2].m_pid = PID_KCD;
+	g_api_procs[2].m_stack_size=0x100;
+	g_api_procs[2].mpf_start_pc = &kcd_proc;
+	g_api_procs[2].m_priority = HIGHEST;
+	g_api_procs[2].is_i_process = FALSE;
+	
+	g_api_procs[3].m_pid= PID_CRT;
+	g_api_procs[3].m_stack_size=0x100;
+	g_api_procs[3].mpf_start_pc = &crt_proc;
+	g_api_procs[3].m_priority   = HIGHEST;
+	g_api_procs[3].is_i_process = FALSE;
 }
 
 void process_init() 
@@ -340,14 +352,19 @@ void process_init()
 	
 		if(g_proc_table[i].is_i_process == FALSE) {
 			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
-			rpq_enqueue(gp_pcbs[i]);
+			if ((gp_pcbs[i])->m_pid == PID_KCD || (gp_pcbs[i])->m_pid == PID_CRT) {
+				gp_pcbs[i]->m_state = WFM;
+				mail_benqueue(gp_pcbs[i]);
+			} else {
+				rpq_enqueue(gp_pcbs[i]);
+			}
 		} else {
 			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
 			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
 				timer_process = gp_pcbs[i];
 			}
-			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
-			//	uart_process = gp_pcbs[i];
+			if(gp_pcbs[i]->m_pid == PID_UART_IPROC) {
+				uart_process = gp_pcbs[i];
 			}
 		}
 		

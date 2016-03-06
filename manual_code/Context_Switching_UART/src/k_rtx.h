@@ -36,11 +36,11 @@
 #define PID_TIMER_IPROC  14
 #define PID_UART_IPROC   15
 
-#define HIGHEST -1
-#define HIGH    0
-#define MEDIUM  1
-#define LOW     2
-#define LOWEST  3
+#define HIGHEST 1
+#define HIGH    2
+#define MEDIUM  3
+#define LOW     4
+#define LOWEST  5
 
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */
