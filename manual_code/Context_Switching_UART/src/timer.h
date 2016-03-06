@@ -6,6 +6,8 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
+#include "common.h"
+
 extern U32 timer_init (U8 );  /* initialize timer n_timer */
 
 int get_time(void);

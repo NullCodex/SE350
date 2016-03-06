@@ -9,7 +9,6 @@
 #define K_RTX_H_
 
 /*----- Definitations -----*/
-
 #define BOOL unsigned char
 
 #define TRUE 1
@@ -34,9 +33,10 @@
 #define PID_CLOCK        11
 #define PID_KCD          12
 #define PID_CRT          13
-#define PID_TIMER_IPROC  7 //14
+#define PID_TIMER_IPROC  14
 #define PID_UART_IPROC   15
 
+#define HIGHEST -1
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -56,7 +56,8 @@ typedef unsigned int U32;
 * WFM - Waiting for message
 *
 */
-typedef enum {NEW = 0, RDY, RUN, BOR, WFM} PROC_STATE_E;
+
+typedef enum {NEW = 0, RDY, RUN, BOR, WFM, WAITING_FOR_INTERRUPT} PROC_STATE_E;
 
 /*
   PCB data structure definition.
@@ -69,19 +70,11 @@ typedef struct pcb
 	U32 *mp_sp;		/* stack pointer of the process */
 	U32 m_pid;		/* process id */
 	U32 m_priority; /* process priority */
+	int is_i_process; /* flag for checking if i process */
 	PROC_STATE_E m_state;   /* state of the process */
 	struct pcb *next;
 	struct Envelope* mailBox;
 } PCB;
-
-/* initialization table item, exposed to user space */
-/*typedef struct proc_init*/
-//{	
-//	int m_pid;	        /* process id */ 
-//	int m_priority;         /* initial priority, not used in this example. */ 
-//	int m_stack_size;       /* size of stack in words */
-//	void (*mpf_start_pc) ();/* entry point of the process */    
-//} PROC_INIT;
 
 
 #endif // ! K_RTX_H_

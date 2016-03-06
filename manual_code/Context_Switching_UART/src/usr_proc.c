@@ -1,43 +1,19 @@
 /**
  * @file:   usr_proc.c
- * @brief:  Six user processes: proc1...6 to test memory blocking/unblocking 
+ * @brief:  Six user processes: proc1...6 to do simple processor managment testing
  * @author: Yiqing Huang
- * @date:   2016/02/03
+ * @date:   2014/02/07
  * NOTE: Each process is in an infinite loop. Processes never terminate.
- *       The test requires set_process_priority preemption works properly.
- *   
- * Two possible output unde the assumption that 
- * we have TWO memory blocks in the system.
+ * Expected UART output:
+ * abcde
+ * 01234
+ * fghij
+ * 56789
+ * 01234
+ * 56789
+ * proc1 end of testing
+ * proc2 end of testing
  *
- * Expected UART output: (assuming memory block has ownership.):
- * ABCDE
- * FGHIJ
- * 01234
- * KLMNO
- * 56789
- * proc2: end of testing
- * proc3: 
- * proc4: 
- * proc5: 
- * proc6: 
- * proc3: 
- * proc4: 
- * proc5: 
- * proc6: 
- *
- * Expected UART output: (assuming shared memory among processes (no ownership))
- * ABCDE
- * FGHIJ
- * 01234
- * KLMNO
- * 56789
- * PQRST
- * 01234
- * UVWXY
- * 56789
- * ZABCD
- * 01234
- * ...... you see P1 and P2 keep alternating between each other, p3-p6 will never run
  * 
  */
 
@@ -52,6 +28,8 @@
 /* initialization table item */
 PROC_INIT g_test_procs[NUM_TEST_PROCS];
 
+
+
 void set_test_procs() {
 	int i;
 	for( i = 0; i < NUM_TEST_PROCS; i++ ) {
@@ -63,7 +41,7 @@ void set_test_procs() {
 	g_test_procs[0].m_priority   = MEDIUM;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
-	g_test_procs[1].m_priority   = LOW;
+	g_test_procs[1].m_priority   = MEDIUM;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
 	g_test_procs[2].m_priority   = LOW;
@@ -76,77 +54,14 @@ void set_test_procs() {
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
 	g_test_procs[5].m_priority   = LOW;
-	
-	uart1_init();
+
 }
 
 
 /**
- * @brief: a process that prints five uppercase letters
- *         and request a memory block.
+ * @brief: a process that prints 2x5 lowercase letters
  */
 void proc1(void)
-{
-	int i = 0;
-	void *p_mem_blk;
-	while ( 1 ) {
-		if ( i != 0 && i%5 == 0 ) {
-			uart0_put_string("\n\r");
-			p_mem_blk = request_memory_block();
-#ifdef DEBUG_0
-			printf("proc1: p_mem_blk=0x%x\n", p_mem_blk);
-#endif /* DEBUG_0 */
-		}
-		uart0_put_char('A' + i%26);
-		i++;
-	}
-}
-
-/**
- * @brief: a process that prints five numbers
- *         and then releases a memory block
- */
-// void proc2(void)
-// {
-// 	int i = 0;
-// 	int ret_val = 20;
-// 	void *p_mem_blk;
-	
-// 	p_mem_blk = request_memory_block();
-// 	set_process_priority(g_test_procs[1].m_pid, MEDIUM);
-// 	while ( 1) {
-// 		if ( i != 0 && i%5 == 0 ) {
-// 			uart0_put_string("\n\r");
-// 			ret_val = release_memory_block(p_mem_blk);
-// #ifdef DEBUG_0
-// 			printf("proc2: ret_val=%d\n", ret_val);
-// #endif /* DEBUG_0 */
-// 			if ( ret_val == -1 ) {
-// 				break;
-// 			}
-// 		}
-// 		uart0_put_char('0' + i%10);
-// 		i++;
-// 	}
-// 	uart0_put_string("proc2: end of testing\n\r");
-// 	set_process_priority(g_test_procs[1].m_pid, LOWEST);
-// 	while ( 1 ) {
-// 		release_processor();
-// 	}
-// }
-void proc2(void)
-{
-	int i=0;
-	msgbuf *p_msg_env_received;
-	while(1) {
-		p_msg_env_received = (msgbuf*) non_blocking_receive_message(&g_test_procs[4].m_pid);
-		printf("Print message characters: %c, %c \n", p_msg_env_received->mtext[0], p_msg_env_received->mtext[1]);
-		set_process_priority(g_test_procs[5].m_pid, LOW);
-		i++;
-	}
-}
-
-void proc3(void)
 {
 	int i = 0;
 	int counter = 0;
@@ -154,10 +69,10 @@ void proc3(void)
 	while ( 1 ) {
 		
 		if ( i != 0 && i%5 == 0 ) {
-			uart1_put_string("\n\r");
+			uart0_put_string("\n\r");
 			counter++;
 			if ( counter == 2 ) {
-				ret_val = set_process_priority(g_test_procs[1].m_pid, HIGH);
+				ret_val = set_process_priority(PID_P2, HIGH);
 				break;
 			} else {
 				ret_val = release_processor();
@@ -166,17 +81,19 @@ void proc3(void)
 			printf("proc1: ret_val = %d \n", ret_val);
 #endif /* DEBUG_0 */
 		}
-		uart1_put_char('a' + i%10);
+		uart0_put_char('a' + i%10);
 		i++;
 	}
-	uart1_put_string("proc1 end of testing\n\r");
+	uart0_put_string("proc1 end of testing\n\r");
 	while ( 1 ) {
 		release_processor();
 	}
 }
 
-
-void proc4(void)
+/**
+ * @brief: a process that prints 4x5 numbers 
+ */
+void proc2(void)
 {
 	int i = 0;
 	int ret_val = 20;
@@ -184,10 +101,10 @@ void proc4(void)
 	
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
-			uart1_put_string("\n\r");
+			uart0_put_string("\n\r");
 			counter++;
 			if ( counter == 4 ) {
-				ret_val = set_process_priority(g_test_procs[0].m_pid, HIGH);
+				ret_val = set_process_priority(PID_P1, HIGH);
 				break;
 			} else {
 				ret_val = release_processor();
@@ -196,11 +113,28 @@ void proc4(void)
 			printf("proc2: ret_val=%d\n", ret_val);
 #endif /* DEBUG_0 */
 		}
-		uart1_put_char('0' + i%10);
+		uart0_put_char('0' + i%10);
 		i++;
 	}
-	uart1_put_string("proc2 end of testing\n\r");
+	uart0_put_string("proc2 end of testing\n\r");
 	while ( 1 ) {
+		release_processor();
+	}
+}
+
+void proc3(void)
+{
+	
+	while(1) {
+		uart0_put_string("proc3: \n\r");
+		release_processor();
+	}
+}
+
+void proc4(void)
+{
+	while(1) {
+		uart0_put_string("proc4: \n\r");
 		release_processor();
 	}
 }
@@ -215,7 +149,7 @@ void proc5(void)
 	p_msg_env->mtext[0] = '%';
 	p_msg_env->mtext[1] = 'W';
 	while (1) {
-		//retCode = delayed_send(g_test_procs[5].m_pid, (void *)p_msg_env, 2);
+		retCode = delayed_send(g_test_procs[5].m_pid, (void *)p_msg_env, 2);
 		set_process_priority(g_test_procs[5].m_pid, HIGH);
 		set_process_priority(g_test_procs[1].m_pid, HIGH);
 		printf("testing derp\n");
@@ -231,14 +165,11 @@ void proc5(void)
 		i++;
 	}*/
 }
+
 void proc6(void)
 {
-	int i=0;
-	msgbuf *p_msg_env_received;
 	while(1) {
-		p_msg_env_received = (msgbuf*) non_blocking_receive_message(&g_test_procs[4].m_pid);
-		printf("Print message characters: %c, %c \n", p_msg_env_received->mtext[0], p_msg_env_received->mtext[1]);
-		set_process_priority(g_test_procs[5].m_pid, LOW);
-		i++;
+		uart0_put_string("proc6: \n\r");
+		release_processor();
 	}
 }

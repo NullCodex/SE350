@@ -17,6 +17,8 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
+#define NUM_API_PROCS 2
+#define NUM_TOTAL_PROCS 8
 #define NUM_COMMANDS	3
 
 /* Helper macros */
@@ -39,11 +41,12 @@
 #define PID_CLOCK        11
 #define PID_KCD          12
 #define PID_CRT          13
-#define PID_TIMER_IPROC  7 //14
+#define PID_TIMER_IPROC  14
 #define PID_UART_IPROC   15
 
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
+#define HIGHEST -1
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
@@ -60,13 +63,14 @@ typedef unsigned int U32;
 
 /* common data structures in both kernel and user spaces */
 
-/* initialization table item, exposed to user space */
+/* initialization table item */
 typedef struct proc_init
-{	
-	int m_pid;	        /* process id */ 
-	int m_priority;         /* initial priority, not used in this example. */ 
+{
+	int m_pid;	        /* process id */
+	int m_priority;         /* initial priority, not used in this example. */
 	int m_stack_size;       /* size of stack in words */
-	void (*mpf_start_pc) ();/* entry point of the process */    
+	int is_i_process; 			/* flag for checking if i process */
+	void (*mpf_start_pc) ();/* entry point of the process */
 } PROC_INIT;
 
 /* message buffer */

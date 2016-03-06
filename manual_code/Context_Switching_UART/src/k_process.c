@@ -39,43 +39,21 @@ PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
 PCB *headBlockedMail = NULL;
-Envelope* headTimer = NULL;
+extern Envelope* headTimer;
 
 /* process initialization table */
-PROC_INIT g_proc_table[NUM_TEST_PROCS];
+
+PROC_INIT g_proc_table[NUM_TOTAL_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+PROC_INIT g_api_procs[NUM_API_PROCS];
+extern PCB* timer_process;
+// extern PCB* uart_process;
+//extern void timer_i_process(void);
 
 /**
 *	Null Process
 *
 */
-
-void timer_enqueue (Envelope *env) {
-	Envelope* temp = headTimer;
-	Envelope* prev = NULL;
-	if(headTimer == NULL) {
-		env->next = headTimer;
-		headTimer = env;
-	} else {
-		while(temp && temp->delay < env->delay) {
-			prev = temp;
-			temp = temp->next;
-		}
-		env->next = prev->next;
-		prev->next = env;
-	}
-}
-
-Envelope* timer_dequeue(void) {
-		Envelope* temp;
-		if(headTimer) {
-			temp = headTimer;
-			headTimer = headTimer->next;
-			temp->next = NULL;
-			return temp;
-		}
-		return NULL;
-}
 
 void mail_benqueue(PCB* process) {
 	if(headBlockedMail) {
@@ -107,57 +85,7 @@ PCB* remove_from_mail_blocked(int pid) {
 	
 	return NULL;
 }
-/*
-PCB* bpq_dequeue(void) {
-		PCB* temp;
-		if(headBlocked) {
-			temp = headBlocked;
-			headBlocked = headBlocked->next;
-			return temp;
-		}
-		return NULL;
-}
 
-void bpq_enqueue (PCB *current_process) {
-	PCB* temp = headBlocked;
-	PCB* prev = NULL;
-	
-	if (headBlocked == NULL) {
-		headBlocked = tailBlocked = current_process;
-	} else {
-		if (headBlocked == tailBlocked) {
-			if (headBlocked->m_priority < current_process->m_priority) {
-				headBlocked->next = current_process;
-				tailBlocked = current_process;
-			} else {
-				current_process->next = tailBlocked;
-				headBlocked = current_process;
-				tailBlocked = current_process->next;
-			}
-		} else {
-			while (temp != tailBlocked->next) {
-				if (temp->m_priority < current_process->m_priority) {
-					if (temp == tailBlocked) {
-						current_process->next = temp->next;
-						temp->next = current_process;
-						tailBlocked = current_process;
-						break;
-					}
-					prev = temp;
-					temp = temp->next;
-				} else {
-					if (headBlocked == temp) {
-						headBlocked = current_process;
-					}
-					current_process->next = temp;
-					prev->next = current_process;
-					break;
-				}
-			}
-		}
-	}
-}
-*/
 
 void printTimerBlockedQueue() {
 	PCB* iter = headBlockedMail;
@@ -204,7 +132,7 @@ PCB* rpq_dequeue(void) {
 PCB* getProcessByID(int process_id) {
 	int i;
 	
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		if(gp_pcbs[i]->m_pid == process_id) {
 			return gp_pcbs[i];
 		}
@@ -256,7 +184,7 @@ PCB* removeProcessByID(int pid) {
 int k_get_process_priority(int process_id) {
 	int i;
 	
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		if(gp_pcbs[i]->m_pid == process_id) {
 			return gp_pcbs[i]->m_priority;
 		}
@@ -348,26 +276,57 @@ int k_set_process_priority(int process_id, int priority) {
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
  */
+
+void set_api_procs() {
+	int i;
+	g_api_procs[0].m_pid= PID_TIMER_IPROC;
+	g_api_procs[0].m_stack_size=0x100;
+	g_api_procs[0].mpf_start_pc = NULL;
+	g_api_procs[0].m_priority   = HIGHEST;
+	g_api_procs[0].is_i_process = TRUE;
+	
+	g_api_procs[1].m_pid= PID_UART_IPROC;
+	g_api_procs[1].m_stack_size=0x100;
+	g_api_procs[1].mpf_start_pc = NULL;
+	g_api_procs[1].m_priority   = HIGHEST;
+	g_api_procs[1].is_i_process = TRUE;
+}
+
 void process_init() 
 {
 	int i;
+	int j = 0;
 	U32 *sp;
 	PCB* temp;
   
         /* fill out the initialization table */
 
 	set_test_procs();
+	set_api_procs();
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
 		g_proc_table[i].m_stack_size = g_test_procs[i].m_stack_size;
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
-		printf("gtest_pcbs %d \n", (g_test_procs[i]).m_priority);
+		g_proc_table[i].is_i_process = FALSE;
+		printf("gtest_pcbs pid %d \n", (g_test_procs[i]).m_pid);
+		printf("gtest_pcbs stack %d \n", (g_test_procs[i]).m_stack_size);
+	}
+	
+	for (; i < NUM_TOTAL_PROCS; i++, j++ ) {
+		g_proc_table[i].m_pid = g_api_procs[j].m_pid;
+		g_proc_table[i].m_stack_size = g_api_procs[j].m_stack_size;
+		g_proc_table[i].mpf_start_pc = g_api_procs[j].mpf_start_pc;
+		// added a priority to the table
+		g_proc_table[i].m_priority = g_api_procs[j].m_priority;
+		g_proc_table[i].is_i_process = g_api_procs[j].is_i_process;
+		printf("gapi_pcbs %d \n", (g_api_procs[j]).m_priority);
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+
+	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		int j;
 		
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
@@ -378,8 +337,19 @@ void process_init()
 		(gp_pcbs[i])->next = NULL;
 		(gp_pcbs[i])->mailBox = NULL;
 		
-		printf("gp_pcbs %d \n", (gp_pcbs[i])->m_priority);
-		rpq_enqueue(gp_pcbs[i]);
+	
+		if(g_proc_table[i].is_i_process == FALSE) {
+			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
+			rpq_enqueue(gp_pcbs[i]);
+		} else {
+			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
+			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
+				timer_process = gp_pcbs[i];
+			}
+			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
+			//	uart_process = gp_pcbs[i];
+			}
+		}
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
@@ -409,6 +379,7 @@ PCB *scheduler(void)
 {
 
 		PCB* temp;
+		
 		if (gp_current_process != NULL && gp_current_process->m_state != BOR && gp_current_process->m_state != WFM) {
 			temp = gp_current_process;
 			temp->next = NULL;
@@ -444,6 +415,7 @@ int process_switch(PCB *p_pcb_old)
 		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
 			if (p_pcb_old->m_state != BOR) {
+		
 				printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
 				rpq_enqueue(p_pcb_old);
@@ -458,7 +430,9 @@ int process_switch(PCB *p_pcb_old)
 	/* The following will only execute if the if block above is FALSE */
 
 	if (state == RDY) {
+		printf("current state is ready\n");
 		if (gp_current_process != p_pcb_old) {
+
 			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
 				p_pcb_old->m_state = RDY; 
 				rpq_enqueue(p_pcb_old);

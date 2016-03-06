@@ -9,6 +9,7 @@
 #include "common.h"
 
 /* ----- Definitations ----- */
+#define NUM_TEST_PROCS 6
 
 /* ----- Types ----- */
 
