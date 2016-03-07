@@ -443,7 +443,9 @@ int process_switch(PCB *p_pcb_old)
 	if (state == NEW) {
 //		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
+			// last condition is for checking if p_pcb_old has the same priority as the head -> to avoid enqueueing twice
+			// eg in premptionuserproc.c
+			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM && p_pcb_old->m_priority != headReady->m_priority ) {
 		
 	//			printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
@@ -462,7 +464,7 @@ int process_switch(PCB *p_pcb_old)
 //		printf("current state is ready\n");
 		if (gp_current_process != p_pcb_old) {
 
-			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
+			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM && p_pcb_old->m_priority != headReady->m_priority) {
 				p_pcb_old->m_state = RDY; 
 				rpq_enqueue(p_pcb_old);
 			}
@@ -514,10 +516,14 @@ int k_release_processor(void)
 //			temp = temp->next;
 //	}
 	
+	
 	p_pcb_old = gp_current_process;
+	
 	gp_current_process = scheduler();
 		
 	temp = headReady;
+	
+	printf(" -------------------------- \n ");
 	
 	while(temp != NULL) {
 			printf("after scheduler %d \n", (temp)->m_pid);
@@ -540,7 +546,7 @@ int k_release_processor(void)
 	
 	// means that there is no other process with a higher priority on the ready queue
 	// but we need to check if the old process is not a system process
-	if(p_pcb_old->m_priority < gp_current_process->m_priority && p_pcb_old->m_pid < PID_SET_PRIO) {
+	if(p_pcb_old->m_priority < gp_current_process->m_priority && p_pcb_old->m_pid < PID_SET_PRIO && p_pcb_old->m_state == RDY) {
 		// since we're not switching to the low priority process, need to enqueue back
 		rpq_enqueue(gp_current_process);
 		gp_current_process = p_pcb_old;

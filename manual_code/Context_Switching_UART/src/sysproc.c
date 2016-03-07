@@ -131,6 +131,7 @@ void wall_clock(void){
     msgbuf* msg;
 
     //registering to KCD
+		/*
     message = request_memory_block();
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
@@ -160,7 +161,7 @@ void wall_clock(void){
     message->mtext[2] = 'S';
     message->mtype = KCD_REG;
     send_message(PID_KCD, message); 
-
+		*/
     while(1){
         message = receive_message(&sender_id);
         

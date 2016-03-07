@@ -15,7 +15,7 @@ void k_rtx_init(void)
 {
 	__disable_irq();
 	uart_irq_init(0);   // uart0, interrupt-driven 
-	timer_init(0);
+	//timer_init(0);
 	uart1_init();       // uart1, polling
 	memory_init();
 	process_init();
