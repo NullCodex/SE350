@@ -1,11 +1,9 @@
 #ifndef SYS_PROC_H_
 #define SYS_PROC_H_
 
-#include "k_rtx.h"
 #include "rtx.h"
-#include "msg.h"
+#include "k_rtx.h"
 #include "common.h"
-#include "string.h"
 
 #define K_MSG_ENV
 

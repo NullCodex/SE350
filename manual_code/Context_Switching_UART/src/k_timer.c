@@ -109,7 +109,7 @@ void timer_enqueue (Envelope *env) {
 		env->next = headTimer;
 		headTimer = env;
 	} else {
-		while(temp && temp->delay < env->delay) {
+		while(temp && temp->delay <= env->delay) {
 			prev = temp;
 			temp = temp->next;
 		}

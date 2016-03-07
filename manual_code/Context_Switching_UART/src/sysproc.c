@@ -1,6 +1,4 @@
 #include "sysproc.h"
-#include "rtx.h"
-#include "uart_polling.h"
 
 REG_CMD sys_cmd[MAX_COMMANDS];
 int cmd_index = 0;
@@ -87,7 +85,7 @@ void kcd_proc(void) {
 }
 
 void print_wall_clock(int hour, int minute, int second){
-    msgbuf* message = (msgbuf*)request_memory_block();
+    msgbuf* msg = request_memory_block();
 		int i;
     char str[9];
 
@@ -101,11 +99,12 @@ void print_wall_clock(int hour, int minute, int second){
     str[7] = second %10 + '0';
     
     for (i = 0; i < 8; i ++){
-        message->mtext[i] = str[i];
-				uart0_put_char(str[i]);
+        msg->mtext[i] = str[i];
+				//uart0_put_char(str[i]);
     }
-		uart0_put_char('\n');
-    send_message(PID_CRT, (void*) message);
+		msg->mtype = CRT_DISPLAY;
+		//uart0_put_char('\n');
+    send_message(PID_CRT, (void*) msg);
 
 
 }
@@ -124,7 +123,8 @@ void send_wall_clock_message(msgbuf *msg){
     //sends a delayed message to wall_clock
     msg = request_memory_block();
     msg->mtype = DEFAULT;
-    msg->mtext[0] = ' ';
+		msg->mtext[0] = '%';
+    msg->mtext[1] = ' ';
     delayed_send(PID_CLOCK, msg, 2); 
 
 }
@@ -198,9 +198,7 @@ void wall_clock(void){
                     minute = minute % 60;
                 }
                 
-                __disable_irq();
                 print_wall_clock(hour,minute,second);
-                __enable_irq();
                 release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
                 
@@ -209,10 +207,8 @@ void wall_clock(void){
                     hour = 0;
                     minute = 0;
                     second = 0;
-                    __disable_irq();
                     print_wall_clock(hour,minute,second);
-                    __enable_irq();
-
+                   
                     //deallocate then create a new one.
                     release_memory_block((void *)message);
 
@@ -246,12 +242,11 @@ void wall_clock(void){
                                 hour = (hour +1 ) % 24;
                                 minute = minute % 60;
                     }
-                    __disable_irq();
                     print_wall_clock(hour,minute,second);
-                    __enable_irq();
                    release_memory_block((void*)message);
             } else{ 
                 //else prints out the message
+								msg->mtype = CRT_DISPLAY;
                 send_message(PID_CRT, msg);
             }
         } else { 
@@ -260,5 +255,3 @@ void wall_clock(void){
         }
     }
 }
-
-

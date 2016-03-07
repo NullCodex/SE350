@@ -103,6 +103,4 @@ typedef struct Envelope{
     struct Envelope* next;
 } Envelope;
 
-
-
 #endif // COMMON_H_

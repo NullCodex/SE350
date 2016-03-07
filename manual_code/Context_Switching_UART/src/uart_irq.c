@@ -253,7 +253,7 @@ void UART_iprocess(void)
 		pUart->THR = g_char_in;
 		if (g_char_in == '\r') {
 			pUart->THR = '\n';
-			pUart->IER ^= IER_THRE;
+			//pUart->IER ^= IER_THRE;
 			buffer_index = 0;
 			send_to_KCD();
 		}
@@ -282,6 +282,8 @@ void UART_iprocess(void)
 				i++;
 				g_char_out = to_disp_message->mtext[i];
 			}
+			g_char_out = '\n';
+			pUart->THR = g_char_out;
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);

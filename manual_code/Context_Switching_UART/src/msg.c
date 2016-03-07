@@ -91,8 +91,7 @@ int k_delayed_send(int process_id, void* message_envelope, int delay) {
     env->message = message_envelope;
 		msg = env->message;
 		timer_enqueue(env);
-		
-    __enable_irq();
+	  __enable_irq();
 
     return RTX_OK;
 }
