@@ -50,6 +50,7 @@ void kcd_proc(void) {
 		
     while(1) {
 			message = (msgbuf*)receive_message(&sender_id);
+			i = 0;
 			for (i = 0; i < COMMAND_SIZE; i++) {
 				txt = message->mtext[i];
 				if (txt == '\0') {
@@ -138,7 +139,7 @@ void wall_clock(void){
     msgbuf* msg;
 
     //registering to KCD
-		/*
+		
     message = request_memory_block();
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
@@ -168,14 +169,12 @@ void wall_clock(void){
     message->mtext[2] = 'S';
     message->mtype = KCD_REG;
     send_message(PID_KCD, message); 
-		*/
+		
     while(1){
         message = (msgbuf*)receive_message(&sender_id);
         
         //start the clock
 			
-				printf("Clocklol: %c\n", message->mtext[0]);
-				printf("Clocklol: %c\n", message->mtext[1]);
         if (message->mtext[1] == 'W' && message->mtext[2] == '\0') {
             message->mtext[1] = ' ';
             clock_on = TRUE;

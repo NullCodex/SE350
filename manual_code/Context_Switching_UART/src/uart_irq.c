@@ -23,6 +23,7 @@ int buffer_index = 0;
 uint8_t g_send_char = 0;
 uint8_t g_char_in;
 uint8_t g_char_out;
+int ret_code = -1;
 
 extern uint32_t g_switch_flag;
 extern PCB* gp_current_process;
@@ -201,7 +202,7 @@ void send_to_KCD(void) {
 	to_send->mtext[buffer_index] = '\0';
 	g_send_char = 0;
 	buffer_index = 0;
-	k_send_message(PID_KCD, (void *) to_send);
+	ret_code = k_send_message(PID_KCD, (void *) to_send);
 }
 
 
@@ -221,18 +222,14 @@ void UART_iprocess(void)
 
 	/* Reading IIR automatically acknowledges the interrupt */
 
-
 	IIR_IntId = (pUart->IIR) >> 1 ; // skip pending bit in IIR 
 	if (IIR_IntId & IIR_RDA) { // Receive Data Avaialbe
 		/* read UART. Read RBR will clear the interrupt */
 		
 		g_char_in = pUart->RBR;
-	
-#ifdef DEBUG_0
-		uart1_put_string("Reading a char = ");
-		uart1_put_char(g_char_in);
-		uart1_put_string("\n\r");
-#endif // DEBUG_0
+		if (g_char_in == '\%') {
+			buffer_index = 0;
+		}
 		// Disp the character (API)
 		g_buffer[buffer_index] = g_char_in;
 		
@@ -243,7 +240,9 @@ void UART_iprocess(void)
 			send_to_KCD();
 		}
 		pUart->IER = IER_RBR;
-		buffer_index++;
+		if (buffer_index < COMMAND_SIZE) {
+			buffer_index++;
+		}
 		
 		/* setting the g_switch_flag */
 		if ( g_char_in == 'g') {
