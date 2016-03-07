@@ -60,10 +60,10 @@ void set_test_procs() {
 	}
   
 	g_test_procs[0].mpf_start_pc = &proc1;
-	g_test_procs[0].m_priority   = LOW;
+	g_test_procs[0].m_priority   = MEDIUM;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
-	g_test_procs[1].m_priority   = LOW;
+	g_test_procs[1].m_priority   = HIGH;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
 	g_test_procs[2].m_priority   = MEDIUM;
@@ -86,14 +86,14 @@ void set_test_procs() {
 void proc1(void)
 {
 	int i = 0;
-	msgbuf* p_msg_env = request_memory_block();
-	p_msg_env->mtype = DEFAULT;
-	p_msg_env->mtext[0] = 'W';
-	send_message(PID_CLOCK, (void *)p_msg_env);
+	void *p_mem_blk;
 	while ( 1 ) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");
-		
+			p_mem_blk = request_memory_block();
+#ifdef DEBUG_0
+			printf("proc1: p_mem_blk=0x%x\n", p_mem_blk);
+#endif /* DEBUG_0 */
 		}
 		uart0_put_char('A' + i%26);
 		i++;
@@ -107,78 +107,54 @@ void proc1(void)
 void proc2(void)
 {
 	int i = 0;
-	msgbuf* p_msg_env = request_memory_block();
-	msgbuf* p_msg_term;
-	p_msg_env->mtype = DEFAULT;
-	p_msg_env->mtext[0] = 'W';
-	send_message(PID_CLOCK, (void *)p_msg_env);
-	while ( 1 ) {
+	int ret_val = 20;
+	void *p_mem_blk;
+	
+	p_mem_blk = request_memory_block();
+	set_process_priority(PID_P2, MEDIUM);
+	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");
+			ret_val = release_memory_block(p_mem_blk);
+#ifdef DEBUG_0
+			printf("proc2: ret_val=%d\n", ret_val);
+#endif /* DEBUG_0 */
+			if ( ret_val == -1 ) {
+				break;
+			}
 		}
-		if( i != 0 && i % 1000 == 0) {
-			p_msg_term = request_memory_block();
-			p_msg_term->mtext[0] = 'W';
-			p_msg_term->mtext[1] = 'T';
-			send_message(PID_CLOCK, (void *)p_msg_term);
-		}
-		uart0_put_char('A' + i%26);
+		uart0_put_char('0' + i%10);
 		i++;
+	}
+	uart0_put_string("proc2: end of testing\n\r");
+	set_process_priority(PID_P2, LOWEST);
+	while ( 1 ) {
+		release_processor();
 	}
 }
 
-
 void proc3(void)
 {
-	int i = 0;
-	msgbuf* p_msg_env = request_memory_block();
-	msgbuf* p_msg_term;
-	p_msg_env->mtype = DEFAULT;
-	p_msg_env->mtext[0] = 'W';
-	send_message(PID_CLOCK, (void *)p_msg_env);
-	while ( 1 ) {
-		if ( i != 0 && i%5 == 0 ) {
-			uart0_put_string("\n\r");
+	int i=0;
+	
+	while(1) {
+		if ( i < 2 ) {
+			uart0_put_string("proc3: \n\r");
 		}
-		if( i != 0 && i % 1000 == 0) {
-			p_msg_term = request_memory_block();
-			p_msg_term->mtext[0] = 'W';
-			p_msg_term->mtext[1] = 'S';
-			p_msg_term->mtext[2] = ' ';
-			p_msg_term->mtext[3] = '1';
-			p_msg_term->mtext[4] = '2';
-			p_msg_term->mtext[5] = ':';
-			p_msg_term->mtext[6] = '3';
-			p_msg_term->mtext[7] = '5';
-			p_msg_term->mtext[8] = ':';
-			p_msg_term->mtext[9] = '0';
-			p_msg_term->mtext[10] = '9';
-			send_message(PID_CLOCK, (void *)p_msg_term);
-		}
-		uart0_put_char('A' + i%26);
+		release_processor();
 		i++;
 	}
 }
 
 void proc4(void)
 {
-	int i = 0;
-	msgbuf* p_msg_env = request_memory_block();
-	msgbuf* p_msg_term;
-	p_msg_env->mtype = DEFAULT;
-	p_msg_env->mtext[0] = 'W';
-	send_message(PID_CLOCK, (void *)p_msg_env);
-	while ( 1 ) {
-		if ( i != 0 && i%5 == 0 ) {
-			uart0_put_string("\n\r");
+	int i=0;
+	
+	while(1) {
+		if ( i < 2 ) {
+			uart0_put_string("proc4: \n\r");
 		}
-		if( i != 0 && i % 1000 == 0) {
-			p_msg_term = request_memory_block();
-			p_msg_term->mtext[0] = 'W';
-			p_msg_term->mtext[1] = 'R';
-			send_message(PID_CLOCK, (void *)p_msg_term);
-		}
-		uart0_put_char('A' + i%26);
+		release_processor();
 		i++;
 	}
 }

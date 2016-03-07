@@ -69,6 +69,7 @@ void print_free_blocks() {
 void memory_init(void)
 {
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
+	U32	iterAddress;
 	int i;
 
 	/* 4 bytes padding */
@@ -98,24 +99,26 @@ void memory_init(void)
 	/* allocate memory for heap, not implemented yet*/
 
   //headBlock = (void*) (p_end + sizeof(mem_block*));
-	headBlock = (void*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
+	headBlock = (mem_block*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 	headBlock->addr = ((U32) headBlock + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 	headBlock->released = 1;
 	headBlock->next = NULL;
-	for (i = 0; i < 10; i++) {
+	iterAddress = (U32)headBlock;
+	for (i = 0; i < 1; i++) {
 		/*
 		headBlock->next = (void *) (headBlock->addr + BLOCK_SIZE);
 		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 		headBlock->next->released = 1;
 		headBlock = headBlock->next;
 		*/
-		headBlock->next = (void*)(headBlock + 128 + sizeof(mem_block*));
-		headBlock->next->addr = ((U32)headBlock + 128 + 2*sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
+		iterAddress = iterAddress + BLOCK_SIZE + sizeof(mem_block*);
+		headBlock->next = (mem_block*)iterAddress;
+		headBlock->next->addr = iterAddress + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*);
 		headBlock->released = 1;
 		headBlock = headBlock->next;
 	}
 	headBlock->next = NULL;
-	headBlock = (void*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
+	headBlock = (mem_block*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 	//print_free_blocks();
 
 }
