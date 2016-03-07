@@ -1,15 +1,20 @@
 #include "sysproc.h"
 #include "rtx.h"
+#include "uart_polling.h"
 
 REG_CMD sys_cmd[MAX_COMMANDS];
+int cmd_index = 0;
 
 PCB *clock_process;
 int is_prefix (char str1[], char str2[]) {
 	int i = 0;
-	for (i = 0; i < ARRAYSIZE(str1); i++) {
-		if (str1[i] != str2[i]) {
+	char txt = str1[i];
+	while (i < COMMAND_SIZE && txt != '\0') {
+		if (txt != str2[i]) {
 			return -1;
 		}
+		i++;
+		txt = str1[i];
 	}
 	return 0;
 }
@@ -18,21 +23,19 @@ int check_cmd (char str[], int sender_id) {
 	int exists = -1;
 	int i;
 	for (i = 0; i < MAX_COMMANDS; i++) {
-		if (is_prefix(sys_cmd[i].cmd_str, str) == 0 && sys_cmd[i].sender_id == sender_id) {
-			return 0;
+		if (is_prefix(sys_cmd[i].cmd_str, str) == 0) {
+			return sys_cmd[i].sender_id;
 		}
 	}
 	return -1;
 }
 
 void insert_cmd (char str[], int sender_id) {
-	int i;
-	for (i = 0; i < MAX_COMMANDS; i++) {
-		if (ARRAYSIZE(sys_cmd[i].cmd_str) == 0) {
-			strcpy(sys_cmd[i].cmd_str, str);
-			sys_cmd[i].sender_id = sender_id;
-			break;
-		}
+	
+	if( cmd_index < MAX_COMMANDS ) {
+		strcpy(sys_cmd[cmd_index].cmd_str, str);
+		sys_cmd[cmd_index].sender_id = sender_id;
+		cmd_index++;
 	}
 }
 
@@ -41,26 +44,28 @@ void kcd_proc(void) {
 		int i;
 		int exists = -1;
 		int sender_id;
+		char txt;
     msgbuf* message = NULL;
 		char cmd[COMMAND_SIZE];
 		
     while(1) {
 			message = (msgbuf*)receive_message(&sender_id);
 			for (i = 0; i < COMMAND_SIZE; i++) {
-				if (message->mtext[i] == '\0') {
+				txt = message->mtext[i];
+				if (txt == '\0') {
 					break;
 				}
-				cmd[i] = message->mtext[i];
+				cmd[i] = txt;
 			}
 			 
 			if (message->mtype == DEFAULT)
 			{
 				// Check if the command is registered
-				if (ARRAYSIZE(sys_cmd) > 0) {
+				if (cmd_index > 0) {
 					exists = check_cmd(cmd, sender_id);
-					if (exists == 0) {
+					if (exists != -1) {
 						message->mtype = DEFAULT;
-						msg_sent = send_message(i, (void *)message);
+						msg_sent = send_message(exists, (void *)message);
 					}
 					
 				}
@@ -90,9 +95,10 @@ void print_wall_clock(int hour, int minute, int second){
     
     for (i = 0; i < 8; i ++){
         message->mtext[i] = str[i];
-				printf("%c", str[i]);
+				//printf("%c", str[i]);
+				uart0_put_char(str[i]);
     }
-		printf("\n");
+		uart0_put_char('\n');
     //send_message(PID_CRT, envelope);
 
 
@@ -119,6 +125,7 @@ void send_wall_clock_message(msgbuf *msg){
 
 
 void wall_clock(void){
+		char firstC;
     int sender_id;
     msgbuf* message;
     int hour = 0;
@@ -131,7 +138,7 @@ void wall_clock(void){
     msgbuf* msg;
 
     //registering to KCD
-    /*message = request_memory_block();
+    message = request_memory_block();
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
     message->mtype = KCD_REG;
@@ -159,20 +166,23 @@ void wall_clock(void){
     message->mtext[1] = 'W';
     message->mtext[2] = 'S';
     message->mtype = KCD_REG;
-    send_message(PID_KCD, message); */
+    send_message(PID_KCD, message); 
 
     while(1){
-        message = receive_message(&sender_id);
+        message = (msgbuf*)receive_message(&sender_id);
         
         //start the clock
-        if (message->mtext[0] == 'W' && message->mtext[1] == NULL) {
-            message->mtext[0] = ' ';
+			
+				printf("Clocklol: %c\n", message->mtext[0]);
+				printf("Clocklol: %c\n", message->mtext[1]);
+        if (message->mtext[1] == 'W' && message->mtext[2] == '\0') {
+            message->mtext[1] = ' ';
             clock_on = TRUE;
         }
 
         if (message != NULL && clock_on) { 
             //checks if msg has text and clock is on
-            if (message->mtext[0] == ' ' || message->mtext[1] == NULL ) {
+            if (message->mtext[1] == ' ' || message->mtext[2] == '\0' ) {
                 second++;
                 if (second >= 60){
                     minute ++;
@@ -189,7 +199,7 @@ void wall_clock(void){
         //        release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
                 
-                } else if (message->mtext[1] == 'R') { 
+                } else if (message->mtext[2] == 'R') { 
                     //resets clock
                     hour = 0;
                     minute = 0;
@@ -201,14 +211,14 @@ void wall_clock(void){
                     //deallocate then create a new one.
        ///             release_memory_block((void *)message);
 
-                } else if (message->mtext[1] == 'T') {
+                } else if (message->mtext[2] == 'T') {
                     hour = 0;
                     minute = 0;
                     second = 0;
                     clock_on = FALSE;
       //              release_memory_block((void*)message);
 
-                } else if (message->mtext[1] == 'S' && check_format(message->mtext)) {
+                } else if (message->mtext[2] == 'S' && check_format(message->mtext)) {
                     for(i = 3; i < 10; i = i + 3) { 
                         temp = (message->mtext[i] - '0') * 10 + message->mtext[i + 1] - '0';
                         switch(i) {

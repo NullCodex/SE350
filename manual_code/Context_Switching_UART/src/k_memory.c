@@ -116,7 +116,7 @@ void memory_init(void)
 	}
 	headBlock->next = NULL;
 	headBlock = (void*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
-	print_free_blocks();
+	//print_free_blocks();
 
 }
 

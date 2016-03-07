@@ -18,10 +18,7 @@
 
 PCB* uart_process;
 LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
-uint8_t g_buffer[MAX_BUFFER_SIZE];
-uint8_t *gp_buffer;
-uint8_t g_input[];
-uint8_t *gp_input = g_input;
+char g_buffer[COMMAND_SIZE];
 int buffer_index = 0;
 uint8_t g_send_char = 0;
 uint8_t g_char_in;
@@ -195,13 +192,14 @@ void send_to_KCD(void) {
 	buffer_index = 0;
 	to_send->mtype = DEFAULT;
 	to_send->sender_id = PID_UART_IPROC;
-	char_out = g_input[buffer_index];
+	char_out = g_buffer[buffer_index];
 	while (char_out != '\r') {
 		to_send->mtext[buffer_index] = char_out;
 		buffer_index++;
-		char_out = g_input[buffer_index];
+		char_out = g_buffer[buffer_index];
 	}
 	to_send->mtext[buffer_index] = '\0';
+	g_send_char = 0;
 	buffer_index = 0;
 	k_send_message(PID_KCD, (void *) to_send);
 }
@@ -223,38 +221,44 @@ void UART_iprocess(void)
 
 	/* Reading IIR automatically acknowledges the interrupt */
 
+
 	IIR_IntId = (pUart->IIR) >> 1 ; // skip pending bit in IIR 
 	if (IIR_IntId & IIR_RDA) { // Receive Data Avaialbe
 		/* read UART. Read RBR will clear the interrupt */
+		
 		g_char_in = pUart->RBR;
+	
 #ifdef DEBUG_0
 		uart1_put_string("Reading a char = ");
 		uart1_put_char(g_char_in);
 		uart1_put_string("\n\r");
 #endif // DEBUG_0
 		// Disp the character (API)
-		g_input[buffer_index] = g_char_in;
-		pUart->THR = g_char_in;
+		g_buffer[buffer_index] = g_char_in;
 		
-		buffer_index++;
+		pUart->THR = g_char_in;
 		if (g_char_in == '\r') {
+			pUart->IER ^= IER_THRE;
 			buffer_index = 0;
 			send_to_KCD();
 		}
+		pUart->IER = IER_RBR;
+		buffer_index++;
 		
 		/* setting the g_switch_flag */
-		if ( g_char_in == 'S') {
+		if ( g_char_in == 'g') {
 			g_switch_flag = 1; 
 		} else {
 			g_switch_flag = 0;
 		}
 	} else if (IIR_IntId & IIR_THRE) {
+		if (gp_current_process->m_pid == PID_UART_IPROC) {
 		// Get the message from crt_display - receive message by sender id
 		to_disp_message = (msgbuf*)k_receive_message(&sender_id);
 		
 	/* THRE Interrupt, transmit holding register becomes empty */
 
-		if (*gp_buffer != '\0' ) {
+		//if (*gp_buffer != '\0' ) {
 			g_char_out = to_disp_message->mtext[i];
 			while (g_char_out != '\0') {
 				printf("Writing a char = %c \n\r", g_char_out);
@@ -268,7 +272,8 @@ void UART_iprocess(void)
 			//uart1_put_string("\n\r");
 				
 			k_release_memory_block((void*)to_disp_message);
-#endif // DEBUG_0			
+#endif // DEBUG_0		
+		}			
 		
 		} else {
 #ifdef DEBUG_0
@@ -277,15 +282,11 @@ void UART_iprocess(void)
 			pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
 			pUart->THR = '\0';
 			g_send_char = 0;
-			gp_buffer = g_buffer;		
+			//gp_buffer = g_buffer;		
 		}
+	
 	      
-	} else {  /* not implemented yet */
-#ifdef DEBUG_0
-			uart1_put_string("Should not get here!\n\r");
-#endif // DEBUG_0
-		return;
-	}	
+		
 }
 
 /**
