@@ -179,7 +179,7 @@ void timer_i_process(void)
 		
   while((headTimer != NULL) && headTimer->delay == 0) {
 		Envelope* env = timer_dequeue();
-		k_send_message(env->destination_id, env);
+		k_send_message(env->destination_id, (void*)env->message);
 	}
 	g_switch_flag = 1;
 	
