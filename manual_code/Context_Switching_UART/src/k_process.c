@@ -39,6 +39,7 @@ PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
 PCB *headBlockedMail = NULL;
+extern PCB *clock_process;
 extern Envelope* headTimer;
 
 /* process initialization table */
@@ -69,8 +70,15 @@ void mail_benqueue(PCB* process) {
 PCB* remove_from_mail_blocked(int pid) {
 	PCB* prev = NULL;
 	PCB* current = headBlockedMail;
+	
+	// only a single element
 	if(headBlockedMail->m_pid == pid && headBlockedMail->next == NULL) {
 		headBlocked = NULL;
+		return current;
+	} 
+	// if we want to remove the first element, but there are more elements in the queue
+	else if(headBlockedMail->m_pid == pid) {
+		headBlockedMail = headBlockedMail->next;
 		return current;
 	}
 	while(current) {
@@ -303,6 +311,12 @@ void set_api_procs() {
 	g_api_procs[3].mpf_start_pc = &crt_proc;
 	g_api_procs[3].m_priority   = HIGHEST;
 	g_api_procs[3].is_i_process = FALSE;
+	
+	g_api_procs[4].m_pid= PID_CLOCK;
+	g_api_procs[4].m_stack_size=0x100;
+	g_api_procs[4].mpf_start_pc = &wall_clock;
+	g_api_procs[4].m_priority   = HIGHEST;
+	g_api_procs[4].is_i_process = FALSE;
 }
 
 void process_init() 
@@ -363,6 +377,9 @@ void process_init()
 			}
 			if(gp_pcbs[i]->m_pid == PID_UART_IPROC) {
 				uart_process = gp_pcbs[i];
+			}
+			if(gp_pcbs[i]->m_pid == PID_CLOCK) {
+				clock_process = gp_pcbs[i];
 			}
 		}
 		
@@ -522,7 +539,7 @@ int k_release_processor(void)
 	} 
 	
 	// means that there is no other process with a higher priority on the ready queue
-	
+	// but we need to check if the old process is not a system process
 	if(p_pcb_old->m_priority < gp_current_process->m_priority && p_pcb_old->m_pid < PID_SET_PRIO) {
 		// since we're not switching to the low priority process, need to enqueue back
 		rpq_enqueue(gp_current_process);

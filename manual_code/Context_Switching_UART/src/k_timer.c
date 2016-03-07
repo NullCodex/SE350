@@ -163,7 +163,7 @@ void timer_i_process(void)
 	
 	g_timer_count++;
 	
-	printf("in the timer process: %d", g_timer_count);
+//	printf("in the timer process: %d", g_timer_count);
   
 	// get pending requests from the queue
 	while(timer_process->mailBox != NULL) {
