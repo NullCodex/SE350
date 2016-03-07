@@ -1,49 +1,74 @@
 #include "sysproc.h"
 
-char commands[NUM_TEST_PROCS][NUM_COMMANDS];
+REG_CMD sys_cmd[MAX_COMMANDS];
+
+int is_prefix (char str1[], char str2[]) {
+	int i = 0;
+	for (i = 0; i < ARRAYSIZE(str1); i++) {
+		if (str1[i] != str2[i]) {
+			return -1;
+		}
+	}
+	return 0;
+}
+
+int check_cmd (char str[], int sender_id) {
+	int exists = -1;
+	int i;
+	for (i = 0; i < MAX_COMMANDS; i++) {
+		if (is_prefix(sys_cmd[i].cmd_str, str) == 0 && sys_cmd[i].sender_id == sender_id) {
+			return 0;
+		}
+	}
+	return -1;
+}
+
+void insert_cmd (char str[], int sender_id) {
+	int i;
+	for (i = 0; i < MAX_COMMANDS; i++) {
+		if (ARRAYSIZE(sys_cmd[i].cmd_str) == 0) {
+			strcpy(sys_cmd[i].cmd_str, str);
+			sys_cmd[i].sender_id = sender_id;
+			break;
+		}
+	}
+}
 
 void kcd_proc(void) {
 		int msg_sent = -1;
 		int i;
-		int j;
+		int exists = -1;
+		int sender_id;
     msgbuf* message = NULL;
-    //char commands[NUM_PROCS][max_command][max_lengthofcommand]; //process id, number of commands registered to a single id, max length of a command
-		int num_commands = ARRAYSIZE(commands);
-		char* toExecute;
+		char cmd[COMMAND_SIZE];
 		
     while(1) {
-			for (i = 0; i < ARRAYSIZE(message->mtext); i++) {
-				toExecute += message->mtext[i];
+			message = (msgbuf*)receive_message(&sender_id);
+			for (i = 0; i < COMMAND_SIZE; i++) {
+				if (message->mtext[i] == '\0') {
+					break;
+				}
+				cmd[i] = message->mtext[i];
 			}
+			 
 			if (message->mtype == DEFAULT)
 			{
-				
 				// Check if the command is registered
-				if (num_commands > 0) {
-					for (i = 0; i < NUM_TEST_PROCS; i++) {
-						for (j = 0; j < NUM_COMMANDS; j++) {
-							if (commands[i][j] == *toExecute) {
-								printf("To Execute Command: %s\n", commands[i][j]);
-								//TODO: IDK what to do here...how to execute this proc?
-								message->mtype = DEFAULT;
-								msg_sent = k_send_message(i, (void *)message);
-								break;
-							}
-						}
+				if (ARRAYSIZE(sys_cmd) > 0) {
+					exists = check_cmd(cmd, sender_id);
+					if (exists == 0) {
+						message->mtype = DEFAULT;
+						msg_sent = send_message(i, (void *)message);
 					}
+					
 				}
 			} else if(message->mtype == KCD_REG) {
-				
-				for (i = 0; i < NUM_COMMANDS; i++) {
-					if (commands[i] == NULL) {
-						commands[message->sender_id][i] = *toExecute;
-					}
-				}
+				insert_cmd(cmd, sender_id);
+			}
+			if (msg_sent == -1) {
+				release_memory_block(message);
+			}
 		}
-		if (msg_sent == -1) {
-			k_release_memory_block((void*)message);
-		}
-	}
 }
 
 void print_wall_clock(int hour, int minute, int second){

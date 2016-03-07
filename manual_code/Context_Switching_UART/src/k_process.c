@@ -279,6 +279,7 @@ int k_set_process_priority(int process_id, int priority) {
 
 void set_api_procs() {
 	int i;
+
 	g_api_procs[0].m_pid= PID_TIMER_IPROC;
 	g_api_procs[0].m_stack_size=0x100;
 	g_api_procs[0].mpf_start_pc = NULL;
@@ -352,12 +353,9 @@ void process_init()
 	
 		if(g_proc_table[i].is_i_process == FALSE) {
 			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
-			if ((gp_pcbs[i])->m_pid == PID_KCD || (gp_pcbs[i])->m_pid == PID_CRT) {
-				gp_pcbs[i]->m_state = WFM;
-				mail_benqueue(gp_pcbs[i]);
-			} else {
+				gp_pcbs[i]->m_state = NEW;
 				rpq_enqueue(gp_pcbs[i]);
-			}
+			
 		} else {
 			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
 			if(gp_pcbs[i]->m_pid == PID_TIMER_IPROC) {
@@ -428,7 +426,7 @@ int process_switch(PCB *p_pcb_old)
 	if (state == NEW) {
 //		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
-			if (p_pcb_old->m_state != BOR) {
+			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM) {
 		
 	//			printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
@@ -456,7 +454,7 @@ int process_switch(PCB *p_pcb_old)
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
 		}
 	} else {
-	//	printf("Testing error condition");
+			printf("Testing error condition");
 			gp_current_process = p_pcb_old; // revert back to the old proc on error
 			return RTX_ERR;
 	}
@@ -505,7 +503,7 @@ int k_release_processor(void)
 	temp = headReady;
 	
 	while(temp != NULL) {
-//			printf("after scheduler %d \n", (temp)->m_pid);
+			printf("after scheduler %d \n", (temp)->m_pid);
 			temp = temp->next;
 	}
 //	printf("gp_current_process 0x%x \n", gp_current_process->m_state);
@@ -525,7 +523,7 @@ int k_release_processor(void)
 	
 	// means that there is no other process with a higher priority on the ready queue
 	
-	if(p_pcb_old->m_priority < gp_current_process->m_priority) {
+	if(p_pcb_old->m_priority < gp_current_process->m_priority && p_pcb_old->m_pid < PID_SET_PRIO) {
 		// since we're not switching to the low priority process, need to enqueue back
 		rpq_enqueue(gp_current_process);
 		gp_current_process = p_pcb_old;

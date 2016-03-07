@@ -201,6 +201,7 @@ void send_to_KCD(void) {
 		buffer_index++;
 		char_out = g_input[buffer_index];
 	}
+	to_send->mtext[buffer_index] = '\0';
 	buffer_index = 0;
 	k_send_message(PID_KCD, (void *) to_send);
 }
@@ -220,6 +221,7 @@ void UART_iprocess(void)
 #endif // DEBUG_0
 
 	/* Reading IIR automatically acknowledges the interrupt */
+
 	IIR_IntId = (pUart->IIR) >> 1 ; // skip pending bit in IIR 
 	if (IIR_IntId & IIR_RDA) { // Receive Data Avaialbe
 		/* read UART. Read RBR will clear the interrupt */
@@ -230,12 +232,8 @@ void UART_iprocess(void)
 		uart1_put_string("\n\r");
 #endif // DEBUG_0
 		// Disp the character (API)
-		to_disp_message->mtype = CRT_DISPLAY;
-		to_disp_message->sender_id = PID_UART_IPROC;
-		to_disp_message->mtext[0] = g_char_in;
-		g_send_char = 1;
-		k_send_message(PID_CRT, (void *)to_disp_message);
 		g_input[buffer_index] = g_char_in;
+		pUart->THR = g_char_in;
 		
 		buffer_index++;
 		if (g_char_in == '\r') {
@@ -251,7 +249,6 @@ void UART_iprocess(void)
 		}
 	} else if (IIR_IntId & IIR_THRE) {
 		// Get the message from crt_display - receive message by sender id
-		sender_id = PID_CRT;
 		to_disp_message = k_receive_message(&sender_id);
 		
 	/* THRE Interrupt, transmit holding register becomes empty */
@@ -296,18 +293,17 @@ void crt_proc(void) {
 		int sender_id;
 		char str;
     while(1) {
-			message = k_receive_message(&sender_id);
+			message = receive_message(&sender_id);
 			// Display character by character as they are input to the console
 			str = message->mtext[0];
-			sender_id = message->sender_id;
 			if (message->mtype == CRT_DISPLAY) {
 				if (g_send_char == 1) {
 					message->sender_id = PID_CRT;
-					k_send_message(PID_UART_IPROC, (void*)message);
+					send_message(PID_UART_IPROC, (void*)message);
 					pUart->IER = IER_THRE | IER_RLS | IER_RBR;
 				}
 			} else {
-				k_release_memory_block((void*)message);
+				release_memory_block((void*)message);
 			}
 			//str = NULL;
     }

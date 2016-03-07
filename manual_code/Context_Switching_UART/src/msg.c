@@ -6,13 +6,15 @@ extern PCB* gp_current_process;
 int k_send_message(int process_id, void* message_envelope) {
     PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
-
+		msgbuf* msg = (msgbuf*) message_envelope;
     __disable_irq();
+		printf("Addr of message: %d\n", &message_envelope);
     env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
-    env->sender_id = gp_current_process->m_pid;
+    printf("Printing addr: %d\n", &(env->sender_id));
+		env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
     env->delay = 0;
-    env->message = message_envelope;
+    env->message = msg;
 
     // create new mailbox for each pcb
     // enqueue into mailbox
@@ -24,7 +26,7 @@ int k_send_message(int process_id, void* message_envelope) {
         rpq_enqueue(receiving_proc);
 			
 				if (receiving_proc->m_priority <= gp_current_process->m_priority) {
-					__enable_irq();
+					//__enable_irq();
 					k_release_processor();
 				}
     }

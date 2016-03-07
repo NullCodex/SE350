@@ -19,7 +19,8 @@
 #define NUM_TEST_PROCS 6
 #define NUM_API_PROCS 4
 #define NUM_TOTAL_PROCS 10
-#define NUM_COMMANDS	3
+#define COMMAND_SIZE	3
+#define MAX_COMMANDS	10
 
 /* Helper macros */
 #define ARRAYSIZE(array) (sizeof(array)/sizeof(array[0]))
@@ -72,6 +73,11 @@ typedef struct proc_init
 	int is_i_process; 			/* flag for checking if i process */
 	void (*mpf_start_pc) ();/* entry point of the process */
 } PROC_INIT;
+
+typedef struct reg_command {
+	int sender_id;
+	char cmd_str[COMMAND_SIZE];
+} REG_CMD;
 
 /* message buffer */
 typedef struct MSGBUF

@@ -76,7 +76,7 @@ void memory_init(void)
 
 	/* allocate memory for pcb pointers   */
 	gp_pcbs = (PCB **)p_end;
-	p_end += NUM_TOTAL_PROCS * sizeof(PCB *);
+	p_end += (NUM_TOTAL_PROCS + 1) * sizeof(PCB *);
 
 	for ( i = 0; i < NUM_TOTAL_PROCS; i++ ) {
 		gp_pcbs[i] = (PCB *)p_end;
@@ -97,18 +97,25 @@ void memory_init(void)
 
 	/* allocate memory for heap, not implemented yet*/
 
-  headBlock = (void*) (p_end + sizeof(mem_block*));
-	headBlock->addr = ((U32) headBlock + sizeof(mem_block*));
+  //headBlock = (void*) (p_end + sizeof(mem_block*));
+	headBlock = (void*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
+	headBlock->addr = ((U32) headBlock + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 	headBlock->released = 1;
 	headBlock->next = NULL;
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < 10; i++) {
+		/*
 		headBlock->next = (void *) (headBlock->addr + BLOCK_SIZE);
-		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*));
+		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 		headBlock->next->released = 1;
+		headBlock = headBlock->next;
+		*/
+		headBlock->next = (void*)(headBlock + 128 + sizeof(mem_block*));
+		headBlock->next->addr = ((U32)headBlock + 128 + 2*sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
+		headBlock->released = 1;
 		headBlock = headBlock->next;
 	}
 	headBlock->next = NULL;
-	headBlock = (void*) (p_end + sizeof(mem_block*));
+	headBlock = (void*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 	print_free_blocks();
 
 }
@@ -204,7 +211,7 @@ void *k_request_memory_block(void) {
 	toRet->next = NULL;
 	//print_free_blocks();
 	
-	return (void*) (toRet->addr + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
+	return (void*) (toRet->addr);
 }
 
 int k_release_memory_block(void *p_mem_blk) {
@@ -217,9 +224,9 @@ int k_release_memory_block(void *p_mem_blk) {
 		return RTX_ERR;
 	}
 
-	if((U32)headBlock >= (U32)p_mem_blk - sizeof(mem_block*)) {
+	/*if((U32)headBlock >= (U32)p_mem_blk - sizeof(mem_block*)) {
 		return RTX_ERR;
-	}
+	}*/
 	if (headBlocked != NULL ) {
 		current_process = bpq_dequeue();
 		current_process->m_state = RDY;
@@ -227,6 +234,8 @@ int k_release_memory_block(void *p_mem_blk) {
 	}
 
 	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*) - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
+	//curr_node = (mem_block *)((U32)p_mem_blk);
+	
 	if (curr_node->released == 1) {
 		return RTX_ERR;
 	}
