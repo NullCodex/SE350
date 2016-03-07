@@ -160,7 +160,7 @@ void wall_clock(void){
     message->mtext[1] = 'W';
     message->mtext[2] = 'S';
     message->mtype = KCD_REG;
-    send_message(PID_KCD, message); 
+    send_message(PID_KCD, message); */
 		*/
     while(1){
         message = receive_message(&sender_id);
@@ -187,7 +187,7 @@ void wall_clock(void){
                 __disable_irq();
                 print_wall_clock(hour,minute,second);
                 __enable_irq();
-                release_memory_block((void*)message);
+        //        release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
                 
                 } else if (message->mtext[1] == 'R') { 
@@ -200,14 +200,14 @@ void wall_clock(void){
                     __enable_irq();
 
                     //deallocate then create a new one.
-                    release_memory_block((void *)message);
+       ///             release_memory_block((void *)message);
 
                 } else if (message->mtext[1] == 'T') {
                     hour = 0;
                     minute = 0;
                     second = 0;
                     clock_on = FALSE;
-                    release_memory_block((void*)message);
+      //              release_memory_block((void*)message);
 
                 } else if (message->mtext[1] == 'S' && check_format(message->mtext)) {
                     for(i = 3; i < 10; i = i + 3) { 
@@ -235,14 +235,14 @@ void wall_clock(void){
                     __disable_irq();
                     print_wall_clock(hour,minute,second);
                     __enable_irq();
-                    release_memory_block((void*)message);
+       //             release_memory_block((void*)message);
             } else{ 
                 //else prints out the message
                 send_message(PID_CRT, msg);
             }
         } else { 
             //if message is null or clock is off, deallocates the message
-            release_memory_block((void*)message);
+      //      release_memory_block((void*)message);
         }
     }
 }
