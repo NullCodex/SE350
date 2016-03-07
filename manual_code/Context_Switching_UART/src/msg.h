@@ -3,7 +3,7 @@
 
 #include "printf.h"
 #include "k_process.h"
-#include "timer.h"
+#include "k_timer.h"
 
 /* ----- Definitions ----- */
 #define DEFAULT 0

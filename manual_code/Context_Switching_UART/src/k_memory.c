@@ -218,8 +218,10 @@ void *k_request_memory_block(void) {
 }
 
 int k_release_memory_block(void *p_mem_blk) {
+	int i = 0;
 	mem_block* curr_node;
 	PCB* current_process = NULL;
+	msgbuf* toBeCleared = (msgbuf*)p_mem_blk;
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
@@ -235,7 +237,15 @@ int k_release_memory_block(void *p_mem_blk) {
 		current_process->m_state = RDY;
 		rpq_enqueue(current_process);
 	}
+	
+	if(toBeCleared->mtext[0]) {
+		while(toBeCleared->mtext[i] != '\0') {
+			toBeCleared->mtext[i] = '\0';
+			i++;
+		}
+	}
 
+	
 	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*) - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
 	//curr_node = (mem_block *)((U32)p_mem_blk);
 	
