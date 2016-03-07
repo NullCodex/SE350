@@ -1,6 +1,9 @@
 #include "sysproc.h"
+#include "rtx.h"
 
 char commands[NUM_TEST_PROCS][NUM_COMMANDS];
+
+PCB *clock_process;
 
 void kcd_proc(void) {
 		int msg_sent = -1;
@@ -26,7 +29,7 @@ void kcd_proc(void) {
 								printf("To Execute Command: %s\n", commands[i][j]);
 								//TODO: IDK what to do here...how to execute this proc?
 								message->mtype = DEFAULT;
-								msg_sent = k_send_message(i, (void *)message);
+								msg_sent = send_message(i, (void *)message);
 								break;
 							}
 						}
@@ -63,9 +66,10 @@ void print_wall_clock(int hour, int minute, int second){
     
     for (i = 0; i < 8; i ++){
         message->mtext[i] = str[i];
+				printf("%c", str[i]);
     }
-    
-    k_send_message(PID_CRT, envelope);
+		printf("\n");
+    //send_message(PID_CRT, envelope);
 
 
 }
@@ -73,19 +77,19 @@ void print_wall_clock(int hour, int minute, int second){
 //checks if string is in WS hh:mm:ss format. 
 BOOL check_format(char *str) {
     int i;
-    for (i = 3; i < 10; i = i + 3) {
-        if (str[i] == NULL || (str[i] < '0' || str[i] > '9' )||( str[i+1] < '0' || str[i+1] > '9') || (str[i+2] != ':' && i != 9))
-            return FALSE;
-    }
+    //for (i = 3; i < 10; i = i + 3) {
+    //    if (str[i] == NULL || (str[i] < '0' || str[i] > '9' )||( str[i+1] < '0' || str[i+1] > '9') || (str[i+2] != ':' && i != 9))
+    //        return FALSE;
+    //}
     return TRUE;
 } 
 
 void send_wall_clock_message(msgbuf *msg){ 
     //sends a delayed message to wall_clock
-    msg = k_request_memory_block();
+    msg = request_memory_block();
     msg->mtype = DEFAULT;
     msg->mtext[0] = ' ';
-    k_delayed_send(PID_CLOCK, msg, 1); 
+    delayed_send(PID_CLOCK, msg, 15); 
 
 }
 
@@ -103,38 +107,38 @@ void wall_clock(void){
     msgbuf* msg;
 
     //registering to KCD
-    message = k_request_memory_block();
+    message = request_memory_block();
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
     message->mtype = KCD_REG;
-    k_send_message(PID_KCD, message);
+    send_message(PID_KCD, message);
 
-    message = k_request_memory_block();
+    message = request_memory_block();
 
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
     message->mtext[2] = 'R';
     message->mtype = KCD_REG;
-    k_send_message(PID_KCD, message);
+    send_message(PID_KCD, message);
     
-    message = k_request_memory_block();
+    message = request_memory_block();
 
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
     message->mtext[2] = 'T';
     message->mtype = KCD_REG;
-    k_send_message(PID_KCD, message);
+    send_message(PID_KCD, message);
 		
-    message = k_request_memory_block();
+    message = request_memory_block();
 
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
     message->mtext[2] = 'S';
     message->mtype = KCD_REG;
-    k_send_message(PID_KCD, message);
+    send_message(PID_KCD, message); 
 
     while(1){
-        message = k_receive_message(&sender_id);
+        message = receive_message(&sender_id);
         
         //start the clock
         if (message->mtext[0] == 'W' && message->mtext[1] == NULL) {
@@ -158,7 +162,7 @@ void wall_clock(void){
                 __disable_irq();
                 print_wall_clock(hour,minute,second);
                 __enable_irq();
-                k_release_memory_block((void*)message);
+                release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
                 
                 } else if (message->mtext[1] == 'R') { 
@@ -171,14 +175,14 @@ void wall_clock(void){
                     __enable_irq();
 
                     //deallocate then create a new one.
-                    k_release_memory_block((void *)message);
+                    release_memory_block((void *)message);
 
                 } else if (message->mtext[1] == 'T') {
                     hour = 0;
                     minute = 0;
                     second = 0;
                     clock_on = FALSE;
-                    k_release_memory_block((void*)message);
+                    release_memory_block((void*)message);
 
                 } else if (message->mtext[1] == 'S' && check_format(message->mtext)) {
                     for(i = 3; i < 10; i = i + 3) { 
@@ -206,14 +210,14 @@ void wall_clock(void){
                     __disable_irq();
                     print_wall_clock(hour,minute,second);
                     __enable_irq();
-                    k_release_memory_block((void*)message);
+                    release_memory_block((void*)message);
             } else{ 
                 //else prints out the message
-                k_send_message(PID_CRT, msg);
+                send_message(PID_CRT, msg);
             }
         } else { 
             //if message is null or clock is off, deallocates the message
-            k_release_memory_block((void*)message);
+            release_memory_block((void*)message);
         }
     }
 }
