@@ -28,7 +28,7 @@ uint8_t g_char_in;
 uint8_t g_char_out;
 
 extern uint32_t g_switch_flag;
-
+extern PCB* gp_current_process;
 extern int k_release_processor(void);
 /**
  * @brief: initialize the n_uart
@@ -215,6 +215,7 @@ void UART_iprocess(void)
 	msgbuf* to_disp_message;
 	int sender_id;
 	uint8_t IIR_IntId;	    // Interrupt ID from IIR 		 
+	int i = 0;
 	
 #ifdef DEBUG_0
 	uart1_put_string("Entering UART_iprocess\n\r");
@@ -249,23 +250,26 @@ void UART_iprocess(void)
 		}
 	} else if (IIR_IntId & IIR_THRE) {
 		// Get the message from crt_display - receive message by sender id
-		to_disp_message = k_receive_message(&sender_id);
+		to_disp_message = (msgbuf*)k_receive_message(&sender_id);
 		
 	/* THRE Interrupt, transmit holding register becomes empty */
 
 		if (*gp_buffer != '\0' ) {
-			g_char_out = to_disp_message->mtext[0];
+			g_char_out = to_disp_message->mtext[i];
+			while (g_char_out != '\0') {
+				printf("Writing a char = %c \n\r", g_char_out);
+				pUart->THR = g_char_out;
+				i++;
+				g_char_out = to_disp_message->mtext[i];
+			}
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);
 			//uart1_put_string("\n\r");
-			
-			// you could use the printf instead
-			printf("Writing a char = %c \n\r", g_char_out);
+				
 			k_release_memory_block((void*)to_disp_message);
 #endif // DEBUG_0			
-			pUart->THR = g_char_out;
-			gp_buffer++;
+		
 		} else {
 #ifdef DEBUG_0
 			uart1_put_string("Finish writing. Turning off IER_THRE\n\r");
@@ -291,17 +295,16 @@ void crt_proc(void) {
 	
     msgbuf* message;
 		int sender_id;
-		char str;
     while(1) {
 			message = receive_message(&sender_id);
 			// Display character by character as they are input to the console
-			str = message->mtext[0];
 			if (message->mtype == CRT_DISPLAY) {
-				if (g_send_char == 1) {
-					message->sender_id = PID_CRT;
-					send_message(PID_UART_IPROC, (void*)message);
-					pUart->IER = IER_THRE | IER_RLS | IER_RBR;
-				}
+				message->sender_id = PID_CRT;
+				send_message(PID_UART_IPROC, (void*)message);
+				gp_current_process = (PCB*)getProcessByID(PID_UART_IPROC);
+				pUart->IER = IER_THRE | IER_RLS | IER_RBR;
+				gp_current_process = (PCB*)getProcessByID(PID_CRT);
+				
 			} else {
 				release_memory_block((void*)message);
 			}
