@@ -94,12 +94,30 @@ PCB* remove_from_mail_blocked(int pid) {
 	return NULL;
 }
 
-
+// For hot keys
 void printTimerBlockedQueue() {
 	PCB* iter = headBlockedMail;
-	while(iter) {
-		printf("Current process in received blocked queue is: %d \n", iter->m_pid);
-		iter = iter->next;
+	if(!iter) {
+		printf("Blocked on receive queue is empty \n");
+	}
+	else {
+		while(iter) {
+			printf("Current process in received blocked queue is: %d \n", iter->m_pid);
+			iter = iter->next;
+		}
+	}
+}
+
+void printReadyQueue() {
+	PCB* iter = headReady;
+	if(!iter) {
+		printf("Ready queue is empty \n");
+	}
+	else {
+		while(iter) {
+			printf("Current process in ready queue: %d \n", iter->m_pid);
+			iter = iter->next;
+		}
 	}
 }
 
@@ -107,15 +125,19 @@ void printTimeOutQueue() {
 	Envelope* iter = headTimer;
 	msgbuf* iterMessage = NULL;
 	int i = 0;
-	
-	while(iter) {
-		printf("Current envelope message: ");
-		iterMessage = (msgbuf*)iter->message;
-		for(i = 0; i < sizeof(iterMessage->mtext)/sizeof(char); i++) {
-			printf("%c", iterMessage->mtext[i]); 
+	if(!iter) {
+		printf("Timeout queue is empty \n");
+	}
+	else {
+		while(iter) {
+			printf("Current envelope message: ");
+			iterMessage = (msgbuf*)iter->message;
+			for(i = 0; i < sizeof(iterMessage->mtext)/sizeof(char); i++) {
+				printf("%c", iterMessage->mtext[i]); 
+			}
+			printf("\n");
+			iter = iter->next;
 		}
-		printf("\n");
-		iter = iter->next;
 	}
 }
 
@@ -251,11 +273,9 @@ int k_set_process_priority(int process_id, int priority) {
 
 	// if the new priority is the same priority as the current process 
 		if(priority != process->m_priority) {
-			printf("have to switch to %d" , process->m_pid);
 			// remove the process from the ready queue (by id)
 			removeProcessByID(process_id);
 
-			printf("curremt priority: %d\n",process->m_priority);
 			old_p = process->m_priority;
 			
 			//set the new priority
@@ -337,8 +357,6 @@ void process_init()
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
 		g_proc_table[i].is_i_process = FALSE;
-		printf("gtest_pcbs pid %d \n", (g_test_procs[i]).m_pid);
-		printf("gtest_pcbs stack %d \n", (g_test_procs[i]).m_stack_size);
 	}
 	
 	for (; i < NUM_TOTAL_PROCS; i++, j++ ) {
@@ -348,7 +366,6 @@ void process_init()
 		// added a priority to the table
 		g_proc_table[i].m_priority = g_api_procs[j].m_priority;
 		g_proc_table[i].is_i_process = g_api_procs[j].is_i_process;
-		printf("gapi_pcbs %d \n", (g_api_procs[j]).m_priority);
 	}
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
@@ -366,7 +383,6 @@ void process_init()
 		
 	
 		if(g_proc_table[i].is_i_process == FALSE) {
-			printf("gp_pcbs %d \n", (gp_pcbs[i])->m_pid);
 				gp_pcbs[i]->m_state = NEW;
 				rpq_enqueue(gp_pcbs[i]);
 			
@@ -395,7 +411,6 @@ void process_init()
 	temp = headReady;
 	
 	while(temp != NULL) {
-			printf("temp %d \n", (temp)->m_pid);
 			temp = temp->next;
 	}
 }
@@ -437,17 +452,11 @@ int process_switch(PCB *p_pcb_old)
 	PROC_STATE_E state;
 	
 	state = gp_current_process->m_state;
-//	printf("-------------------------------------\n");
-//	printf("Process switch old id %d \n", p_pcb_old->m_pid);
-//	printf("Process switch old state %d \n", p_pcb_old->m_state);
 	if (state == NEW) {
-//		printf("current state is new\n");
 		if (gp_current_process != p_pcb_old) {
 			// last condition is for checking if p_pcb_old has the same priority as the head -> to avoid enqueueing twice
 			// eg in premptionuserproc.c
 			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM && p_pcb_old->m_priority != headReady->m_priority ) {
-		
-	//			printf("current procss not old and old not new\n");
 				p_pcb_old->m_state = RDY;
 				rpq_enqueue(p_pcb_old);
 			}
@@ -461,7 +470,6 @@ int process_switch(PCB *p_pcb_old)
 	/* The following will only execute if the if block above is FALSE */
 
 	if (state == RDY) {
-//		printf("current state is ready\n");
 		if (gp_current_process != p_pcb_old) {
 
 			if (p_pcb_old->m_state != BOR && p_pcb_old->m_state != WFM && p_pcb_old->m_priority != headReady->m_priority) {
@@ -473,28 +481,11 @@ int process_switch(PCB *p_pcb_old)
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
 		}
 	} else {
-			printf("Testing error condition");
+	//		printf("Testing error condition");
 			gp_current_process = p_pcb_old; // revert back to the old proc on error
 			return RTX_ERR;
 	}
-	/*
-	if (gp_current_process != p_pcb_old) {
-		printf("current procss not old\n");
-		if (state == RDY){
-			printf("current procss not old and current state is ready\n");
-			if (p_pcb_old->m_state != BOR) {
-				p_pcb_old->m_state = RDY; 
-				rpq_enqueue(p_pcb_old);
-			}
-			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
-			gp_current_process->m_state = RUN;
-			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
-		} else {
-			printf("Testing error condition");
-			gp_current_process = p_pcb_old; // revert back to the old proc on error
-			return RTX_ERR;
-		} 
-	}*/
+	
 	return RTX_OK;
 }
 
@@ -509,28 +500,11 @@ int k_release_processor(void)
 	PCB *p_pcb_old = NULL;
 	
 	PCB* temp = headReady;
-//	printf("-----------------------\n");
-//	printf("in k_release processor\n");
-//	while(temp != NULL) {
-//			printf("before scheduler %d \n", (temp)->m_pid);
-//			temp = temp->next;
-//	}
-	
 	
 	p_pcb_old = gp_current_process;
 	
 	gp_current_process = scheduler();
-		
-	temp = headReady;
-	
-	printf(" -------------------------- \n ");
-	
-	while(temp != NULL) {
-			printf("after scheduler %d \n", (temp)->m_pid);
-			temp = temp->next;
-	}
-//	printf("gp_current_process 0x%x \n", gp_current_process->m_state);
-	
+
 	if ( gp_current_process == NULL  ) {
 		null_process();
 //		gp_current_process = p_pcb_old; // revert back to the old process
@@ -538,7 +512,6 @@ int k_release_processor(void)
 	}
   
 	if ( p_pcb_old == NULL /*|| p_pcb_old->m_state==BOR*/ ) {
-//		printf("old is null or old state is bor\n");
 		p_pcb_old = gp_current_process;
 	//	p_pcb_old->m_state = NEW;
 	//	gp_current_process->m_state = NEW;
@@ -554,7 +527,6 @@ int k_release_processor(void)
 
 	process_switch(p_pcb_old);
 
-	//rpq_enqueue(p_pcb_old);
 	p_pcb_old = NULL;
 	return RTX_OK;
 }

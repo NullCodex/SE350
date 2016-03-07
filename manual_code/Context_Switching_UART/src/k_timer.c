@@ -162,8 +162,6 @@ void timer_i_process(void)
 	LPC_TIM0->IR = BIT(0);  
 	
 	g_timer_count++;
-	
-//	printf("in the timer process: %d", g_timer_count);
   
 	// get pending requests from the queue
 	while(timer_process->mailBox != NULL) {

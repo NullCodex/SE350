@@ -28,6 +28,11 @@
 #define BLOCK_SIZE 128
 #define MAX_BUFFER_SIZE (BLOCK_SIZE - sizeof(msgbuf*))
 
+/* Hotkey macros */
+#define HOTKEY1 '!'
+#define HOTKEY2 '*'
+#define HOTKEY3 '$'
+
 /* Process IDs */
 #define PID_NULL 0
 #define PID_P1   1

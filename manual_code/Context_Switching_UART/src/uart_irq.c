@@ -214,6 +214,7 @@ void UART_iprocess(void)
 	msgbuf* to_disp_message;
 	int sender_id;
 	uint8_t IIR_IntId;	    // Interrupt ID from IIR 		 
+
 	int i = 0;
 	
 #ifdef DEBUG_0
@@ -227,9 +228,24 @@ void UART_iprocess(void)
 		/* read UART. Read RBR will clear the interrupt */
 		
 		g_char_in = pUart->RBR;
+	
+#ifdef HOTKEYS		
+		if (g_char_in == HOTKEY1) {
+			printTimerBlockedQueue();
+		}
+		if (g_char_in == HOTKEY2) {
+			printTimeOutQueue();
+		}
+		if (g_char_in == HOTKEY3) {
+			printReadyQueue();
+		}
+#endif HOTKEYS
+		
 		if (g_char_in == '\%') {
 			buffer_index = 0;
 		}
+		
+		// checking if hotkey
 		// Disp the character (API)
 		g_buffer[buffer_index] = g_char_in;
 		
@@ -261,7 +277,6 @@ void UART_iprocess(void)
 		//if (*gp_buffer != '\0' ) {
 			g_char_out = to_disp_message->mtext[i];
 			while (g_char_out != '\0') {
-				printf("Writing a char = %c \n\r", g_char_out);
 				pUart->THR = g_char_out;
 				i++;
 				g_char_out = to_disp_message->mtext[i];
@@ -270,9 +285,8 @@ void UART_iprocess(void)
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);
 			//uart1_put_string("\n\r");
-				
-			k_release_memory_block((void*)to_disp_message);
 #endif // DEBUG_0		
+			k_release_memory_block((void*)to_disp_message);
 		}			
 		
 		} else {
@@ -284,9 +298,6 @@ void UART_iprocess(void)
 			g_send_char = 0;
 			//gp_buffer = g_buffer;		
 		}
-	
-	      
-		
 }
 
 /**

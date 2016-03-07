@@ -8,9 +8,7 @@ int k_send_message(int process_id, void* message_envelope) {
     Envelope* env;
 		msgbuf* msg = (msgbuf*) message_envelope;
     __disable_irq();
-		printf("Addr of message: %d\n", &message_envelope);
     env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
-    printf("Printing addr: %d\n", &(env->sender_id));
 		env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
     env->delay = 0;

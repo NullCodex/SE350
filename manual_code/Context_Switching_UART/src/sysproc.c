@@ -96,7 +96,6 @@ void print_wall_clock(int hour, int minute, int second){
     
     for (i = 0; i < 8; i ++){
         message->mtext[i] = str[i];
-				//printf("%c", str[i]);
 				uart0_put_char(str[i]);
     }
 		uart0_put_char('\n');
