@@ -255,9 +255,11 @@ void rpq_enqueue (PCB *current_process) {
 					} else {
 						if (headReady == temp) {
 							headReady = current_process;
+							current_process->next = temp;
+						} else {
+							current_process->next = temp;
+							prev->next = current_process;
 						}
-						current_process->next = temp;
-						prev->next = current_process;
 						break;
 					}
 				}
@@ -309,31 +311,31 @@ void set_api_procs() {
 	int i;
 
 	g_api_procs[0].m_pid= PID_TIMER_IPROC;
-	g_api_procs[0].m_stack_size=0x100;
+	g_api_procs[0].m_stack_size=0x200;
 	g_api_procs[0].mpf_start_pc = NULL;
 	g_api_procs[0].m_priority   = HIGHEST;
 	g_api_procs[0].is_i_process = TRUE;
 	
 	g_api_procs[1].m_pid= PID_UART_IPROC;
-	g_api_procs[1].m_stack_size=0x100;
+	g_api_procs[1].m_stack_size=0x200;
 	g_api_procs[1].mpf_start_pc = &UART_iprocess;
 	g_api_procs[1].m_priority   = HIGHEST;
 	g_api_procs[1].is_i_process = TRUE;
 	
 	g_api_procs[2].m_pid = PID_KCD;
-	g_api_procs[2].m_stack_size=0x100;
+	g_api_procs[2].m_stack_size=0x200;
 	g_api_procs[2].mpf_start_pc = &kcd_proc;
 	g_api_procs[2].m_priority = HIGHEST;
 	g_api_procs[2].is_i_process = FALSE;
 	
 	g_api_procs[3].m_pid= PID_CRT;
-	g_api_procs[3].m_stack_size=0x100;
+	g_api_procs[3].m_stack_size=0x200;
 	g_api_procs[3].mpf_start_pc = &crt_proc;
 	g_api_procs[3].m_priority   = HIGHEST;
 	g_api_procs[3].is_i_process = FALSE;
 	
 	g_api_procs[4].m_pid= PID_CLOCK;
-	g_api_procs[4].m_stack_size=0x100;
+	g_api_procs[4].m_stack_size=0x200;
 	g_api_procs[4].mpf_start_pc = &wall_clock;
 	g_api_procs[4].m_priority   = HIGHEST;
 	g_api_procs[4].is_i_process = FALSE;

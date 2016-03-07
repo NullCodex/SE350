@@ -228,6 +228,7 @@ void UART_iprocess(void)
 		/* read UART. Read RBR will clear the interrupt */
 		
 		g_char_in = pUart->RBR;
+		
 	
 #ifdef HOTKEYS		
 		if (g_char_in == HOTKEY1) {
