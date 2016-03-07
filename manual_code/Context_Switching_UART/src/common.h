@@ -21,6 +21,7 @@
 #define NUM_TOTAL_PROCS 11
 #define COMMAND_SIZE	3
 #define MAX_COMMANDS	10
+#define BUFFER_SIZE 15
 
 /* Helper macros */
 #define ARRAYSIZE(array) (sizeof(array)/sizeof(array[0]))

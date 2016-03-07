@@ -18,7 +18,7 @@
 
 PCB* uart_process;
 LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
-char g_buffer[COMMAND_SIZE];
+char g_buffer[BUFFER_SIZE];
 int buffer_index = 0;
 uint8_t g_send_char = 0;
 uint8_t g_char_in;
@@ -235,12 +235,13 @@ void UART_iprocess(void)
 		
 		pUart->THR = g_char_in;
 		if (g_char_in == '\r') {
+			pUart->THR = '\n';
 			pUart->IER ^= IER_THRE;
 			buffer_index = 0;
 			send_to_KCD();
 		}
 		pUart->IER = IER_RBR;
-		if (buffer_index < COMMAND_SIZE) {
+		if (buffer_index < BUFFER_SIZE) {
 			buffer_index++;
 		}
 		

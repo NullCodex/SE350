@@ -219,16 +219,16 @@ void wall_clock(void){
       //              release_memory_block((void*)message);
 
                 } else if (message->mtext[2] == 'S' && check_format(message->mtext)) {
-                    for(i = 3; i < 10; i = i + 3) { 
+                    for(i = 4; i < 11; i = i + 3) { 
                         temp = (message->mtext[i] - '0') * 10 + message->mtext[i + 1] - '0';
                         switch(i) {
-                            case 3:
+                            case 4:
                                 hour = temp % 24;
                                 break;
-                            case 6:
+                            case 7:
                                 minute = temp;
                                 break;
-                            case 9:
+                            case 10:
                                 second = temp;
                                 break;
                         }
