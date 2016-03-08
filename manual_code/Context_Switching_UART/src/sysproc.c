@@ -87,7 +87,7 @@ void kcd_proc(void) {
 void print_wall_clock(int hour, int minute, int second){
     msgbuf* msg = request_memory_block();
 		int i;
-    char str[9];
+    char str[10];
 
     str[0] = hour /10 + '0';
     str[1] = hour %10 + '0';
@@ -97,7 +97,7 @@ void print_wall_clock(int hour, int minute, int second){
     str[5] = ':';
     str[6] = second /10 + '0';
     str[7] = second %10 + '0';
-    
+    str[8] = '\0';
     for (i = 0; i < 8; i ++){
         msg->mtext[i] = str[i];
 				//uart0_put_char(str[i]);
@@ -125,6 +125,7 @@ void send_wall_clock_message(msgbuf *msg){
     msg->mtype = DEFAULT;
 		msg->mtext[0] = '%';
     msg->mtext[1] = ' ';
+		
     delayed_send(PID_CLOCK, msg, 2); 
 
 }
