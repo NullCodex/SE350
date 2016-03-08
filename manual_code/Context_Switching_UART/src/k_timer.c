@@ -140,7 +140,6 @@ __asm void TIMER0_IRQHandler(void)
 {
 	  PRESERVE8
 	IMPORT timer_i_process
-	IMPORT k_release_processor
 	PUSH{r4-r11, lr}
 	BL timer_i_process   
 	; BL k_release_processor  ; otherwise (i.e g_switch_flag == 1, then switch to the other process)

@@ -79,7 +79,7 @@ void kcd_proc(void) {
 				insert_cmd(cmd, sender_id);
 			}
 			if (msg_sent == -1) {
-				release_memory_block(message);
+				release_memory_block((void*)message);
 			}
 		}
 }
@@ -87,7 +87,10 @@ void kcd_proc(void) {
 void print_wall_clock(int hour, int minute, int second){
     msgbuf* msg = request_memory_block();
 		int i;
-    char str[10];
+    int retCode = -1;
+		char str[10];
+	__disable_irq();
+		
 
     str[0] = hour /10 + '0';
     str[1] = hour %10 + '0';
@@ -103,9 +106,12 @@ void print_wall_clock(int hour, int minute, int second){
 				//uart0_put_char(str[i]);
     }
 		msg->mtype = CRT_DISPLAY;
+		__enable_irq();
 		//uart0_put_char('\n');
-    send_message(PID_CRT, (void*) msg);
-
+    retCode = send_message(PID_CRT, (void*) msg);
+		if (retCode != 0) {
+			//release_memory_block((void*) msg);
+		}
 
 }
 
@@ -120,62 +126,83 @@ BOOL check_format(char *str) {
 } 
 
 void send_wall_clock_message(msgbuf *msg){ 
+		int retCode = -1;
     //sends a delayed message to wall_clock
-    msg = request_memory_block();
     msg->mtype = DEFAULT;
 		msg->mtext[0] = '%';
     msg->mtext[1] = ' ';
-		
-    delayed_send(PID_CLOCK, msg, 2); 
-
+		msg->mtext[2] = '\0';
+    retCode = delayed_send(PID_CLOCK, msg, 2); 
 }
 
 
 void wall_clock(void){
 		char firstC;
     int sender_id;
+		int retCode = -1;
     msgbuf* message;
     int hour = 0;
     int minute = 0;
     int second = 0;
-
+		msgbuf* msg1;
+		msgbuf* msg2;
+		msgbuf* msg3;
+		msgbuf* msg4;
     int temp = 0;
     int i = 0;
+		msgbuf* delay_msg = request_memory_block();
     BOOL clock_on = FALSE;
-    msgbuf* msg;
 
     //registering to KCD
 		
-    message = request_memory_block();
-    message->mtext[0] = '%';
-    message->mtext[1] = 'W';
-    message->mtype = KCD_REG;
-    send_message(PID_KCD, message);
+    msg1 = request_memory_block();
+    msg1->mtext[0] = '%';
+    msg1->mtext[1] = 'W';
+		msg1->mtext[2] = '\0';
+    msg1->mtype = KCD_REG;
+    retCode = send_message(PID_KCD, msg1);
+		
+		if (retCode != 0) {
+			release_memory_block((void*)msg1);
+		}
+		
+    msg2 = request_memory_block();
 
-    message = request_memory_block();
-
-    message->mtext[0] = '%';
-    message->mtext[1] = 'W';
-    message->mtext[2] = 'R';
-    message->mtype = KCD_REG;
-    send_message(PID_KCD, message);
+    msg2->mtext[0] = '%';
+    msg2->mtext[1] = 'W';
+    msg2->mtext[2] = 'R';
+		msg2->mtext[2] = '\0';
+    msg2->mtype = KCD_REG;
+    retCode = send_message(PID_KCD, msg2);
     
-    message = request_memory_block();
-
-    message->mtext[0] = '%';
-    message->mtext[1] = 'W';
-    message->mtext[2] = 'T';
-    message->mtype = KCD_REG;
-    send_message(PID_KCD, message);
+		if (retCode != 0) {
+			release_memory_block((void*)msg2);
+		}
 		
-    message = request_memory_block();
+    msg3 = request_memory_block();
 
-    message->mtext[0] = '%';
-    message->mtext[1] = 'W';
-    message->mtext[2] = 'S';
-    message->mtype = KCD_REG;
-    send_message(PID_KCD, message); 
+    msg3->mtext[0] = '%';
+    msg3->mtext[1] = 'W';
+    msg3->mtext[2] = 'T';
+		msg3->mtext[2] = '\0';
+    msg3->mtype = KCD_REG;
+    retCode = send_message(PID_KCD, msg3);
 		
+		if (retCode != 0) {
+			release_memory_block((void*)msg3);
+		}
+    msg4 = request_memory_block();
+
+    msg4->mtext[0] = '%';
+    msg4->mtext[1] = 'W';
+    msg4->mtext[2] = 'S';
+		msg4->mtext[2] = '\0';
+    msg4->mtype = KCD_REG;
+    retCode = send_message(PID_KCD, msg4);
+			
+		if (retCode != 0) {
+			release_memory_block((void*) msg4);
+		}
     while(1){
         message = (msgbuf*)receive_message(&sender_id);
         
@@ -201,7 +228,8 @@ void wall_clock(void){
                 
                 print_wall_clock(hour,minute,second);
                 release_memory_block((void*)message);
-                send_wall_clock_message(message); //sends delayed message
+								
+                send_wall_clock_message(delay_msg); //sends delayed message
                 
                 } else if (message->mtext[2] == 'R') { 
                     //resets clock
@@ -247,12 +275,16 @@ void wall_clock(void){
                    release_memory_block((void*)message);
             } else{ 
                 //else prints out the message
-								msg->mtype = CRT_DISPLAY;
-                send_message(PID_CRT, msg);
+								message->mtype = CRT_DISPLAY;
+                retCode = send_message(PID_CRT, message);
+								if (retCode != 0) {
+									release_memory_block((void*)message);
+								}
             }
         } else { 
             //if message is null or clock is off, deallocates the message
-            release_memory_block((void*)message);
+            release_memory_block((void*)delay_msg);
+
         }
     }
 }

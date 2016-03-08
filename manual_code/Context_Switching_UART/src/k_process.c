@@ -73,7 +73,7 @@ PCB* remove_from_mail_blocked(int pid) {
 	
 	// only a single element
 	if(headBlockedMail->m_pid == pid && headBlockedMail->next == NULL) {
-		headBlocked = NULL;
+		headBlockedMail = NULL;
 		return current;
 	} 
 	// if we want to remove the first element, but there are more elements in the queue

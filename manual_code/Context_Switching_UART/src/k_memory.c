@@ -104,7 +104,7 @@ void memory_init(void)
 	headBlock->released = 1;
 	headBlock->next = NULL;
 	iterAddress = (U32)headBlock;
-	for (i = 0; i < 30; i++) {
+	for (i = 0; i < 50; i++) {
 		/*
 		headBlock->next = (void *) (headBlock->addr + BLOCK_SIZE);
 		headBlock->next->addr = ((U32) headBlock->next + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
@@ -203,7 +203,7 @@ void *k_request_memory_block(void) {
 	mem_block *toRet = headBlock;
 #ifdef DEBUG_0
 	printf("k_request_memory_block: entering...\n");
-
+	__disable_irq();
 #endif /* ! DEBUG_0 */
 	while (headBlock == NULL) {
 		gp_current_process->m_state = BOR;
@@ -214,7 +214,7 @@ void *k_request_memory_block(void) {
 	toRet->released = 0;
 	toRet->next = NULL;
 	//print_free_blocks();
-	
+	__enable_irq();
 	return (void*) (toRet->addr);
 }
 
@@ -223,6 +223,7 @@ int k_release_memory_block(void *p_mem_blk) {
 	mem_block* curr_node;
 	PCB* current_process = NULL;
 	msgbuf* toBeCleared = (msgbuf*)p_mem_blk;
+		__disable_irq();
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
@@ -238,13 +239,6 @@ int k_release_memory_block(void *p_mem_blk) {
 		current_process->m_state = RDY;
 		rpq_enqueue(current_process);
 	}
-	
-	/*if(toBeCleared->mtext[0]) {
-		while(toBeCleared->mtext[i] != '\0') {
-			toBeCleared->mtext[i] = '\0';
-			i++;
-		}
-	}*/
 
 	
 	curr_node = (mem_block *)((U32)p_mem_blk - sizeof(mem_block*) - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
@@ -259,5 +253,6 @@ int k_release_memory_block(void *p_mem_blk) {
 	if (current_process != NULL && (current_process->m_priority <= gp_current_process->m_priority)) {
 		k_release_processor();
 	}
+	__enable_irq();
 	return RTX_OK;
 }
