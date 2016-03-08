@@ -24,7 +24,7 @@ int k_send_message(int process_id, void* message_envelope) {
         rpq_enqueue(receiving_proc);
 			
 				if (receiving_proc->m_priority <= gp_current_process->m_priority) {
-					//__enable_irq();
+					__enable_irq();
 					k_release_processor();
 				}
     }
@@ -36,17 +36,16 @@ int k_send_message(int process_id, void* message_envelope) {
 void* k_receive_message(int* sender_id) {
     Envelope* received;
     msgbuf* message;
-
+		__disable_irq();
     while(gp_current_process->mailBox == NULL) {
         gp_current_process->m_state = WFM;
         // probably need another queue for blocked on mail
         // push it here
 				mail_benqueue(gp_current_process);
+			__enable_irq();
         k_release_processor();
     }
-
-    __disable_irq();
-
+		__disable_irq();
     //received = pop mailque;
 		received = dequeue_mailBox(gp_current_process);
     message = (msgbuf* )received->message;

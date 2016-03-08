@@ -98,7 +98,7 @@ int uart_get_char(int n_uart)
 int uart_put_char(int n_uart, unsigned char c)
 {
   LPC_UART_TypeDef *pUart;
-
+	__disable_irq();
   if (n_uart == 0) {
     pUart = (LPC_UART_TypeDef *)LPC_UART0;
   } else if (n_uart == 1) {
@@ -109,6 +109,7 @@ int uart_put_char(int n_uart, unsigned char c)
 
   /* polling LSR THRE bit to wait it is empty */
   while (!(pUart->LSR & LSR_THRE)); 
+	__enable_irq();
   return (pUart->THR = c);  /* write c to the THR */
 }
 

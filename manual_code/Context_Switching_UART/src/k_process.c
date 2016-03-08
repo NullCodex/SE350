@@ -57,6 +57,7 @@ extern PCB* uart_process;
 */
 
 void mail_benqueue(PCB* process) {
+	__disable_irq();
 	if(headBlockedMail) {
 		process->next = headBlockedMail;
 		headBlockedMail = process;
@@ -64,6 +65,7 @@ void mail_benqueue(PCB* process) {
 		process->next = NULL;
 		headBlockedMail = process;
 	}
+	__enable_irq();
 }
 
 // Assuming the list is not empty

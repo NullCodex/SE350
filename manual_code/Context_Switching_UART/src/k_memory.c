@@ -201,13 +201,12 @@ PCB* bpq_dequeue(void) {
 void *k_request_memory_block(void) {
 
 	mem_block *toRet = headBlock;
-#ifdef DEBUG_0
-	printf("k_request_memory_block: entering...\n");
-	__disable_irq();
-#endif /* ! DEBUG_0 */
+	
+		__disable_irq();
 	while (headBlock == NULL) {
 		gp_current_process->m_state = BOR;
 		bpq_enqueue(gp_current_process);
+	
 		k_release_processor();
 	}
 	headBlock = headBlock->next;
@@ -251,6 +250,7 @@ int k_release_memory_block(void *p_mem_blk) {
 	curr_node->released = 1;
 	headBlock = curr_node;
 	if (current_process != NULL && (current_process->m_priority <= gp_current_process->m_priority)) {
+
 		k_release_processor();
 	}
 	__enable_irq();

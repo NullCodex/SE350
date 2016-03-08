@@ -152,7 +152,6 @@ __asm void TIMER0_IRQHandler(void)
 void timer_i_process(void)
 {
 	Envelope* iter = headTimer;
-	__disable_irq();
 	
 	g_pcb_old = gp_current_process;
 	
@@ -180,7 +179,6 @@ void timer_i_process(void)
 	}
 	g_switch_flag = 1;
 	
-	__enable_irq();
 }
 
 int hasNextHeadTimer() {

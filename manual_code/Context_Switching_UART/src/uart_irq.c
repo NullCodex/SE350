@@ -214,7 +214,7 @@ void UART_iprocess(void)
 	msgbuf* to_disp_message;
 	int sender_id;
 	uint8_t IIR_IntId;	    // Interrupt ID from IIR 		 
-
+	PCB* temp = gp_current_process;
 	int i = 0;
 	
 #ifdef DEBUG_0
@@ -222,7 +222,8 @@ void UART_iprocess(void)
 #endif // DEBUG_0
 
 	/* Reading IIR automatically acknowledges the interrupt */
-
+	
+	gp_current_process = (PCB*)getProcessByID(PID_UART_IPROC);
 	IIR_IntId = (pUart->IIR) >> 1 ; // skip pending bit in IIR 
 	if (IIR_IntId & IIR_RDA) { // Receive Data Avaialbe
 		/* read UART. Read RBR will clear the interrupt */
@@ -254,7 +255,8 @@ void UART_iprocess(void)
 		if (g_char_in == '\r') {
 			pUart->THR = '\n';
 			//pUart->IER ^= IER_THRE;
-			buffer_index = 0;
+			buffer_index = 0;			
+			gp_current_process = temp;
 			send_to_KCD();
 		}
 		pUart->IER = IER_RBR;
@@ -289,10 +291,11 @@ void UART_iprocess(void)
 			//uart1_put_char(g_char_out);
 			//uart1_put_string("\n\r");
 #endif // DEBUG_0		
+			gp_current_process = temp;
 			k_release_memory_block((void*)to_disp_message);
 		}			
 		
-		} else {
+		}/* else {
 #ifdef DEBUG_0
 			uart1_put_string("Finish writing. Turning off IER_THRE\n\r");
 #endif // DEBUG_0
@@ -300,7 +303,8 @@ void UART_iprocess(void)
 			pUart->THR = '\0';
 			g_send_char = 0;
 			//gp_buffer = g_buffer;		
-		}
+		}*/
+		gp_current_process = temp;
 }
 
 /**
@@ -316,7 +320,6 @@ void crt_proc(void) {
 			if (message->mtype == CRT_DISPLAY) {
 				message->sender_id = PID_CRT;
 				send_message(PID_UART_IPROC, (void*)message);
-				gp_current_process = (PCB*)getProcessByID(PID_UART_IPROC);
 				pUart->IER = IER_THRE | IER_RLS | IER_RBR;
 				gp_current_process = (PCB*)getProcessByID(PID_CRT);
 				
