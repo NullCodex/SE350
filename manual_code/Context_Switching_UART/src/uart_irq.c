@@ -14,7 +14,6 @@
 #ifdef DEBUG_0
 #include "printf.h"
 #endif
-#define K_MSG_ENV
 
 PCB* uart_process;
 LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
@@ -28,6 +27,11 @@ int ret_code = -1;
 extern uint32_t g_switch_flag;
 extern PCB* gp_current_process;
 extern int k_release_processor(void);
+extern PCB* getProcessByID(int);
+extern void printTimerBlockedQueue(void);
+extern void printTimeOutQueue(void);
+extern void printReadyQueue(void);
+
 /**
  * @brief: initialize the n_uart
  * NOTES: It only supports UART0. It can be easily extended to support UART1 IRQ.
@@ -241,7 +245,7 @@ void UART_iprocess(void)
 		if (g_char_in == HOTKEY3) {
 			printReadyQueue();
 		}
-#endif HOTKEYS
+#endif
 		
 		if (g_char_in == '\%') {
 			buffer_index = 0;
