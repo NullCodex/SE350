@@ -2,6 +2,16 @@ k_memory.o: src\k_memory.c
 k_memory.o: src\k_memory.h
 k_memory.o: src\k_rtx.h
 k_memory.o: src\msg.h
-k_memory.o: src\k_memory.h
 k_memory.o: src\printf.h
 k_memory.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+k_memory.o: src\k_process.h
+k_memory.o: src\k_timer.h
+k_memory.o: src\common.h
+k_memory.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdint.h
+k_memory.o: src\msg.h
+k_memory.o: src\k_memory.h
+k_memory.o: src\sysproc.h
+k_memory.o: src\rtx.h
+k_memory.o: src\uart.h
+k_memory.o: src\uart_def.h
+k_memory.o: src\timer.h

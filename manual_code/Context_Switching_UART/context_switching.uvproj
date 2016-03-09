@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>DEBUG_0</Define>
+              <Define>DEBUG_0 K_MSG_ENV HOTKEYS</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -364,7 +364,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>NO_CRP</Define>
+              <Define></Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -425,6 +425,16 @@
               <FileName>uart_irq.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\uart_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\msg.c</FilePath>
+            </File>
+            <File>
+              <FileName>sysproc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\sysproc.c</FilePath>
             </File>
           </Files>
         </Group>

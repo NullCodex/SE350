@@ -254,14 +254,12 @@ void rpq_enqueue (PCB *current_process) {
 						temp = temp->next;
 					} else {
 						if (headReady == temp) {
-  							headReady = current_process;
- 							current_process->next = temp;
- 						} else {
- 							current_process->next = temp;
- 							prev->next = current_process;
-  						}
-						current_process->next = temp;
-						prev->next = current_process;
+							headReady = current_process;
+							current_process->next = temp;
+						} else {
+							current_process->next = temp;
+							prev->next = current_process;
+						}
 						break;
 					}
 				}
@@ -314,7 +312,7 @@ void set_api_procs() {
 
 	g_api_procs[0].m_pid= PID_TIMER_IPROC;
 	g_api_procs[0].m_stack_size=0x200;
-	g_api_procs[0].mpf_start_pc = NULL;
+	g_api_procs[0].mpf_start_pc = &timer_i_process;
 	g_api_procs[0].m_priority   = HIGHEST;
 	g_api_procs[0].is_i_process = TRUE;
 	
@@ -455,7 +453,8 @@ int process_switch(PCB *p_pcb_old)
 {
 	PROC_STATE_E state;
 	
-	state = gp_current_process->m_state;
+		state = gp_current_process->m_state;
+	
 	if (state == NEW) {
 		if (gp_current_process != p_pcb_old) {
 			// last condition is for checking if p_pcb_old has the same priority as the head -> to avoid enqueueing twice
@@ -467,6 +466,7 @@ int process_switch(PCB *p_pcb_old)
 			p_pcb_old->mp_sp = (U32 *) __get_MSP();
 		}
 		gp_current_process->m_state = RUN;
+		
 		__set_MSP((U32) gp_current_process->mp_sp);
 		__rte();  // pop exception stack frame from the stack for a new processes
 	} 

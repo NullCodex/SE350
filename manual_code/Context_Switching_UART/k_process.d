@@ -10,5 +10,13 @@ k_process.o: src\uart_def.h
 k_process.o: src\k_process.h
 k_process.o: src\k_rtx.h
 k_process.o: src\k_timer.h
+k_process.o: src\common.h
+k_process.o: src\msg.h
 k_process.o: src\printf.h
 k_process.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+k_process.o: src\k_process.h
+k_process.o: src\timer.h
+k_process.o: src\k_memory.h
+k_process.o: src\sysproc.h
+k_process.o: src\rtx.h
+k_process.o: src\uart.h
