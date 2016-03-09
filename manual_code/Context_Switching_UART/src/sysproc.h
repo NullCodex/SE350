@@ -5,7 +5,6 @@
 #include "rtx.h"
 #include "msg.h"
 #include "common.h"
-#include "string.h"
 
 #define K_MSG_ENV
 

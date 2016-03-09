@@ -6,6 +6,15 @@ REG_CMD sys_cmd[MAX_COMMANDS];
 int cmd_index = 0;
 
 PCB *clock_process;
+
+char *strcpy(char *dest, const char *src)
+ {
+    char *save = dest;
+    while(*dest++ = *src++);
+    return save;
+ }
+ 
+
 int is_prefix (char str1[], char str2[]) {
 	int i = 0;
 	char txt = str1[i];
@@ -83,7 +92,7 @@ void print_wall_clock(int hour, int minute, int second){
     Envelope* envelope;
     msgbuf* message;
 		int i;
-    char str[9];
+    char str[10];
 
     str[0] = hour /10 + '0';
     str[1] = hour %10 + '0';
@@ -93,6 +102,7 @@ void print_wall_clock(int hour, int minute, int second){
     str[5] = ':';
     str[6] = second /10 + '0';
     str[7] = second %10 + '0';
+	str[8] = '\0';
     
     for (i = 0; i < 8; i ++){
         message->mtext[i] = str[i];
@@ -192,10 +202,8 @@ void wall_clock(void){
                     minute = minute % 60;
                 }
                 
-                __disable_irq();
                 print_wall_clock(hour,minute,second);
-                __enable_irq();
-        //        release_memory_block((void*)message);
+                release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
                 
                 } else if (message->mtext[2] == 'R') { 
@@ -203,19 +211,17 @@ void wall_clock(void){
                     hour = 0;
                     minute = 0;
                     second = 0;
-                    __disable_irq();
                     print_wall_clock(hour,minute,second);
-                    __enable_irq();
-
+                   
                     //deallocate then create a new one.
-       ///             release_memory_block((void *)message);
+                    release_memory_block((void *)message);
 
                 } else if (message->mtext[2] == 'T') {
                     hour = 0;
                     minute = 0;
                     second = 0;
                     clock_on = FALSE;
-      //              release_memory_block((void*)message);
+                    release_memory_block((void*)message);
 
                 } else if (message->mtext[2] == 'S' && check_format(message->mtext)) {
                     for(i = 4; i < 11; i = i + 3) { 
@@ -240,19 +246,16 @@ void wall_clock(void){
                                 hour = (hour +1 ) % 24;
                                 minute = minute % 60;
                     }
-                    __disable_irq();
                     print_wall_clock(hour,minute,second);
-                    __enable_irq();
-       //             release_memory_block((void*)message);
+                   release_memory_block((void*)message);
             } else{ 
                 //else prints out the message
+								msg->mtype = CRT_DISPLAY;
                 send_message(PID_CRT, msg);
             }
         } else { 
             //if message is null or clock is off, deallocates the message
-      //      release_memory_block((void*)message);
+            release_memory_block((void*)message);
         }
     }
 }
-
-
