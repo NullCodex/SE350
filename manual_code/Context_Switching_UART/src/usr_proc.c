@@ -40,19 +40,19 @@ void set_test_procs() {
 	}
   
 	g_test_procs[0].mpf_start_pc = &proc1;
-	g_test_procs[0].m_priority   = HIGH;
+	g_test_procs[0].m_priority   = LOW;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
 	g_test_procs[1].m_priority   = LOW;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
-	g_test_procs[2].m_priority   = LOW;
+	g_test_procs[2].m_priority   = HIGH;
 	
 	g_test_procs[3].mpf_start_pc = &proc4;
-	g_test_procs[3].m_priority   = HIGH;
+	g_test_procs[3].m_priority   = LOW;
 	
 	g_test_procs[4].mpf_start_pc = &proc5;
-	g_test_procs[4].m_priority   = HIGH;
+	g_test_procs[4].m_priority   = LOW;
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
 	g_test_procs[5].m_priority   = LOW;
@@ -78,7 +78,7 @@ void proc1(void)
     p_msg_env->mtext[0] = '%';
     p_msg_env->mtext[1] = 'W';
     p_msg_env->mtext[2] = '\0';
-    retCode = delayed_send(PID_P2, (void *)p_msg_env, 5000);
+    retCode = delayed_send(PID_P2, (void *)p_msg_env, 100);
 
     set_process_priority(PID_P2, HIGH);
     uart0_put_string("proc1: end of testing\n\r");
@@ -111,13 +111,13 @@ void proc3(void)
 {
 	int i = 0;
 	void *p_mem_blk;
-	uart0_put_string("G025_test: Test 3 OK \n");
+	uart1_put_string("G025_test: Test 3 OK \n");
 
 	while ( 1 ) {
 		if ( i < 1 ) {
-			p_mem_blk = request_memory_block();
+	//		p_mem_blk = request_memory_block();
 		}
-		uart0_put_string("proc3: \n\r");
+		uart1_put_string("proc3: \n\r");
 		release_processor();
 		i++;
 	}

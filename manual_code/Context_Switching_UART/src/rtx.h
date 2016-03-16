@@ -50,6 +50,10 @@ extern int k_send_message(int pid, void *p_msg);
 #define send_message(pid, p_msg) _send_message((U32)k_send_message, pid, p_msg)
 extern int _send_message(U32 p_func, int pid, void *p_msg) __SVC_0;
 
+extern int k_send_message_from_uart(int sid, int pid, void *p_msg);
+#define send_message_from_uart(sid, pid, p_msg) _send_message_from_uart((U32)k_send_message_from_uart, sid, pid, p_msg)
+extern int _send_message_from_uart(U32 p_func, int sid, int pid, void *p_msg) __SVC_0;
+
 extern void *k_receive_message(int *p_pid);
 #define receive_message(p_pid) _receive_message((U32)k_receive_message, p_pid)
 extern void *_receive_message(U32 p_func, void *p_pid) __SVC_0;

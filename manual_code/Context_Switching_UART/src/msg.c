@@ -31,6 +31,32 @@ int k_send_message(int process_id, void* message_envelope) {
     return RTX_OK;
 }
 
+int k_send_message_from_uart(int sender_id, int process_id, void* message_envelope)  {
+	  PCB* receiving_proc = getProcessByID(process_id);
+    Envelope* env;
+		msgbuf* msg = (msgbuf*) message_envelope;
+
+    env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
+		env->sender_id = sender_id;
+    env->destination_id = process_id;
+    env->delay = 0;
+    env->message = msg;
+
+		push_mailBox(receiving_proc, env);
+
+    if(receiving_proc->m_state == WFM) {
+				receiving_proc = remove_from_mail_blocked(receiving_proc->m_pid);
+				receiving_proc->m_state = RDY;
+        rpq_enqueue(receiving_proc);
+			
+				if (receiving_proc->m_priority <= gp_current_process->m_priority) {
+					k_release_processor();
+				}
+    }
+
+    return RTX_OK;
+}
+
 void* k_receive_message(int* sender_id) {
     Envelope* received;
     msgbuf* message;

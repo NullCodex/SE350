@@ -14,7 +14,7 @@
 #ifdef DEBUG_0
 #include "printf.h"
 #endif
-#define K_MSG_ENV
+
 
 PCB* uart_process;
 LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
@@ -194,7 +194,6 @@ void send_to_KCD(void) {
 	char char_out;
 	buffer_index = 0;
 	to_send->mtype = DEFAULT;
-	to_send->sender_id = PID_UART_IPROC;
 	char_out = g_buffer[buffer_index];
 	while (char_out != '\r') {
 		to_send->mtext[buffer_index] = char_out;
@@ -204,7 +203,7 @@ void send_to_KCD(void) {
 	to_send->mtext[buffer_index] = '\0';
 	g_send_char = 0;
 	buffer_index = 0;
-	ret_code = k_send_message(PID_KCD, (void *) to_send);
+	ret_code = k_send_message_from_uart(PID_UART_IPROC ,PID_KCD, (void *) to_send);
 }
 
 
@@ -313,12 +312,10 @@ void crt_proc(void) {
 			message = receive_message(&sender_id);
 			// Display character by character as they are input to the console
 			if (message->mtype == CRT_DISPLAY) {
-				message->sender_id = PID_CRT;
-				send_message(PID_UART_IPROC, (void*)message);
+				send_message_from_uart(PID_CRT, PID_UART_IPROC, (void*)message);
 				gp_current_process = (PCB*)getProcessByID(PID_UART_IPROC);
 				pUart->IER = IER_THRE | IER_RLS | IER_RBR;
 				gp_current_process = (PCB*)getProcessByID(PID_CRT);
-				
 			} else {
 				release_memory_block((void*)message);
 			}

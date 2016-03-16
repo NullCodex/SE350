@@ -25,5 +25,7 @@ int k_delayed_send(int, void*, int);
 
 void push_mailBox(PCB*, struct Envelope*);
 
+int k_send_message_from_uart(int, int, void*);
+
 Envelope* dequeue_mailBox(PCB*);
 #endif
