@@ -7,7 +7,7 @@ int k_send_message(int process_id, void* message_envelope) {
     PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
 		msgbuf* msg = (msgbuf*) message_envelope;
-    __disable_irq();
+
     env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
 		env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
@@ -24,11 +24,9 @@ int k_send_message(int process_id, void* message_envelope) {
         rpq_enqueue(receiving_proc);
 			
 				if (receiving_proc->m_priority <= gp_current_process->m_priority) {
-					__enable_irq();
 					k_release_processor();
 				}
     }
-    __enable_irq();
 
     return RTX_OK;
 }
@@ -42,19 +40,15 @@ void* k_receive_message(int* sender_id) {
         // probably need another queue for blocked on mail
         // push it here
 				mail_benqueue(gp_current_process);
-			__enable_irq();
+
         k_release_processor();
     }
-
-    __disable_irq();
 
     //received = pop mailque;
 		received = dequeue_mailBox(gp_current_process);
     message = (msgbuf* )received->message;
 
     *sender_id = received->sender_id;
-
-    __enable_irq();
 
     return (void*)message;
 }
@@ -63,19 +57,15 @@ void* k_receive_message(int* sender_id) {
 void* k_non_blocking_receive_message(int* sender_id) {
     Envelope* received;
     msgbuf* message;
-    __disable_irq();
 
     //received = pop mailque;
 		if(gp_current_process->mailBox == NULL) {
-			__enable_irq();
 			return NULL;
 		}
 		received = dequeue_mailBox(gp_current_process);
     message = (msgbuf* )received->message;
 
     *sender_id = received->sender_id;
-
-    __enable_irq();
 
     return (void*)message;
 }
@@ -85,7 +75,6 @@ int k_delayed_send(int process_id, void* message_envelope, int delay) {
     Envelope* env;
 		msgbuf* msg;
 
-    __disable_irq();
     env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
     env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
@@ -93,8 +82,6 @@ int k_delayed_send(int process_id, void* message_envelope, int delay) {
     env->message = message_envelope;
 		msg = env->message;
 		timer_enqueue(env);
-		
-    __enable_irq();
 
     return RTX_OK;
 }

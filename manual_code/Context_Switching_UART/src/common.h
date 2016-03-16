@@ -88,9 +88,6 @@ typedef struct reg_command {
 /* message buffer */
 typedef struct MSGBUF
 {
-	#ifdef K_MSG_ENV
-	int sender_id;					// Expose this to the kernal code
-	#endif		
 	int mtype;              /* user defined message type */
 	 char mtext[(128 - 4*sizeof(int) - sizeof(struct msgbuf*) - sizeof(struct Envelope*))/sizeof(char)];          /* body of the message */
 } msgbuf;

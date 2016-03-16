@@ -138,13 +138,12 @@ Envelope* timer_dequeue(void) {
  */
 __asm void TIMER0_IRQHandler(void)
 {
+	PRESERVE8
 	CPSID I
-	  PRESERVE8
 	IMPORT timer_i_process
 	IMPORT k_release_processor
 	PUSH{r4-r11, lr}
 	BL timer_i_process   
-	; BL k_release_processor  ; otherwise (i.e g_switch_flag == 1, then switch to the other process)
 	CPSIE I
 	POP{r4-r11, pc}
 } 
@@ -178,7 +177,6 @@ void timer_i_process(void)
 		
   while((headTimer != NULL) && headTimer->delay == 0) {
 		Envelope* env = timer_dequeue();
-		__enable_irq();
 		k_send_message(env->destination_id, (void*)env->message);
 	}
 	g_switch_flag = 1;
