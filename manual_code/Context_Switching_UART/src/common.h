@@ -1,5 +1,5 @@
-/* @brief: common defines and structs for both kernel and user 
- * @file: common.h 
+/* @brief: common defines and structs for both kernel and user
+ * @file: common.h
  * @author: Yiqing Huang
  * @date: 2016/02/24
  */
@@ -90,7 +90,7 @@ typedef struct MSGBUF
 {
 	#ifdef K_MSG_ENV
 	int sender_id;					// Expose this to the kernal code
-	#endif		
+	#endif
 	int mtype;              /* user defined message type */
 	 char mtext[(128 - 4*sizeof(int) - sizeof(struct msgbuf*) - sizeof(struct Envelope*))/sizeof(char)];          /* body of the message */
 } msgbuf;
@@ -103,6 +103,17 @@ typedef struct Envelope{
     struct Envelope* next;
 } Envelope;
 
+typedef struct Element Element;
+struct Element {
+    Element* next;
+    void* data;
+} ;
+typedef struct Queue Queue;
+
+struct Queue {
+        Element* first;
+        Element* last;
+};
 
 
 #endif // COMMON_H_
