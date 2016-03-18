@@ -273,6 +273,7 @@ void UART_iprocess(void)
 			g_switch_flag = 0;
 		}
 	} else if (IIR_IntId & IIR_THRE) {
+		pUart->IER ^= IER_THRE;
 		if (gp_current_process->m_pid == PID_UART_IPROC) {
 		// Get the message from crt_display - receive message by sender id
 		to_disp_message = (msgbuf*)k_receive_message(&sender_id);
@@ -287,7 +288,6 @@ void UART_iprocess(void)
 				g_char_out = to_disp_message->mtext[i];
 			}
 			pUart->THR = '\n';
-			pUart->IER ^= IER_THRE;
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);
