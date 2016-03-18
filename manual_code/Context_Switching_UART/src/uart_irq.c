@@ -287,6 +287,7 @@ void UART_iprocess(void)
 				g_char_out = to_disp_message->mtext[i];
 			}
 			pUart->THR = '\n';
+			pUart->IER ^= IER_THRE;
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);
@@ -299,7 +300,7 @@ void UART_iprocess(void)
 #ifdef DEBUG_0
 			uart1_put_string("Finish writing. Turning off IER_THRE\n\r");
 #endif // DEBUG_0
-			pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
+			//pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
 			pUart->THR = '\0';
 			g_send_char = 0;
 			//gp_buffer = g_buffer;		
