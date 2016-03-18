@@ -2,6 +2,7 @@
 #include "k_rtx.h"
 
 extern PCB* gp_current_process;
+extern void rpq_enqueue(PCB*);
 
 int k_send_message(int process_id, void* message_envelope) {
     PCB* receiving_proc = getProcessByID(process_id);

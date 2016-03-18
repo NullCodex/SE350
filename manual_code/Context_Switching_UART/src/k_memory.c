@@ -27,6 +27,7 @@ mem_block* headBlock = NULL;
 extern PCB* headBlocked;
 extern PCB* tailBlocked;
 extern PCB* gp_current_process;
+extern void rpq_enqueue(PCB*);
 
 /**
  * @brief: Initialize RAM as follows:

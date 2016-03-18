@@ -28,6 +28,11 @@ int ret_code = -1;
 extern uint32_t g_switch_flag;
 extern PCB* gp_current_process;
 extern int k_release_processor(void);
+extern void printTimerBlockedQueue(void);
+extern void printTimeOutQueue(void);
+extern void printReadyQueue(void);
+extern PCB* getProcessByID(int);
+
 /**
  * @brief: initialize the n_uart
  * NOTES: It only supports UART0. It can be easily extended to support UART1 IRQ.
@@ -240,7 +245,7 @@ void UART_iprocess(void)
 		if (g_char_in == HOTKEY3) {
 			printReadyQueue();
 		}
-#endif HOTKEYS
+#endif
 		
 		if (g_char_in == '\%') {
 			buffer_index = 0;
@@ -319,6 +324,5 @@ void crt_proc(void) {
 			} else {
 				release_memory_block((void*)message);
 			}
-			//str = NULL;
     }
 }
