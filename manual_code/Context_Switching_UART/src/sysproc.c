@@ -6,6 +6,7 @@ REG_CMD sys_cmd[MAX_COMMANDS];
 int cmd_index = 0;
 
 PCB *clock_process;
+PCB *priority_process;
 
 char *strcpy(char *dest, const char *src)
  {
@@ -13,7 +14,7 @@ char *strcpy(char *dest, const char *src)
     while(*dest++ = *src++);
     return save;
  }
- 
+
 
 int is_prefix (char str1[], char str2[]) {
 	int i = 0;
@@ -40,7 +41,7 @@ int check_cmd (char str[], int sender_id) {
 }
 
 void insert_cmd (char str[], int sender_id) {
-	
+
 	if( cmd_index < MAX_COMMANDS ) {
 		strcpy(sys_cmd[cmd_index].cmd_str, str);
 		sys_cmd[cmd_index].sender_id = sender_id;
@@ -56,7 +57,7 @@ void kcd_proc(void) {
 		char txt;
     msgbuf* message = NULL;
 		char cmd[COMMAND_SIZE];
-		
+
     while(1) {
 			exists = - 1;
 			message = (msgbuf*)receive_message(&sender_id);
@@ -68,7 +69,7 @@ void kcd_proc(void) {
 				}
 				cmd[i] = txt;
 			}
-			 
+
 			if (message->mtype == DEFAULT)
 			{
 				// Check if the command is registered
@@ -78,7 +79,7 @@ void kcd_proc(void) {
 						message->mtype = DEFAULT;
 						msg_sent = send_message(exists, (void *)message);
 					}
-					
+
 				}
 			} else if(message->mtype == KCD_REG) {
 				insert_cmd(cmd, sender_id);
@@ -103,7 +104,7 @@ void print_wall_clock(int hour, int minute, int second){
     str[6] = second /10 + '0';
     str[7] = second %10 + '0';
 		str[8] = '\0';
-    
+
     for (i = 0; i < 9; i ++){
         message->mtext[i] = str[i];
 				//uart0_put_char(str[i]);
@@ -115,7 +116,7 @@ void print_wall_clock(int hour, int minute, int second){
 
 }
 
-//checks if string is in WS hh:mm:ss format. 
+//checks if string is in WS hh:mm:ss format.
 BOOL check_format(char *str) {
     int i;
     //for (i = 3; i < 10; i = i + 3) {
@@ -123,14 +124,14 @@ BOOL check_format(char *str) {
     //        return FALSE;
     //}
     return TRUE;
-} 
+}
 
-void send_wall_clock_message(msgbuf *msg){ 
+void send_wall_clock_message(msgbuf *msg){
     //sends a delayed message to wall_clock
     msg = (msgbuf*)request_memory_block();
     msg->mtype = DEFAULT;
     msg->mtext[0] = ' ';
-    delayed_send(PID_CLOCK, msg, 15); 
+    delayed_send(PID_CLOCK, msg, 15);
 
 }
 
@@ -149,7 +150,7 @@ void wall_clock(void){
     msgbuf* msg;
 
     //registering to KCD
-		
+
     message = request_memory_block();
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
@@ -163,7 +164,7 @@ void wall_clock(void){
     message->mtext[2] = 'R';
     message->mtype = KCD_REG;
     send_message(PID_KCD, message);
-    
+
     message = request_memory_block();
 
     message->mtext[0] = '%';
@@ -171,26 +172,26 @@ void wall_clock(void){
     message->mtext[2] = 'T';
     message->mtype = KCD_REG;
     send_message(PID_KCD, message);
-		
+
     message = request_memory_block();
 
     message->mtext[0] = '%';
     message->mtext[1] = 'W';
     message->mtext[2] = 'S';
     message->mtype = KCD_REG;
-    send_message(PID_KCD, message); 
-		
+    send_message(PID_KCD, message);
+
     while(1){
         message = (msgbuf*)receive_message(&sender_id);
-        
+
         //start the clock
-			
+
         if (message->mtext[1] == 'W' && message->mtext[2] == '\0') {
             message->mtext[1] = ' ';
             clock_on = TRUE;
         }
 
-        if (message != NULL && clock_on) { 
+        if (message != NULL && clock_on) {
             //checks if msg has text and clock is on
             if (message->mtext[1] == ' ' || message->mtext[2] == '\0' ) {
                 second++;
@@ -202,18 +203,18 @@ void wall_clock(void){
                     hour = (hour + 1) % 24;
                     minute = minute % 60;
                 }
-                
+
                 print_wall_clock(hour,minute,second);
                 release_memory_block((void*)message);
                 send_wall_clock_message(message); //sends delayed message
-                
-                } else if (message->mtext[2] == 'R') { 
+
+                } else if (message->mtext[2] == 'R') {
                     //resets clock
                     hour = 0;
                     minute = 0;
                     second = 0;
                     print_wall_clock(hour,minute,second);
-                   
+
                     //deallocate then create a new one.
                     //release_memory_block((void *)message);
 
@@ -225,7 +226,7 @@ void wall_clock(void){
                     //release_memory_block((void*)message);
 
                 } else if (message->mtext[2] == 'S' && check_format(message->mtext)) {
-                    for(i = 4; i < 11; i = i + 3) { 
+                    for(i = 4; i < 11; i = i + 3) {
                         temp = (message->mtext[i] - '0') * 10 + message->mtext[i + 1] - '0';
                         switch(i) {
                             case 4:
@@ -249,14 +250,70 @@ void wall_clock(void){
                     }
                     print_wall_clock(hour,minute,second);
                    //release_memory_block((void*)message);
-            } else{ 
+            } else{
                 //else prints out the message
 								msg->mtype = CRT_DISPLAY;
                 send_message(PID_CRT, msg);
             }
-        } else { 
+        } else {
             //if message is null or clock is off, deallocates the message
             release_memory_block((void*)message);
         }
+    }
+}
+
+
+void set_priority_process(void) {
+    int sender_id;
+    int process_id;
+    int priority;
+    int i = 3;
+    int status = RTX_OK;
+    bool isError = false;
+    msgbuf* msg;
+
+    // registers with the kcd
+    msg = request_memory_block();
+    msg->mtext[0] = '%';
+    msg->mtext[1] = 'C';
+    msg->mtype = KCD_REG;
+    send_message(PID_KCD, msg);
+
+    while(1) {
+        msg = receive_message(sender_id);
+
+        if(msg->mtext[i] >= '0' && msg->mtext[i] <= '9') {
+            if(msg->mtext[i+1] >= '0' && msg->mtext[i+1] <= '9') {
+                process_id = (msg->mtext[i] - '0') * 10 + msg->mtext[i+1] - '0';
+                i += 2;
+            } else {
+                process_id = (msg->mtext[i] - '0');
+                i += 1;
+            }
+        } else {
+            isError = TRUE;
+        }
+
+        if (!isError && msg->mtext[i] == ' ' && msg->mtext[i+1] >= '0' && msg->mtext[i+1] < (NUM_PRIORITIES + '0') && msg->mtext[i+2] == NULL) {
+            priority = (msg->mtext[i+1] - '0');
+        } else {
+            isError = true;
+        }
+
+        if(!isError) {
+            status = set_process_priority(process_id, priority);
+            if (status == RTX_ERR) {
+                isError = true;
+            }
+        }
+
+        if (isError) {
+            printf("Invalid parameters for the command was passed in!\n\r");
+        }
+
+        isError = false;
+        i = 3;
+        status = RTX_OK;
+        release_memory_block(msg);
     }
 }
