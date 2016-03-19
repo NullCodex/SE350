@@ -9,4 +9,5 @@
 void kcd_proc(void);
 void print_wall_clock(int, int, int);
 void wall_clock(void);
+void set_priority_process(void);
 #endif

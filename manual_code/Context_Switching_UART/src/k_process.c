@@ -41,6 +41,7 @@ PCB *tailReady = NULL;
 PCB *headBlockedMail = NULL;
 extern PCB *clock_process;
 extern Envelope* headTimer;
+extern PCB *priority_process;
 
 /* process initialization table */
 
@@ -339,6 +340,12 @@ void set_api_procs() {
 	g_api_procs[4].mpf_start_pc = &wall_clock;
 	g_api_procs[4].m_priority   = HIGH;
 	g_api_procs[4].is_i_process = FALSE;
+	
+	g_api_procs[5].m_pid= PID_SET_PRIO;
+	g_api_procs[5].m_stack_size=0x200;
+	g_api_procs[5].mpf_start_pc = &set_priority_process;
+	g_api_procs[5].m_priority   = HIGH;
+	g_api_procs[5].is_i_process = FALSE;
 }
 
 void process_init() 
@@ -398,6 +405,9 @@ void process_init()
 			}
 			if(gp_pcbs[i]->m_pid == PID_CLOCK) {
 				clock_process = gp_pcbs[i];
+			}
+			if(gp_pcbs[i]->m_pid == PID_SET_PRIO) {
+				priority_process = gp_pcbs[i];
 			}
 		}
 		

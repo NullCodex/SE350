@@ -6,6 +6,7 @@ REG_CMD sys_cmd[MAX_COMMANDS];
 int cmd_index = 0;
 
 PCB *clock_process;
+PCB *priority_process;
 
 char *strcpy(char *dest, const char *src)
  {
@@ -258,5 +259,85 @@ void wall_clock(void){
             //if message is null or clock is off, deallocates the message
             release_memory_block((void*)message);
         }
+    }
+}
+
+
+void set_priority_process(void) {
+    int sender_id;
+    int process_id;
+    int priority;
+    int i = 3;
+    int status = RTX_OK;
+    BOOL isError = FALSE;
+    msgbuf* msg;
+		msgbuf* print_msg;
+
+    // registers with the kcd
+    msg = request_memory_block();
+    msg->mtext[0] = '%';
+    msg->mtext[1] = 'C';
+		msg->mtext[2] = '\0';
+    msg->mtype = KCD_REG;
+    send_message(PID_KCD, msg);
+
+    while(1) {
+        msg = receive_message(&sender_id);
+
+        if(msg->mtext[i] >= '0' && msg->mtext[i] <= '9') {
+            if(msg->mtext[i+1] >= '0' && msg->mtext[i+1] <= '9') {
+                process_id = (msg->mtext[i] - '0') * 10 + msg->mtext[i+1] - '0';
+                i += 2;
+            } else {
+                process_id = (msg->mtext[i] - '0');
+                i += 1;
+            }
+        } else {
+            isError = TRUE;
+        }
+
+        if (!isError && msg->mtext[i] == ' ' && msg->mtext[i+1] >= '0' && msg->mtext[i+1] < (NUM_PRIORITIES + '0') && msg->mtext[i+2] == NULL) {
+            priority = (msg->mtext[i+1] - '0');
+        } else {
+            isError = TRUE;
+        }
+
+        if(!isError) {
+            status = set_process_priority(process_id, priority);
+            if (status == RTX_ERR) {
+                isError = TRUE;
+            }
+        }
+
+        if (isError) {
+						print_msg = request_memory_block();
+						print_msg->mtype = CRT_DISPLAY;
+						print_msg->mtext[0] = 'I';
+						print_msg->mtext[1] = 'n';
+						print_msg->mtext[2] = 'v';
+						print_msg->mtext[3] = 'a';
+						print_msg->mtext[4] = 'l';
+						print_msg->mtext[5] = 'i';
+						print_msg->mtext[6] = 'd';
+						print_msg->mtext[7] = ' ';
+						print_msg->mtext[8] = 'p';
+						print_msg->mtext[9] = 'a';
+						print_msg->mtext[10] = 'r';
+						print_msg->mtext[11] = 'a';
+						print_msg->mtext[12] = 'm';
+						print_msg->mtext[13] = 'e';
+						print_msg->mtext[14] = 't';
+						print_msg->mtext[15] = 'e';
+						print_msg->mtext[16] = 'r';
+						print_msg->mtext[17] = 's';
+						print_msg->mtext[18] = '\0';
+						
+						send_message(PID_CRT, print_msg);
+        }
+
+        isError = FALSE;
+        i = 3;
+        status = RTX_OK;
+        release_memory_block(msg);
     }
 }

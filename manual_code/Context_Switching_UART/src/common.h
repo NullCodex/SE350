@@ -17,8 +17,8 @@
 #define RTX_ERR -1
 #define RTX_OK 0
 #define NUM_TEST_PROCS 6
-#define NUM_API_PROCS 5
-#define NUM_TOTAL_PROCS 11
+#define NUM_API_PROCS 6
+#define NUM_TOTAL_PROCS 12
 #define COMMAND_SIZE	3
 #define MAX_COMMANDS	10
 #define BUFFER_SIZE 15
@@ -58,6 +58,7 @@
 #define MEDIUM  3
 #define LOW     4
 #define LOWEST  5
+#define NUM_PRIORITIES 5
 
 /* Message Types */
 #define DEFAULT 0
