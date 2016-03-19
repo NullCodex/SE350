@@ -215,7 +215,7 @@ void *k_request_memory_block(void) {
 	}
 	headBlock = headBlock->next;
 	toRet->released = 0;
-	toRet->next = NULL;
+	//toRet->next = NULL;
 	//print_free_blocks();
 	return (void*) (toRet->addr);
 }

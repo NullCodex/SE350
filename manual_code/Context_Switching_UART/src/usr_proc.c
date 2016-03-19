@@ -237,6 +237,7 @@ void A(void) //pid = 7
     send_message(PID_KCD, msg);
 
     while(1){
+				uart0_put_string("G025_test: A: ");
         msg = receive_message(&sender_id);
         if(msg->mtext[0] == '%' && msg->mtext[1] == 'Z'){
             break;
@@ -247,6 +248,7 @@ void A(void) //pid = 7
     release_memory_block(msg);
 
     while(1) {
+				uart0_put_string("G025_test: A: \n");
         msg = request_memory_block();
         msg->mtype = COUNT_REPORT;
         msg->mtext[0] = (char)num;
@@ -263,6 +265,7 @@ void B(void) //pid = 8
     int sender_id;
 
     while(1){
+				uart0_put_string("G025_test: B: \n");
         msg = receive_message(&sender_id);
         send_message(9, msg);
     }
@@ -285,6 +288,7 @@ void C(void) //pid == 9
     q.last = NULL;
 
     while(1) {
+				uart0_put_string("G025_test: C: \n");
         if(q.first == NULL){
             msg = receive_message(&sender_id);
         } else {

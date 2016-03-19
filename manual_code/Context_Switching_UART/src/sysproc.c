@@ -132,7 +132,7 @@ void send_wall_clock_message(msgbuf *msg){
     msg = (msgbuf*)request_memory_block();
     msg->mtype = DEFAULT;
     msg->mtext[0] = ' ';
-    delayed_send(PID_CLOCK, msg, 15); 
+    delayed_send(PID_CLOCK, msg, 1); 
 
 }
 
@@ -250,7 +250,6 @@ void wall_clock(void){
                                 minute = minute % 60;
                     }
                     print_wall_clock(hour,minute,second);
-                   release_memory_block(message);
             } else{ 
                 //else prints out the message
 								msg->mtype = CRT_DISPLAY;

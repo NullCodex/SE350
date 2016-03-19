@@ -101,13 +101,13 @@ int k_delayed_send(int process_id, void* message_envelope, int delay) {
 		PCB* receiving_proc = getProcessByID(process_id);
     Envelope* env;
 		msgbuf* msg;
-
+		delay = delay*1000;
     env = (Envelope*) ((U32)message_envelope - 3*sizeof(int) - sizeof(msgbuf*) - sizeof(Envelope*));
     env->sender_id = gp_current_process->m_pid;
     env->destination_id = process_id;
     env->delay = delay;
     env->message = message_envelope;
-		msg = env->message;
+		msg = (msgbuf*)env->message;
 		timer_enqueue(env);
 
     return RTX_OK;

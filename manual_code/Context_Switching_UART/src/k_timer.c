@@ -104,7 +104,7 @@ int get_time(void) {
 
 void timer_enqueue (Envelope *env) {
 	Envelope* temp = headTimer;
-	Envelope* prev = NULL;
+	Envelope* prev = headTimer;
 	if(headTimer == NULL) {
 		env->next = headTimer;
 		headTimer = env;
@@ -114,7 +114,9 @@ void timer_enqueue (Envelope *env) {
 			temp = temp->next;
 		}
 		env->next = prev->next;
-		prev->next = env;
+		if (prev != headTimer) { 
+			prev->next = env;
+		}
 	}
 }
 
@@ -173,6 +175,9 @@ void timer_i_process(void)
 	while(iter != NULL) {
 		iter->delay = iter->delay - 1;
 		iter = iter->next;
+	} 
+	if (iter == NULL) {
+		iter = NULL;
 	}
 		
   while((headTimer != NULL) && headTimer->delay == 0) {
