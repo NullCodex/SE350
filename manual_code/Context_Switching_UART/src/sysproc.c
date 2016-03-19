@@ -132,7 +132,7 @@ void send_wall_clock_message(msgbuf *msg){
     msg = (msgbuf*)request_memory_block();
     msg->mtype = DEFAULT;
     msg->mtext[0] = ' ';
-    delayed_send(PID_CLOCK, msg, 1); 
+    delayed_send(PID_CLOCK, msg, 1000); 
 
 }
 

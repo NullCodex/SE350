@@ -89,7 +89,7 @@ void proc1(void)
     p_msg_env->mtext[0] = '%';
     p_msg_env->mtext[1] = 'W';
     p_msg_env->mtext[2] = '\0';
-    retCode = delayed_send(PID_P2, (void *)p_msg_env, 100);
+    retCode = delayed_send(PID_P2, (void *)p_msg_env, 1000);
 
     set_process_priority(PID_P2, HIGH);
     uart0_put_string("proc1: end of testing\n\r");
@@ -307,7 +307,7 @@ void C(void) //pid == 9
             delay = request_memory_block();
             delay->mtype = wakeup10;
             delay->mtext[0] = NULL;
-            delayed_send(9, delay, 10);
+            delayed_send(9, delay, 10000);
             while(1) {
 
                 receive = receive_message(&sender_id);
