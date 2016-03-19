@@ -419,12 +419,7 @@ void process_init()
 		}
 		(gp_pcbs[i])->mp_sp = sp;
 	}
-	
-	temp = headReady;
-	
-	while(temp != NULL) {
-			temp = temp->next;
-	}
+
 }
 
 /*@brief: scheduler, pick the pid of the next to run process
