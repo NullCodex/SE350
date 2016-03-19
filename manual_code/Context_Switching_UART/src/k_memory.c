@@ -121,7 +121,7 @@ void memory_init(void)
 	headBlock->next = NULL;
 	headBlock = (mem_block*) (p_end + sizeof(mem_block*) + 3*sizeof(int) + sizeof(msgbuf*) + sizeof(Envelope*));
 #ifdef DEBUG_0
-	//print_free_blocks();
+	print_free_blocks();
 #endif
 }
 
@@ -213,9 +213,10 @@ void *k_request_memory_block(void) {
 
 		k_release_processor();
 	}
+	toRet = headBlock;
 	headBlock = headBlock->next;
 	toRet->released = 0;
-	//toRet->next = NULL;
+//	toRet->next = NULL;
 	//print_free_blocks();
 	return (void*) (toRet->addr);
 }

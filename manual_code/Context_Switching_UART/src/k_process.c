@@ -326,13 +326,13 @@ void set_api_procs() {
 	g_api_procs[2].m_pid = PID_KCD;
 	g_api_procs[2].m_stack_size=0x200;
 	g_api_procs[2].mpf_start_pc = &kcd_proc;
-	g_api_procs[2].m_priority = HIGH;
+	g_api_procs[2].m_priority = HIGHEST;
 	g_api_procs[2].is_i_process = FALSE;
 	
 	g_api_procs[3].m_pid= PID_CRT;
 	g_api_procs[3].m_stack_size=0x200;
 	g_api_procs[3].mpf_start_pc = &crt_proc;
-	g_api_procs[3].m_priority   = HIGH;
+	g_api_procs[3].m_priority   = HIGHEST;
 	g_api_procs[3].is_i_process = FALSE;
 	
 	g_api_procs[4].m_pid= PID_CLOCK;
