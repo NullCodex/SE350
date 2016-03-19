@@ -64,6 +64,8 @@
 #define DEFAULT 0
 #define KCD_REG 1
 #define CRT_DISPLAY 2
+#define COUNT_REPORT 3
+#define wakeup10 4
 
 /* ----- Types ----- */
 typedef unsigned char U8;
@@ -101,6 +103,16 @@ typedef struct Envelope{
     struct Envelope* next;
 } Envelope;
 
+typedef struct Element Element;
+struct Element {
+    Element* next;
+    void* data;
+} ;
+typedef struct Queue Queue;
 
+struct Queue {
+        Element* first;
+        Element* last;
+};
 
 #endif // COMMON_H_

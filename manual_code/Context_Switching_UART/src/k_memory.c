@@ -229,6 +229,9 @@ int k_release_memory_block(void *p_mem_blk) {
 #ifdef DEBUG_0
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
+	if (p_mem_blk == NULL) {
+		return RTX_ERR;
+	}
 	if((U32)p_mem_blk >= (U32)gp_stack || (U32)p_mem_blk < 0x10000414) {
 
 		return RTX_ERR;

@@ -61,6 +61,7 @@ void kcd_proc(void) {
     while(1) {
 			exists = - 1;
 			message = (msgbuf*)receive_message(&sender_id);
+			msg_sent = -1;
 			i = 0;
 			for (i = 0; i < COMMAND_SIZE; i++) {
 				txt = message->mtext[i];
@@ -205,7 +206,7 @@ void wall_clock(void){
                 }
                 
                 print_wall_clock(hour,minute,second);
-                release_memory_block((void*)message);
+                release_memory_block(message);
                 send_wall_clock_message(message); //sends delayed message
                 
                 } else if (message->mtext[2] == 'R') { 
@@ -216,14 +217,14 @@ void wall_clock(void){
                     print_wall_clock(hour,minute,second);
                    
                     //deallocate then create a new one.
-                    //release_memory_block((void *)message);
+                    release_memory_block(message);
 
                 } else if (message->mtext[2] == 'T') {
                     hour = 0;
                     minute = 0;
                     second = 0;
                     clock_on = FALSE;
-                    //release_memory_block((void*)message);
+                    release_memory_block(message);
 
                 } else if (message->mtext[2] == 'S' && check_format(message->mtext)) {
                     for(i = 4; i < 11; i = i + 3) { 
@@ -249,7 +250,7 @@ void wall_clock(void){
                                 minute = minute % 60;
                     }
                     print_wall_clock(hour,minute,second);
-                   //release_memory_block((void*)message);
+                   release_memory_block(message);
             } else{ 
                 //else prints out the message
 								msg->mtype = CRT_DISPLAY;
@@ -257,7 +258,7 @@ void wall_clock(void){
             }
         } else { 
             //if message is null or clock is off, deallocates the message
-            release_memory_block((void*)message);
+            release_memory_block(message);
         }
     }
 }

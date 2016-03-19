@@ -293,7 +293,7 @@ void UART_iprocess(void)
 			//uart1_put_char(g_char_out);
 			//uart1_put_string("\n\r");
 #endif // DEBUG_0		
-			k_release_memory_block((void*)to_disp_message);
+			k_release_memory_block(to_disp_message);
 		}			
 		
 		} else {
@@ -323,7 +323,7 @@ void crt_proc(void) {
 				pUart->IER = IER_THRE | IER_RLS | IER_RBR;
 				gp_current_process = (PCB*)getProcessByID(PID_CRT);
 			} else {
-				release_memory_block((void*)message);
+				release_memory_block(message);
 			}
     }
 }
