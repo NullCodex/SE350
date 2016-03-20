@@ -63,10 +63,10 @@ void set_test_procs() {
 	g_test_procs[6].m_priority   = HIGH;
 	
 	g_test_procs[7].mpf_start_pc = &B;
-	g_test_procs[7].m_priority   = MEDIUM;
+	g_test_procs[7].m_priority   = HIGH;
 	
 	g_test_procs[8].mpf_start_pc = &C;
-	g_test_procs[8].m_priority   = LOW;
+	g_test_procs[8].m_priority   = HIGH;
 }
 
 
@@ -308,7 +308,7 @@ void C(void) //pid == 9
             delay = request_memory_block();
             delay->mtype = wakeup10;
             delay->mtext[0] = NULL;
-            delayed_send(9, delay, 1000);
+            delayed_send(9, delay, 10000);
             while(1) {
 
                 receive = receive_message(&sender_id);
