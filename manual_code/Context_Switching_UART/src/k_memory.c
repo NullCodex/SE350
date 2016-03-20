@@ -213,6 +213,7 @@ void *k_request_memory_block(void) {
 
 		k_release_processor();
 	}
+	toRet = headBlock;
 	headBlock = headBlock->next;
 	toRet->released = 0;
 	//toRet->next = NULL;
