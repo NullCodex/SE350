@@ -63,10 +63,10 @@ void set_test_procs() {
 	g_test_procs[6].m_priority   = HIGH;
 	
 	g_test_procs[7].mpf_start_pc = &B;
-	g_test_procs[7].m_priority   = HIGH;
+	g_test_procs[7].m_priority   = MEDIUM;
 	
 	g_test_procs[8].mpf_start_pc = &C;
-	g_test_procs[8].m_priority   = HIGH;
+	g_test_procs[8].m_priority   = LOW;
 }
 
 
@@ -143,7 +143,7 @@ void proc4(void)
 	uart0_put_string("G025_test: Test 4 OK \n");
 	
 	p_mem_blk = request_memory_block();
-	set_process_priority(PID_P3, MEDIUM);
+//	set_process_priority(PID_P3, MEDIUM);
 	while ( 1) {
 		if ( i < 1 ) {
 			uart0_put_string("\n\r");
@@ -153,6 +153,7 @@ void proc4(void)
 				break;
 			}
 		}
+		release_processor();
 		//uart0_put_char('0' + i%10);
 		i++;
 	}
@@ -217,7 +218,7 @@ void proc6(void)
 			p_msg_term->mtext[2] = '\0';
 			send_message(PID_CLOCK, (void *)p_msg_term);
 		}
-		uart0_put_string("proc6: \n\r");
+		uart1_put_string("proc6: \n\r");
 		release_processor();
 		i++;
 	}
@@ -237,7 +238,7 @@ void A(void) //pid = 7
     send_message(PID_KCD, msg);
 
     while(1){
-				uart0_put_string("G025_test: A: ");
+	//			uart0_put_string("G025_test: A: ");
         msg = receive_message(&sender_id);
         if(msg->mtext[0] == '%' && msg->mtext[1] == 'Z'){
             break;
@@ -248,7 +249,7 @@ void A(void) //pid = 7
     release_memory_block(msg);
 
     while(1) {
-				uart0_put_string("G025_test: A: \n");
+//				uart0_put_string("G025_test: A: \n");
         msg = request_memory_block();
         msg->mtype = COUNT_REPORT;
         msg->mtext[0] = (char)num;
@@ -265,7 +266,7 @@ void B(void) //pid = 8
     int sender_id;
 
     while(1){
-				uart0_put_string("G025_test: B: \n");
+	//			uart0_put_string("G025_test: B: \n");
         msg = receive_message(&sender_id);
         send_message(9, msg);
     }
@@ -279,7 +280,7 @@ void C(void) //pid == 9
     msgbuf *msg;
     msgbuf *delay;
     msgbuf *receive;
-    char print_msg[9] = {'P', 'r', 'o', 'c', 'e', 's', 's', ' ', 'C'};
+    char print_msg[10] = {'P', 'r', 'o', 'c', 'e', 's', 's', ' ', 'C', '\0'};
     Element *element;
     int i = 0;
 		int iter = 0;
@@ -288,7 +289,7 @@ void C(void) //pid == 9
     q.last = NULL;
 
     while(1) {
-				uart0_put_string("G025_test: C: \n");
+//				uart0_put_string("G025_test: C: \n");
         if(q.first == NULL){
             msg = receive_message(&sender_id);
         } else {
@@ -298,7 +299,7 @@ void C(void) //pid == 9
             release_memory_block(element);
         }
         if(msg->mtype == COUNT_REPORT && (int)(msg->mtext[0]) % 20 == 0){
-            msg->mtype = DEFAULT;
+            msg->mtype = CRT_DISPLAY;
 						for(iter = 0; iter < 9; iter++) {
 							msg->mtext[iter] = print_msg[iter];
 						}
@@ -307,7 +308,7 @@ void C(void) //pid == 9
             delay = request_memory_block();
             delay->mtype = wakeup10;
             delay->mtext[0] = NULL;
-            delayed_send(9, delay, 10000);
+            delayed_send(9, delay, 1000);
             while(1) {
 
                 receive = receive_message(&sender_id);
