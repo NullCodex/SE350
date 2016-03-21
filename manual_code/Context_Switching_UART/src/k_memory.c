@@ -7,7 +7,6 @@
 
 #include "k_memory.h"
 #include "msg.h"
-
 #ifdef DEBUG_0
 #include "printf.h"
 #endif /* ! DEBUG_0 */
@@ -61,7 +60,9 @@ void print_free_blocks() {
 	mem_block * temp = headBlock;
 	int c = 0;
 	while (temp != NULL) {
-		printf("Count: %d Free mem-block address: @ 0x%x\n", c, temp->addr);
+		#ifdef DEBUG_0
+		printf("Count: %d Free mem-block address: @ 0x%x\n\r", c, temp->addr);
+		#endif
 		temp = temp->next;
 		c++;
 	}
@@ -150,7 +151,9 @@ U32 *alloc_stack(U32 size_b)
 void bpq_enqueue (PCB *current_process) {
 	PCB* temp = headBlocked;
 	PCB* prev = NULL;
-
+	#ifdef DEBUG_0
+	printf("Dequeuing process %d on ready queue.\n\r", current_process->m_pid);
+	#endif
 	if (headBlocked == NULL) {
 		headBlocked = tailBlocked = current_process;
 		headBlocked->next = NULL;
@@ -180,7 +183,9 @@ void bpq_enqueue (PCB *current_process) {
 						headBlocked = current_process;
 					}
 					current_process->next = temp;
-					prev->next = current_process;
+					if (prev != NULL) {
+						prev->next = current_process;
+					}
 					break;
 				}
 			}
@@ -204,18 +209,26 @@ void *k_request_memory_block(void) {
 	mem_block *toRet = headBlock;
 
 #ifdef DEBUG_0
-	printf("k_request_memory_block: entering...\n");
-
+	printf("Entering request memory:\n\r");
 #endif /* ! DEBUG_0 */
+	#ifdef DEBUG_0
+	printf("Memory block requested by %d:", gp_current_process->m_pid);
+	#endif
 	while (headBlock == NULL) {
 		gp_current_process->m_state = BOR;
 		bpq_enqueue(gp_current_process);
+		#ifdef DEBUG_0
+		printf("Blocking process from request memory %d\n\r", gp_current_process->m_pid);
+		#endif
 
 		k_release_processor();
 	}
 	toRet = headBlock;
 	headBlock = headBlock->next;
 	toRet->released = 0;
+	#ifdef DEBUG_0
+	printf("Returning memory block 0x%x\n\r", toRet->addr);
+	#endif
 	//toRet->next = NULL;
 	//print_free_blocks();
 	return (void*) (toRet->addr);
@@ -228,7 +241,7 @@ int k_release_memory_block(void *p_mem_blk) {
 	msgbuf* toBeCleared = (msgbuf*)p_mem_blk;
 
 #ifdef DEBUG_0
-	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
+	printf("Entering release memory:\n\r");
 #endif /* ! DEBUG_0 */
 	if (p_mem_blk == NULL) {
 		return RTX_ERR;
@@ -244,6 +257,9 @@ int k_release_memory_block(void *p_mem_blk) {
 	if (headBlocked != NULL ) {
 		current_process = bpq_dequeue();
 		current_process->m_state = RDY;
+		#ifdef DEBUG_0
+		printf("Dequeue and enqueue process: %d\n\r", gp_current_process->m_pid);
+		#endif
 		rpq_enqueue(current_process);
 	}
 	
@@ -266,9 +282,13 @@ int k_release_memory_block(void *p_mem_blk) {
 	curr_node->released = 1;
 	headBlock = curr_node;
 	if (current_process != NULL && (current_process->m_priority <= gp_current_process->m_priority)) {
-
+		#ifdef DEBUG_0
+		printf("Prempting process %d with process %d\n\r", gp_current_process->m_pid, current_process->m_pid);
+		#endif
 		k_release_processor();
 	}
-
+	#ifdef DEBUG_0
+	printf("Releasing memory block: 0x%x\n\r", p_mem_blk);
+	#endif
 	return RTX_OK;
 }

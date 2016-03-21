@@ -6,6 +6,7 @@ REG_CMD sys_cmd[MAX_COMMANDS];
 int cmd_index = 0;
 
 PCB *clock_process;
+PCB *kcd_process;
 PCB *priority_process;
 
 char *strcpy(char *dest, const char *src)
@@ -41,7 +42,9 @@ int check_cmd (char str[], int sender_id) {
 }
 
 void insert_cmd (char str[], int sender_id) {
-	
+	#ifdef DEBUG_0
+	printf("Registering command: %s\n\r", str);
+	#endif
 	if( cmd_index < MAX_COMMANDS ) {
 		strcpy(sys_cmd[cmd_index].cmd_str, str);
 		sys_cmd[cmd_index].sender_id = sender_id;
@@ -59,8 +62,14 @@ void kcd_proc(void) {
 		char cmd[COMMAND_SIZE];
 		
     while(1) {
+			#ifdef DEBUG_0
+			printf("Entering KCD: \n\r");
+			#endif
 			exists = - 1;
 			message = (msgbuf*)receive_message(&sender_id);
+			#ifdef DEBUG_0
+			printf("KCD message recieved!\n\r");
+			#endif
 			msg_sent = -1;
 			i = 0;
 			for (i = 0; i < COMMAND_SIZE; i++) {
@@ -94,7 +103,7 @@ void kcd_proc(void) {
 void print_wall_clock(int hour, int minute, int second){
     msgbuf* message = request_memory_block();
 		int i;
-    char str[9];
+    char str[11];
 
     str[0] = hour /10 + '0';
     str[1] = hour %10 + '0';
@@ -104,9 +113,11 @@ void print_wall_clock(int hour, int minute, int second){
     str[5] = ':';
     str[6] = second /10 + '0';
     str[7] = second %10 + '0';
-		str[8] = '\0';
+		str[8] = '\n';
+		str[9] = '\r';
+		str[10] = '\0';
     
-    for (i = 0; i < 9; i ++){
+    for (i = 0; i < 11; i ++){
         message->mtext[i] = str[i];
 				//uart0_put_char(str[i]);
     }
@@ -129,6 +140,9 @@ BOOL check_format(char *str) {
 
 void send_wall_clock_message(msgbuf *msg){ 
     //sends a delayed message to wall_clock
+	#ifdef DEBUG_0
+		printf("Sending message to wall-clock with 1s delay:\n\r");
+	#endif
     msg = (msgbuf*)request_memory_block();
     msg->mtype = DEFAULT;
     msg->mtext[0] = ' ';
@@ -183,6 +197,9 @@ void wall_clock(void){
     send_message(PID_KCD, message); 
 		
     while(1){
+			#ifdef DEBUG_0
+				printf("Entering wall-clock:\n\r");
+			#endif
         message = (msgbuf*)receive_message(&sender_id);
         
         //start the clock

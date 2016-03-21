@@ -15,19 +15,19 @@
 #include <LPC17xx.h>
 #include <system_LPC17xx.h>
 #include "rtx.h"
-#ifdef DEBUG_0
 #include "uart_polling.h"
+//#ifdef DEBUG_0
 #include "printf.h"
-#endif /* DEBUG_0 */
+//#endif /* DEBUG_0 */
 
 int main() 
 {	
 	/* CMSIS system initialization */
 	SystemInit(); 
-#ifdef DEBUG_0
+//#ifdef DEBUG_0
 	init_printf(NULL, putc);
-#endif /* DEBUG_0 */
-	
+//#endif /* DEBUG_0 */
+	//printf("Initializing RTOS Systems:\n\r");
 	
 	/* start the RTX and built-in processes */
 	rtx_init();  

@@ -27,6 +27,7 @@ int ret_code = -1;
 
 extern uint32_t g_switch_flag;
 extern PCB* gp_current_process;
+PCB* crt_process;
 extern int k_release_processor(void);
 extern void printTimerBlockedQueue(void);
 extern void printTimeOutQueue(void);
@@ -228,13 +229,14 @@ void UART_iprocess(void)
 #endif // DEBUG_0
 
 	/* Reading IIR automatically acknowledges the interrupt */
-
 	IIR_IntId = (pUart->IIR) >> 1 ; // skip pending bit in IIR 
 	if (IIR_IntId & IIR_RDA) { // Receive Data Avaialbe
 		/* read UART. Read RBR will clear the interrupt */
 		
 		g_char_in = pUart->RBR;
-	
+		#ifdef DEBUG_0
+		printf("Reading: %c\n\r", g_char_in);
+		#endif
 #ifdef HOTKEYS		
 		if (g_char_in == HOTKEY1) {
 			printTimerBlockedQueue();
@@ -258,6 +260,7 @@ void UART_iprocess(void)
 		pUart->THR = g_char_in;
 		if (g_char_in == '\r') {
 			pUart->THR = '\n';
+			pUart->THR = '\r';
 			buffer_index = 0;
 			send_to_KCD();
 		}
@@ -277,17 +280,23 @@ void UART_iprocess(void)
 		if (gp_current_process->m_pid == PID_UART_IPROC) {
 		// Get the message from crt_display - receive message by sender id
 		to_disp_message = (msgbuf*)k_receive_message(&sender_id);
-		
+			#ifdef DEBUG_0
+		printf("Receiving message from: %d\n\r", sender_id);
+			#endif
 	/* THRE Interrupt, transmit holding register becomes empty */
 
 		//if (*gp_buffer != '\0' ) {
 			g_char_out = to_disp_message->mtext[i];
 			while (g_char_out != '\0') {
+				#ifdef DEBUG_0
+				printf("Displaying: %c\n\r", g_char_out);
+				#endif
 				pUart->THR = g_char_out;
 				i++;
 				g_char_out = to_disp_message->mtext[i];
 			}
-			pUart->THR = '\n';
+			pUart->THR = '\n\r';
+			pUart->THR = '\0';
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
 			//uart1_put_char(g_char_out);
@@ -300,7 +309,7 @@ void UART_iprocess(void)
 #ifdef DEBUG_0
 			uart1_put_string("Finish writing. Turning off IER_THRE\n\r");
 #endif // DEBUG_0
-			//pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
+			pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
 			pUart->THR = '\0';
 			g_send_char = 0;
 			//gp_buffer = g_buffer;		
@@ -315,13 +324,25 @@ void crt_proc(void) {
     msgbuf* message;
 		int sender_id;
     while(1) {
+			#ifdef DEBUG_0
+			printf("Entering CRT:\n\r");
+			#endif
 			message = receive_message(&sender_id);
+			#ifdef DEBUG_0
+			printf("Receiving message from: %d\n\r", sender_id);
+			#endif
 			// Display character by character as they are input to the console
 			if (message->mtype == CRT_DISPLAY) {
 				send_message_from_uart(PID_CRT, PID_UART_IPROC, (void*)message);
 				gp_current_process = (PCB*)getProcessByID(PID_UART_IPROC);
+				#ifdef DEBUG_0
+				printf("Process switched manually to: %d\n\r", PID_UART_IPROC);
+				#endif
 				pUart->IER = IER_THRE | IER_RLS | IER_RBR;
 				gp_current_process = (PCB*)getProcessByID(PID_CRT);
+				#ifdef DEBUG_0
+				printf("Process switched manually to: %d\n\r", PID_CRT);
+				#endif
 			} else {
 				release_memory_block(message);
 			}
