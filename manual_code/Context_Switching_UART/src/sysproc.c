@@ -7,6 +7,7 @@ int cmd_index = 0;
 
 PCB *clock_process;
 PCB *priority_process;
+PCB *kcd_process;
 
 char *strcpy(char *dest, const char *src)
  {

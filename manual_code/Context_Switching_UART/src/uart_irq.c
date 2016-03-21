@@ -17,6 +17,7 @@
 
 
 PCB* uart_process;
+PCB* crt_process;
 LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
 char g_buffer[BUFFER_SIZE];
 int buffer_index = 0;

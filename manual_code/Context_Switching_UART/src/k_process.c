@@ -42,6 +42,8 @@ PCB *headBlockedMail = NULL;
 extern PCB *clock_process;
 extern Envelope* headTimer;
 extern PCB *priority_process;
+extern PCB *kcd_process;
+extern PCB *crt_process;
 
 /* process initialization table */
 
@@ -394,6 +396,18 @@ void process_init()
 		if(g_proc_table[i].is_i_process == FALSE) {
 				gp_pcbs[i]->m_state = NEW;
 				rpq_enqueue(gp_pcbs[i]);
+				if(gp_pcbs[i]->m_pid == PID_CLOCK) {
+					clock_process = gp_pcbs[i];
+				}
+				if(gp_pcbs[i]->m_pid == PID_SET_PRIO) {
+					priority_process = gp_pcbs[i];
+				}
+				if(gp_pcbs[i]->m_pid == PID_CRT) {
+					crt_process = gp_pcbs[i];
+				}
+				if(gp_pcbs[i]->m_pid == PID_KCD) {
+					kcd_process = gp_pcbs[i];
+				}
 			
 		} else {
 			(gp_pcbs[i])->m_state = WAITING_FOR_INTERRUPT;
@@ -403,12 +417,7 @@ void process_init()
 			if(gp_pcbs[i]->m_pid == PID_UART_IPROC) {
 				uart_process = gp_pcbs[i];
 			}
-			if(gp_pcbs[i]->m_pid == PID_CLOCK) {
-				clock_process = gp_pcbs[i];
-			}
-			if(gp_pcbs[i]->m_pid == PID_SET_PRIO) {
-				priority_process = gp_pcbs[i];
-			}
+
 		}
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
