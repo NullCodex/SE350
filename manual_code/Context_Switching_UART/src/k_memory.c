@@ -235,10 +235,8 @@ void *k_request_memory_block(void) {
 }
 
 int k_release_memory_block(void *p_mem_blk) {
-	int i = 0;
 	mem_block* curr_node;
 	PCB* current_process = NULL;
-	msgbuf* toBeCleared = (msgbuf*)p_mem_blk;
 
 #ifdef DEBUG_0
 	printf("Entering release memory:\n\r");

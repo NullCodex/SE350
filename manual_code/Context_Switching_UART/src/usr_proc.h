@@ -22,6 +22,5 @@ void procPrint(void);
 void A(void);
 void B(void);
 void C(void);
-void null_process(void);
 
 #endif /* USR_PROC_H_ */

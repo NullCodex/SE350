@@ -9,7 +9,7 @@
 #include "common.h"
 
 /* ----- Definitations ----- */
-#define NUM_TEST_PROCS 4
+#define NUM_TEST_PROCS 3
 
 /* ----- Types ----- */
 

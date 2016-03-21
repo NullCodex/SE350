@@ -16,8 +16,8 @@
 #define NULL 0
 #define RTX_ERR -1
 #define RTX_OK 0
-#define NUM_TEST_PROCS 4
-#define NUM_API_PROCS 6
+#define NUM_TEST_PROCS 3
+#define NUM_API_PROCS 7
 #define NUM_TOTAL_PROCS 10
 #define COMMAND_SIZE	3
 #define MAX_COMMANDS	10

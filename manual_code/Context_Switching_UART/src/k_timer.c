@@ -114,7 +114,7 @@ void timer_enqueue (Envelope *env) {
 			temp = temp->next;
 		}
 		env->next = prev->next;
-		if (prev != headTimer) { 
+		if (prev != NULL) { 
 			prev->next = env;
 		}
 	}

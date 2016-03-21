@@ -11,9 +11,9 @@
 #include "uart_polling.h"
 #include "rtx.h"
 #include "k_rtx.h"
-#ifdef DEBUG_0
+//#ifdef DEBUG_0
 #include "printf.h"
-#endif
+//#endif
 
 
 PCB* uart_process;
@@ -249,7 +249,7 @@ void UART_iprocess(void)
 		}
 #endif
 		
-		if (g_char_in == '\%') {
+		if (g_char_in == '%') {
 			buffer_index = 0;
 		}
 		
@@ -268,7 +268,6 @@ void UART_iprocess(void)
 		if (buffer_index < BUFFER_SIZE) {
 			buffer_index++;
 		}
-		
 		/* setting the g_switch_flag */
 		if ( g_char_in == 'g') {
 			g_switch_flag = 1; 
@@ -276,8 +275,9 @@ void UART_iprocess(void)
 			g_switch_flag = 0;
 		}
 	} else if (IIR_IntId & IIR_THRE) {
-		pUart->IER ^= IER_THRE;
+		//pUart->IER ^= IER_THRE;
 		if (gp_current_process->m_pid == PID_UART_IPROC) {
+			pUart->IER ^= IER_THRE;
 		// Get the message from crt_display - receive message by sender id
 		to_disp_message = (msgbuf*)k_receive_message(&sender_id);
 			#ifdef DEBUG_0
@@ -295,7 +295,8 @@ void UART_iprocess(void)
 				i++;
 				g_char_out = to_disp_message->mtext[i];
 			}
-			pUart->THR = '\n\r';
+			pUart->THR = '\n';
+			pUart->THR = '\r';
 			pUart->THR = '\0';
 #ifdef DEBUG_0
 			//uart1_put_string("Writing a char = ");
@@ -309,7 +310,7 @@ void UART_iprocess(void)
 #ifdef DEBUG_0
 			uart1_put_string("Finish writing. Turning off IER_THRE\n\r");
 #endif // DEBUG_0
-			pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
+			//pUart->IER ^= IER_THRE; // toggle the IER_THRE bit 
 			pUart->THR = '\0';
 			g_send_char = 0;
 			//gp_buffer = g_buffer;		
@@ -324,6 +325,7 @@ void crt_proc(void) {
     msgbuf* message;
 		int sender_id;
     while(1) {
+			printf("");
 			#ifdef DEBUG_0
 			printf("Entering CRT:\n\r");
 			#endif

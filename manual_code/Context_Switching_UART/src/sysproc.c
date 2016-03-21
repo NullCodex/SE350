@@ -31,7 +31,6 @@ int is_prefix (char str1[], char str2[]) {
 }
 
 int check_cmd (char str[], int sender_id) {
-	int exists = -1;
 	int i;
 	for (i = 0; i < MAX_COMMANDS; i++) {
 		if (is_prefix(sys_cmd[i].cmd_str, str) == 0) {
@@ -130,7 +129,6 @@ void print_wall_clock(int hour, int minute, int second){
 
 //checks if string is in WS hh:mm:ss format. 
 BOOL check_format(char *str) {
-    int i;
     //for (i = 3; i < 10; i = i + 3) {
     //    if (str[i] == NULL || (str[i] < '0' || str[i] > '9' )||( str[i+1] < '0' || str[i+1] > '9') || (str[i+2] != ':' && i != 9))
     //        return FALSE;
@@ -152,7 +150,6 @@ void send_wall_clock_message(msgbuf *msg){
 
 
 void wall_clock(void){
-		char firstC;
     int sender_id;
     msgbuf* message;
     int hour = 0;

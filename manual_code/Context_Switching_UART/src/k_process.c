@@ -36,6 +36,7 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 */
 
 PCB *headBlocked = NULL;
+PCB *null_proc = NULL;
 PCB *tailBlocked = NULL;
 PCB *headReady = NULL;
 PCB *tailReady = NULL;
@@ -341,7 +342,6 @@ int k_set_process_priority(int process_id, int priority) {
  */
 
 void set_api_procs() {
-	int i;
 
 	g_api_procs[0].m_pid= PID_TIMER_IPROC;
 	g_api_procs[0].m_stack_size=0x200;
@@ -378,6 +378,12 @@ void set_api_procs() {
 	g_api_procs[5].mpf_start_pc = &set_priority_process;
 	g_api_procs[5].m_priority   = HIGH;
 	g_api_procs[5].is_i_process = FALSE;
+	
+	g_api_procs[6].m_pid= PID_NULL;
+	g_api_procs[6].m_stack_size=0x100;
+	g_api_procs[6].mpf_start_pc = &null_process;
+	g_api_procs[6].m_priority   = LOWEST;
+	g_api_procs[6].is_i_process = FALSE;
 }
 
 void process_init() 
@@ -385,7 +391,6 @@ void process_init()
 	int i;
 	int j = 0;
 	U32 *sp;
-	PCB* temp;
   
         /* fill out the initialization table */
 
@@ -428,6 +433,7 @@ void process_init()
 			if(gp_pcbs[i]->m_pid == PID_CLOCK) {
 				clock_process = gp_pcbs[i];
 			}
+			
 			if(gp_pcbs[i]->m_pid == PID_SET_PRIO) {
 				priority_process = gp_pcbs[i];
 			}
@@ -436,6 +442,9 @@ void process_init()
 			}
 			if (gp_pcbs[i]->m_pid == PID_CRT) {
 				crt_process = gp_pcbs[i];
+			}
+			if (gp_pcbs[i]->m_pid == PID_NULL) {
+				null_proc = gp_pcbs[i];
 			}
 				rpq_enqueue(gp_pcbs[i]);
 			
@@ -558,7 +567,6 @@ int k_release_processor(void)
 	
 	PCB *p_pcb_old = NULL;
 	
-	PCB* temp = headReady;
 	
 	p_pcb_old = gp_current_process;
 	
@@ -580,8 +588,6 @@ int k_release_processor(void)
 		printf("PCB old is same as current process.\n\r");
 		#endif
 		p_pcb_old = gp_current_process;
-	//	p_pcb_old->m_state = NEW;
-	//	gp_current_process->m_state = NEW;
 	} 
 	
 	// means that there is no other process with a higher priority on the ready queue
@@ -603,4 +609,10 @@ int k_release_processor(void)
 
 	p_pcb_old = NULL;
 	return RTX_OK;
+}
+
+void null_process() {
+	while (1) {
+		k_release_processor () ;
+	}
 }

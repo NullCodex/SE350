@@ -37,13 +37,8 @@ extern void push(Queue*, Element*);
 void set_test_procs() {
 	int i;
 	for( i = 0; i < NUM_TEST_PROCS; i++ ) {
-		if (i == 0) {
-			g_test_procs[i].m_pid=(U32)(i);
+			g_test_procs[i].m_pid=(U32)(i+7);
 			g_test_procs[i].m_stack_size=0x200;
-		} else {
-			g_test_procs[i].m_pid=(U32)(i+ 6);
-			g_test_procs[i].m_stack_size=0x200;
-		}
 	}
   
 	/*g_test_procs[0].mpf_start_pc = &proc1;
@@ -63,18 +58,15 @@ void set_test_procs() {
 	
 	g_test_procs[5].mpf_start_pc = &proc6;
 	g_test_procs[5].m_priority   = LOWEST;*/
-
-	g_test_procs[0].mpf_start_pc = &null_process;
-	g_test_procs[0].m_priority   = LOWEST;
 	
-	g_test_procs[1].mpf_start_pc = &A;
-	g_test_procs[1].m_priority   = MEDIUM;
+	g_test_procs[0].mpf_start_pc = &A;
+	g_test_procs[0].m_priority   = LOW;
 	
-	g_test_procs[2].mpf_start_pc = &B;
+	g_test_procs[1].mpf_start_pc = &B;
+	g_test_procs[1].m_priority   = LOW;
+	
+	g_test_procs[2].mpf_start_pc = &C;
 	g_test_procs[2].m_priority   = MEDIUM;
-	
-	g_test_procs[3].mpf_start_pc = &C;
-	g_test_procs[3].m_priority   = LOW;
 }
 
 
@@ -290,7 +282,7 @@ void C(void) //pid == 9
     msgbuf *receive;
     char print_msg[10] = {'P', 'r', 'o', 'c', 'e', 's', 's', ' ', 'C', '\0'};
     Element *element;
-    int i = 0;
+
 		int iter = 0;
 
     q.first = NULL;
@@ -334,10 +326,4 @@ void C(void) //pid == 9
             release_memory_block(msg);
         }
     }
-}
-
-void null_process() {
-	while (1) {
-		k_release_processor () ;
-	}
 }
