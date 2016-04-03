@@ -275,7 +275,7 @@ void B(void) //pid = 8
 }
 
 void timer_test(void) {
-	 const uint32_t sample_size = 10;
+	 const uint32_t sample_size = 70;
     uint32_t start_time, end_time;
     uint32_t elapsed_time_send[sample_size];
     uint32_t elapsed_time_receive[sample_size];
@@ -284,7 +284,7 @@ void timer_test(void) {
     uint32_t sender_id;
     msgbuf* msg;
 
-		printf("Starting timer proc");
+		printf("Starting timer proc with sample size: %d\n", sample_size);
     for (i = 0; i < sample_size; i++) {
         // Test request_memory_block
         start_time = *tc_count;
