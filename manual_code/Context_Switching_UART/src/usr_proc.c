@@ -25,14 +25,14 @@ proc5:
 #include "uart_polling.h"
 #include "usr_proc.h"
 
-#ifdef DEBUG_0
 #include "printf.h"
-#endif /* DEBUG_0 */
+/* DEBUG_0 */
 
 /* initialization table item */
 PROC_INIT g_test_procs[NUM_TEST_PROCS];
 extern Element* pop(Queue*);
 extern void push(Queue*, Element*);
+extern volatile uint32_t* tc_count;
 
 void set_test_procs() {
 	int i;
@@ -65,8 +65,9 @@ void set_test_procs() {
 	g_test_procs[1].mpf_start_pc = &B;
 	g_test_procs[1].m_priority   = LOW;
 	
-	g_test_procs[2].mpf_start_pc = &C;
+	g_test_procs[2].mpf_start_pc = &timer_test;
 	g_test_procs[2].m_priority   = MEDIUM;
+	g_test_procs[2].m_pid = PID_TIMER_TEST_PROC;
 }
 
 
@@ -117,8 +118,8 @@ void proc2(void)
 		}
 	}
 }
-
-void proc3(void)
+*/
+void A(void)
 {
 	int i = 0;
 	void *p_mem_blk;
@@ -134,7 +135,7 @@ void proc3(void)
 	}
 }
 
-
+/*
 void proc4(void)
 {
 	int i = 0;
@@ -224,7 +225,7 @@ void proc6(void)
 	}
 }*/
 
-void A(void) //pid = 7
+void F(void) //pid = 7
 {
     msgbuf* msg;
     int num = 0;
@@ -250,10 +251,10 @@ void A(void) //pid = 7
 
     while(1) {
 				//uart0_put_string("G025_test: A: \n");
-        msg = request_memory_block();
+      //  msg = request_memory_block();
         msg->mtype = COUNT_REPORT;
         msg->mtext[0] = (char)num;
-        send_message(8, msg);
+       // send_message(8, msg);
         num = num + 1;
         release_processor();
     }
@@ -267,9 +268,65 @@ void B(void) //pid = 8
 
     while(1){
 				//uart0_put_string("G025_test: B: \n");
-        msg = receive_message(&sender_id);
-        send_message(9, msg);
+     //   msg = receive_message(&sender_id);
+      //  send_message(9, msg);
+			release_processor();
     }
+}
+
+void timer_test(void) {
+	 const uint32_t sample_size = 10;
+    uint32_t start_time, end_time;
+    uint32_t elapsed_time_send[sample_size];
+    uint32_t elapsed_time_receive[sample_size];
+    uint32_t elapsed_time_request[sample_size];
+    uint32_t i = 0;
+    uint32_t sender_id;
+    msgbuf* msg;
+
+		printf("Starting timer proc");
+    for (i = 0; i < sample_size; i++) {
+        // Test request_memory_block
+        start_time = *tc_count;
+        msg = request_memory_block();
+        end_time = *tc_count;
+        elapsed_time_request[i] = (end_time - start_time);
+
+        msg->mtype = DEFAULT;
+        msg->mtext[0] = 'A';
+
+        // Test send message
+        start_time = *tc_count;
+        send_message(PID_TIMER_TEST_PROC, msg);
+        end_time = *tc_count;
+        elapsed_time_send[i] = (end_time - start_time);
+        release_memory_block(msg);
+
+        // Test receive message
+        start_time = *tc_count;
+        msg = receive_message(&sender_id);
+        end_time = *tc_count;
+        elapsed_time_receive[i] = (end_time - start_time);
+        release_memory_block(msg);
+    }
+
+    // print everything :D
+    printf("Request Memory Block Timings:\r\n");
+    for (i = 0; i < sample_size; i++) {
+        printf("%d\r\n", elapsed_time_request[i]);
+    }
+    printf("Send Message Timings:\r\n");
+    for (i = 0; i < sample_size; i++) {
+        printf("%d\r\n", elapsed_time_send[i]);
+    }
+    printf("Receive Message Timings: \r\n");
+    for (i = 0; i < sample_size; i++) {
+        printf("%d\r\n", elapsed_time_receive[i]);
+    } 
+		
+		while(1) {
+			release_processor();
+		}
 }
 
 

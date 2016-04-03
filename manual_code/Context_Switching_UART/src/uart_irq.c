@@ -235,7 +235,7 @@ void UART_iprocess(void)
 		
 		g_char_in = pUart->RBR;
 		#ifdef DEBUG_0
-		printf("Reading: %c\n\r", g_char_in);
+		//printf("Reading: %c\n\r", g_char_in);
 		#endif
 #ifdef HOTKEYS		
 		if (g_char_in == HOTKEY1) {
@@ -281,7 +281,7 @@ void UART_iprocess(void)
 		// Get the message from crt_display - receive message by sender id
 		to_disp_message = (msgbuf*)k_receive_message(&sender_id);
 			#ifdef DEBUG_0
-		printf("Receiving message from: %d\n\r", sender_id);
+	//	printf("Receiving message from: %d\n\r", sender_id);
 			#endif
 	/* THRE Interrupt, transmit holding register becomes empty */
 
@@ -289,7 +289,7 @@ void UART_iprocess(void)
 			g_char_out = to_disp_message->mtext[i];
 			while (g_char_out != '\0') {
 				#ifdef DEBUG_0
-				printf("Displaying: %c\n\r", g_char_out);
+//				printf("Displaying: %c\n\r", g_char_out);
 				#endif
 				pUart->THR = g_char_out;
 				i++;
@@ -327,23 +327,23 @@ void crt_proc(void) {
     while(1) {
 			printf("");
 			#ifdef DEBUG_0
-			printf("Entering CRT:\n\r");
+//			printf("Entering CRT:\n\r");
 			#endif
 			message = receive_message(&sender_id);
 			#ifdef DEBUG_0
-			printf("Receiving message from: %d\n\r", sender_id);
+//			printf("Receiving message from: %d\n\r", sender_id);
 			#endif
 			// Display character by character as they are input to the console
 			if (message->mtype == CRT_DISPLAY) {
 				send_message_from_uart(PID_CRT, PID_UART_IPROC, (void*)message);
 				gp_current_process = (PCB*)getProcessByID(PID_UART_IPROC);
 				#ifdef DEBUG_0
-				printf("Process switched manually to: %d\n\r", PID_UART_IPROC);
+//				printf("Process switched manually to: %d\n\r", PID_UART_IPROC);
 				#endif
 				pUart->IER = IER_THRE | IER_RLS | IER_RBR;
 				gp_current_process = (PCB*)getProcessByID(PID_CRT);
 				#ifdef DEBUG_0
-				printf("Process switched manually to: %d\n\r", PID_CRT);
+//				printf("Process switched manually to: %d\n\r", PID_CRT);
 				#endif
 			} else {
 				release_memory_block(message);

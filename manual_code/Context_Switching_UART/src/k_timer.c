@@ -96,7 +96,7 @@ uint32_t timer_init(uint8_t n_timer)
 	} else if(n_timer == 1) {
 		pTimer = (LPC_TIM_TypeDef*) LPC_TIM1;
 
-        pTimer->PR = 49;
+        pTimer->PR = 11;
 
         pTimer->MCR = BIT(0) | BIT(1);
         pTimer->TCR = BIT(0);
